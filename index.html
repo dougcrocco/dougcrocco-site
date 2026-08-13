@@ -18,18 +18,19 @@
   }
   @media only screen and (max-width: 1024px) {
     [data-r="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
-    [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) minmax(220px,300px) !important; gap: 30px !important; }
+    [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) minmax(180px,280px) !important; gap: 24px !important; }
     [data-r="venuecol"] > * { width: 100% !important; }
   }
   @media only screen and (max-width: 768px) {
     [data-r="galcols"], [data-r="feature"], [data-r="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
-    [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
     [data-r="feature"] > *:first-child { grid-column: auto !important; }
     [data-r="w2"] { grid-template-columns: minmax(0,1fr) !important; }
-    [data-r="exhdr"] { display: flex !important; flex-direction: column !important; }
-    [data-r="venuecol"] { justify-content: flex-start !important; }
     [data-r="infotint"] { width: 100% !important; }
     [data-r="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
+  }
+  @media only screen and (max-width: 640px) {
+    [data-r="exhdr"] { display: flex !important; flex-direction: column !important; }
+    [data-r="venuecol"] { justify-content: flex-start !important; }
   }
   ::-webkit-scrollbar { width:0; height:0; }
   * { scrollbar-width:none; -ms-overflow-style:none; }
@@ -660,7 +661,12 @@ class Component extends DCLogic {
     if (!box || !row) return;
     requestAnimationFrame(() => requestAnimationFrame(() => {
       const top = Math.max(0, box.scrollTop + row.getBoundingClientRect().top - box.getBoundingClientRect().top - 26);
-      if (Math.abs(top - box.scrollTop) > 2) box.scrollTo({ top: top, behavior: 'smooth' });
+      if (Math.abs(top - box.scrollTop) > 2) {
+        this._autoScroll = true;
+        clearTimeout(this._autoScrollT);
+        this._autoScrollT = setTimeout(() => { this._autoScroll = false; }, 700);
+        box.scrollTo({ top: top, behavior: 'smooth' });
+      }
     }));
   }
 
@@ -669,8 +675,7 @@ class Component extends DCLogic {
       const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
       const list = e && e.gal ? e.gal.filter(g => !this.state.broken[g.u]) : [];
       const i = list.findIndex(g => g.u === u);
-      this.setState({ exMode: 'full', exFull: Math.max(0, i) });
-      this.scrollToViews();
+      this.setState({ exMode: 'full', exFull: Math.max(0, i), exInfoHidden: true }, () => this.scrollToViews());
     };
   }
 
@@ -933,9 +938,8 @@ class Component extends DCLogic {
         if (el && !el._track) {
           el._track = true;
           el.addEventListener('scroll', () => {
-            const row = this._viewsRow;
-            if (!row) return;
-            const hidden = row.getBoundingClientRect().top - el.getBoundingClientRect().top <= 2;
+            if (this._autoScroll) return;
+            const hidden = el.scrollTop > 8;
             if (hidden !== this.state.exInfoHidden) this.setState({ exInfoHidden: hidden });
           }, { passive: true });
         }
@@ -943,7 +947,11 @@ class Component extends DCLogic {
       showInfo: () => {
         const box = this._exScroll;
         if (!box) return;
+        this._autoScroll = true;
+        clearTimeout(this._autoScrollT);
+        this._autoScrollT = setTimeout(() => { this._autoScroll = false; this.setState({ exInfoHidden: false }); }, 700);
         box.scrollTo({ top: 0, behavior: 'smooth' });
+        this.setState({ exInfoHidden: false });
       },
       lbSwipeRef: el => { this.attachSwipe(el, d => this.stepLb(d)); },
       exGridRef: el => { this._exGrid = el; },
