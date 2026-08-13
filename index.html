@@ -13,13 +13,17 @@
   a { color:#141414; text-decoration:none; }
   a:hover { text-decoration:none; color:#000000; }
   x-dc:not(:defined) [data-live-layer] { display:none !important; }
-  @media only screen and (max-width: 1024px) {
+  @media only screen and (max-width: 900px) {
     [data-r="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  }
+  @media only screen and (max-width: 1024px) {
     [data-r="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
-    [data-r="exhdr"] { gap: 34px !important; }
+    [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) minmax(220px,300px) !important; gap: 30px !important; }
+    [data-r="venuecol"] > * { width: 100% !important; }
   }
   @media only screen and (max-width: 768px) {
-    [data-r="galcols"], [data-r="feature"], [data-r="c2"], [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r="galcols"], [data-r="feature"], [data-r="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
     [data-r="feature"] > *:first-child { grid-column: auto !important; }
     [data-r="w2"] { grid-template-columns: minmax(0,1fr) !important; }
     [data-r="exhdr"] { display: flex !important; flex-direction: column !important; }
@@ -217,7 +221,7 @@
   </sc-if>
 
   <sc-if value="{{ vExhibit }}" hint-placeholder-val="{{ true }}">
-    <div ref="{{ exScrollRef }}" data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
+    <div ref="{{ exScrollRef }}" data-live-layer style="{{ exScrollStyle }}">
       <div style="display:flex;align-items:center;justify-content:flex-end;gap:40px;max-width:1760px;padding:2px 0 26px">
         <div style="display:flex;align-items:center;gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
           <div onClick="{{ prevExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">←</div>
@@ -283,6 +287,35 @@
           </div>
         </div>
       </sc-if>
+      <div ref="{{ viewsRowRef }}" style="display:flex;align-items:center;gap:30px;max-width:1760px;padding:0 0 20px">
+        <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
+        </sc-if>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+          <div onClick="{{ setFullMode }}" style="{{ fullBtnStyle }}">
+            <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="0.65" y="0.65" width="15.7" height="11.7"></rect></svg>
+          </div>
+          <div onClick="{{ setGridMode }}" style="{{ gridBtnStyle }}">
+            <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.6" y="0.6" width="15.8" height="11.8"></rect><path d="M0.6 4.5H16.4M0.6 8.4H16.4M5.9 0.6V12.4M11.2 0.6V12.4"></path></svg>
+          </div>
+        </div>
+      </div>
+      <sc-if value="{{ exFullMode }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:1760px;padding:0 0 56px">
+          <div style="position:relative">
+            <div onClick="{{ openFull }}" style="cursor:pointer;padding:0 46px;display:flex;align-items:center;justify-content:center;height:calc(100vh - 180px);min-height:420px">
+              <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain">
+            </div>
+            <div onClick="{{ prevFull }}" style="position:absolute;left:0;top:50%;transform:translateY(-50%);cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❮</div>
+            <div onClick="{{ nextFull }}" style="position:absolute;right:0;top:50%;transform:translateY(-50%);cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❯</div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:20px;padding:16px 56px 0">
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:80ch">{{ fullCaption }}</div>
+          </div>
+          <div style="text-align:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;color:#b4b4b6;padding-top:8px">{{ fullCount }}</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ exGridMode }}" hint-placeholder-val="{{ false }}">
       <div ref="{{ exGridRef }}" data-r="galcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;align-items:start;max-width:1760px">
         <sc-for list="{{ exColumns }}" as="col" hint-placeholder-count="3">
           <div style="display:flex;flex-direction:column;gap:22px">
@@ -316,6 +349,7 @@
           </a>
         </sc-for>
       </div>
+      </sc-if>
     </div>
   </sc-if>
 
@@ -466,7 +500,7 @@
     </div>
   </sc-if>
 
-  <div style="position:absolute;top:0;left:0;right:0;height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;z-index:5;pointer-events:none">
+  <div style="{{ navStyle }}">
     <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em">Doug Crocco</div>
     <div style="pointer-events:auto;display:flex;gap:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
       <span onClick="{{ toWorks }}" style="cursor:pointer;opacity:{{ oWorks }}">Works</span>
@@ -530,7 +564,7 @@ class Component extends DCLogic {
     return cols.map((items, i) => ({ items, i }));
   }
 
-  colsFor(w) { return w <= 768 ? 1 : (w <= 1024 ? 2 : 3); }
+  colsFor(w) { return w <= 768 ? 1 : (w <= 900 ? 2 : 3); }
 
   componentDidMount() {
     this._resize = () => {
@@ -596,7 +630,6 @@ class Component extends DCLogic {
     const next = list[((i < 0 ? 0 : i) + n + list.length) % list.length];
     this.setState({ lb: next.u, lbC: next.c || '' });
   }
-  openLb(u, c) { return () => this.setState({ lb: u, lbC: c || '' }); }
   attachSwipe(el, onSwipe) {
     if (!el || el._swipe) return;
     el._swipe = true;
@@ -613,12 +646,47 @@ class Component extends DCLogic {
     }, { passive: true });
   }
 
+
+  openExhibit(title) {
+    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFull: 0, exInfoHidden: false });
+  }
+
+  setViewMode(mode) {
+    this.setState({ exMode: mode, exFull: 0, exInfoHidden: true }, () => this.scrollToViews());
+  }
+
+  scrollToViews() {
+    const box = this._exScroll, row = this._viewsRow;
+    if (!box || !row) return;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const top = Math.max(0, box.scrollTop + row.getBoundingClientRect().top - box.getBoundingClientRect().top - 26);
+      if (Math.abs(top - box.scrollTop) > 2) box.scrollTo({ top: top, behavior: 'smooth' });
+    }));
+  }
+
+  openFullAt(u) {
+    return () => {
+      const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
+      const list = e && e.gal ? e.gal.filter(g => !this.state.broken[g.u]) : [];
+      const i = list.findIndex(g => g.u === u);
+      this.setState({ exMode: 'full', exFull: Math.max(0, i) });
+      this.scrollToViews();
+    };
+  }
+
+  stepFull(n) {
+    const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
+    const list = e && e.gal ? e.gal.filter(g => !this.state.broken[g.u]) : [];
+    if (!list.length) return;
+    this.setState(s => ({ exFull: ((s.exFull || 0) + n + list.length) % list.length }));
+  }
+
   stepExhibit(n) {
     const list = window.DC ? window.DC.exhibits : [];
     if (!list.length) return;
     const i = list.findIndex(e => e.title === this.state.exhibit);
     const next = list[((i < 0 ? 0 : i) + n + list.length) % list.length];
-    this.setState({ exhibit: next.title, exOpen: false, lb: '', venue: '' });
+    this.openExhibit(next.title);
     const sc = document.querySelector('[data-live-layer]');
     if (sc && sc.scrollTop) sc.scrollTop = 0;
   }
@@ -641,6 +709,8 @@ class Component extends DCLogic {
     const exhList = exhF === 'All' ? ex : ex.filter(e => e.kinds.indexOf(exhF) >= 0);
     const cxI = ex.findIndex(e => e.title === st.exhibit);
     const cx = ex[cxI] || {};
+    // the nav only hides while you're inside an exhibit
+    const navHidden = view === 'exhibit' && !!st.exInfoHidden;
     const nAll = d.news || [];
     const nF = st.newsFilter || 'All';
     const nList = nF === 'All' ? nAll : nAll.filter(n => n.kind === nF);
@@ -690,6 +760,7 @@ class Component extends DCLogic {
     const venueCap = [cx.venue, cx.city, cx.y].filter(Boolean).join(', ');
     const vImgs = (cx.venue_img || []).map(u => ({ u, c: venueCap }));
     const lbAll = (cx.gal || []).filter(g => !st.broken[g.u]);
+    const fullI = Math.min(st.exFull || 0, Math.max(0, lbAll.length - 1));
     const restItems = lbAll;
     const lbI = lbOpen ? lbAll.findIndex(x => x.u === st.lb) : -1;
     const lbItem = { u: st.lb, c: st.lbC || (lbI >= 0 ? lbAll[lbI].c : '') };
@@ -756,7 +827,7 @@ class Component extends DCLogic {
       backToSeries: this.go('series'),
       nextSlide: () => this.setState(s => ({ slide: s.slide + 1 })),
       prevSlide: () => this.setState(s => ({ slide: s.slide - 1 + slides.length })),
-      openSlideShow: () => { if (cur.title) this.setState({ view: 'exhibit', exhibit: cur.title, exOpen: false, lb: '', venue: '' }); },
+      openSlideShow: () => { if (cur.title) this.openExhibit(cur.title); },
       nextWork: () => this.step(1), prevWork: () => this.step(-1),
 
       slideA: mkRef((slides[even ? si : prevI] || {}).img),
@@ -841,7 +912,7 @@ class Component extends DCLogic {
         year: e.y ? String(e.y) : '', title: e.title,
         venue: [e.venue, e.city].filter(Boolean).join(', '),
         kind: e.kinds.join(' · '),
-        open: () => this.setState({ view: 'exhibit', exhibit: e.title, exOpen: false, lb: '', venue: '' }),
+        open: () => this.openExhibit(e.title),
         imgRef: mkRef(e.img),
         plateStyle: Object.assign({ aspectRatio: '16 / 10' }, PLATE)
       })),
@@ -856,7 +927,24 @@ class Component extends DCLogic {
       exPos: cxI >= 0 ? (cxI + 1) + ' / ' + ex.length : '',
       prevExhibit: () => this.stepExhibit(-1),
       nextExhibit: () => this.stepExhibit(1),
-      exScrollRef: el => { this._exScroll = el; this.attachSwipe(el, d => this.stepExhibit(d)); },
+      exScrollRef: el => {
+        this._exScroll = el;
+        this.attachSwipe(el, d => this.stepExhibit(d));
+        if (el && !el._track) {
+          el._track = true;
+          el.addEventListener('scroll', () => {
+            const row = this._viewsRow;
+            if (!row) return;
+            const hidden = row.getBoundingClientRect().top - el.getBoundingClientRect().top <= 2;
+            if (hidden !== this.state.exInfoHidden) this.setState({ exInfoHidden: hidden });
+          }, { passive: true });
+        }
+      },
+      showInfo: () => {
+        const box = this._exScroll;
+        if (!box) return;
+        box.scrollTo({ top: 0, behavior: 'smooth' });
+      },
       lbSwipeRef: el => { this.attachSwipe(el, d => this.stepLb(d)); },
       exGridRef: el => { this._exGrid = el; },
       exUrl: cx.url || '',
@@ -898,22 +986,43 @@ class Component extends DCLogic {
       venueImgRef: el => { if (el && st.venue) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== st.venue) el.src = st.venue; } },
       venueCaption: st.venueCap || venueCap,
       closeVenue: () => this.setState({ venue: '', venueCap: '' }),
+      viewsRowRef: el => { this._viewsRow = el; },
+      exInfoHidden: !!st.exInfoHidden,
+      exScrollStyle: {
+        position: 'absolute', top: navHidden ? 0 : 86, left: 0, right: 0, bottom: 0,
+        overflowY: 'auto', padding: (navHidden ? '26px' : '0') + ' 44px 70px',
+        transition: 'top .34s cubic-bezier(.33,1,.68,1)'
+      },
+      navStyle: {
+        position: 'absolute', top: 0, left: 0, right: 0, height: 86,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 44px', zIndex: 5, pointerEvents: 'none',
+        transform: navHidden ? 'translateY(-86px)' : 'translateY(0)',
+        opacity: navHidden ? 0 : 1,
+        transition: 'transform .34s cubic-bezier(.33,1,.68,1), opacity .28s ease'
+      },
+      exGridMode: (st.exMode || 'full') === 'grid',
+      exFullMode: st.exMode === 'full',
+      setGridMode: () => this.setViewMode('grid'),
+      setFullMode: () => this.setViewMode('full'),
+      gridBtnStyle: { cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 3, color: (st.exMode === 'full' ? '#c4c4c6' : '#1a1a1c') },
+      fullBtnStyle: { cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 3, color: (st.exMode === 'full' ? '#1a1a1c' : '#c4c4c6') },
+      fullImgRef: mkRef((lbAll[fullI] || {}).u, this.markBroken),
+      fullCaption: (lbAll[fullI] || {}).c || '',
+      fullCount: lbAll.length ? (fullI + 1) + ' / ' + lbAll.length : '',
+      prevFull: () => this.stepFull(-1),
+      nextFull: () => this.stepFull(1),
+      openFull: () => { const g = lbAll[fullI]; if (g) this.setState({ lb: g.u, lbC: g.c || '' }); },
       exColumns: (() => {
         const items = restItems.map((g, i) => ({
           caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
-          open: this.openLb(g.u, g.c)
+          open: this.openFullAt(g.u)
         }));
         const n = this.state.colCount || 3;
         const cols = []; for (let k = 0; k < n; k++) cols.push([]);
         items.forEach((it, i) => cols[i % n].push(it));
         return cols.map((items, i) => ({ items, i }));
       })(),
-      exGallery: lbAll.map((g, i) => ({
-        caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
-        open: this.openLb(g.u, g.c),
-        plateStyle: Object.assign({ aspectRatio: '1 / 1' }, PLATE)
-      })),
-
       vLightbox: lbOpen,
       lbImgRef: el => { if (el && lbItem.u) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== lbItem.u) el.src = lbItem.u; } },
       lbCaption: lbItem.c || '',
