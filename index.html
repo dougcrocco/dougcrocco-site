@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  html, body { margin:0; height:100%; background:#ffffff; -webkit-font-smoothing:antialiased; }
+  a { color:#141414; text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  x-dc:not(:defined) [data-live-layer] { display:none !important; }
+  @media only screen and (max-width: 1024px) {
+    [data-r="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r="exhdr"] { gap: 34px !important; }
+  }
+  @media only screen and (max-width: 768px) {
+    [data-r="galcols"], [data-r="feature"], [data-r="c2"], [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r="feature"] > *:first-child { grid-column: auto !important; }
+    [data-r="w2"] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-r="exhdr"] { display: flex !important; flex-direction: column !important; }
+    [data-r="venuecol"] { justify-content: flex-start !important; }
+    [data-r="infotint"] { width: 100% !important; }
+    [data-r="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
+  }
+  ::-webkit-scrollbar { width:0; height:0; }
+  * { scrollbar-width:none; -ms-overflow-style:none; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+<script src="./works-data.js"></script>
+</helmet>
+
+<div style="position:fixed;inset:0;background:#ffffff;color:#141414;font-family:Helvetica,'Helvetica Neue',Arial,sans-serif;overflow:hidden">
+
+  <sc-if value="{{ vHome }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:0;overflow:hidden">
+      <img ref="{{ slideA }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideAOpacity }};transition:opacity 1.4s ease">
+      <img ref="{{ slideB }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideBOpacity }};transition:opacity 1.4s ease">
+      <div onClick="{{ openSlideShow }}" style="position:absolute;inset:0;cursor:pointer"></div>
+      <div style="position:absolute;left:0;right:0;top:0;height:104px;pointer-events:none;background:linear-gradient(to bottom, rgba(255,255,255,.7), rgba(255,255,255,0))"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:26px 44px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;pointer-events:none">
+        <div onClick="{{ openSlideShow }}" style="pointer-events:auto;cursor:pointer">
+          <div style="font-size:15px;line-height:1.4;border-bottom:1px solid rgba(20,20,20,.35);display:inline-block;padding-bottom:2px">{{ slideTitle }}</div>
+          <div style="font-size:12px;line-height:1.7;opacity:.6;margin-top:4px">{{ slideVenue }}</div>
+        </div>
+        <div style="pointer-events:auto;display:flex;align-items:center;gap:14px">
+          <div onClick="{{ prevSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">←</div>
+          <div style="font-size:11px;letter-spacing:.16em;opacity:.5">{{ slideCount }}</div>
+          <div onClick="{{ nextSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">→</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vWorks }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+      <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
+        <div style="color:#3c3c3d">Series</div>
+        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#9a9a9c">Overview</div>
+      </div>
+      <div data-r="w2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1500px;padding:6px 0 0">
+        <sc-for list="{{ seriesColumns }}" as="col" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:30px">
+            <sc-for list="{{ col.items }}" as="s" hint-placeholder-count="3">
+              <div onClick="{{ s.open }}" style="cursor:pointer">
+                <img ref="{{ s.imgRef }}" alt="{{ s.name }}" style="display:block;width:100%;height:auto">
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.4;color:#2a2a2b;margin-top:9px">{{ s.name }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vSeries }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+      <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
+        <div style="color:#b4b4b6">/</div>
+        <div style="color:#3c3c3d">{{ curSeries }}</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5c5c5e">←</div>
+          <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5c5c5e">→</div>
+        </div>
+      </div>
+      <div data-r="w2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1500px;padding:6px 0 0">
+        <sc-for list="{{ seriesWorkColumns }}" as="col" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:30px">
+            <sc-for list="{{ col.items }}" as="w" hint-placeholder-count="4">
+              <div onClick="{{ w.open }}" style="cursor:pointer">
+                <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vOverview }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+      <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
+        <div style="color:#b4b4b6">/</div>
+        <div style="color:#3c3c3d">Overview</div>
+        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toYear }}" style="cursor:pointer;color:#9a9a9c">By year</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:26px;padding:0 0 26px">
+        <sc-for list="{{ ovFilters }}" as="f" hint-placeholder-count="5">
+          <div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
+        </sc-for>
+      </div>
+      <div data-r="galcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1600px">
+        <sc-for list="{{ ovColumns }}" as="col" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:30px">
+            <sc-for list="{{ col.items }}" as="w" hint-placeholder-count="4">
+              <div onClick="{{ w.open }}" style="position:relative;cursor:pointer;overflow:hidden;background:#f6f5f2">
+                <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.75);opacity:0;transition:opacity .3s ease" style-hover="opacity:1">
+                  <div style="text-align:center;padding:0 18px">
+                    <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:19px;letter-spacing:.1em;text-transform:uppercase;color:#fff;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.85);display:inline-block">{{ w.title }}</div>
+                    <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-top:9px">{{ w.meta }}</div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vYear }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;display:flex;flex-direction:column">
+      <div style="flex:none;display:flex;align-items:baseline;gap:14px;padding:4px 44px 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
+        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#9a9a9c">Overview</div>
+        <div style="color:#b4b4b6">/</div>
+        <div style="color:#3c3c3d">By year</div>
+      </div>
+      <div ref="{{ wallRef }}" style="flex:1;min-height:0;overflow-x:auto;overflow-y:hidden;padding:0 44px 24px">
+        <div style="display:flex;align-items:flex-end;gap:34px;height:100%">
+          <sc-for list="{{ yearGroups }}" as="g" hint-placeholder-count="6">
+            <div style="display:flex;flex-direction:column;height:100%;flex:none">
+              <div style="flex:1;min-height:0;display:flex;align-items:flex-end;gap:14px">
+                <sc-for list="{{ g.items }}" as="w" hint-placeholder-count="3">
+                  <div onClick="{{ w.open }}" style="{{ w.style }}">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;height:100%;width:auto;max-width:none">
+                  </div>
+                </sc-for>
+              </div>
+              <div style="flex:none;margin-top:20px;padding-top:12px;border-top:1px solid rgba(20,20,20,.25);font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.14em;color:#8c8c8e">{{ g.year }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vWork }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">← {{ wSeries }}</div>
+        <div style="display:flex;align-items:center;gap:26px">
+          <div onClick="{{ toContact }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Enquire</div>
+          <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
+        </div>
+      </div>
+      <div style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
+        <div onClick="{{ prevWork }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
+        <div style="flex:1;min-width:0;height:calc(100vh - 210px);display:flex;align-items:center;justify-content:center">
+          <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:calc(100vh - 210px);width:auto;height:auto;object-fit:contain">
+        </div>
+        <div onClick="{{ nextWork }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
+      </div>
+      <div style="flex:none;padding:0 118px 30px;display:flex;justify-content:center">
+        <div style="font-size:13px;line-height:1.7;opacity:.7;max-width:760px;text-align:center;text-wrap:pretty">{{ wCaption }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vExhibits }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+      <div style="display:flex;align-items:baseline;justify-content:flex-end;gap:40px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
+        <div style="display:flex;gap:26px">
+          <sc-for list="{{ exhFilters }}" as="f" hint-placeholder-count="4">
+            <div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div data-r="c2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:56px 44px;padding:40px 0 0;max-width:1560px">
+        <sc-for list="{{ exhibits }}" as="e" hint-placeholder-count="4">
+          <div onClick="{{ e.open }}" style="display:flex;flex-direction:column;gap:16px;cursor:pointer">
+            <div style="{{ e.plateStyle }}">
+              <img ref="{{ e.imgRef }}" alt="{{ e.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+            </div>
+            <div style="display:grid;grid-template-columns:58px 1fr;gap:20px;align-items:baseline">
+              <div style="font-size:11px;letter-spacing:.14em;opacity:.45">{{ e.year }}</div>
+              <div>
+                <div style="font-size:18px;line-height:1.3;text-wrap:pretty">{{ e.title }}</div>
+                <div style="font-size:13px;line-height:1.75;opacity:.55;margin-top:4px">{{ e.venue }}</div>
+                <div style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.4;margin-top:8px">{{ e.kind }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vExhibit }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ exScrollRef }}" data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:40px;max-width:1760px;padding:2px 0 26px">
+        <div style="display:flex;align-items:center;gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
+          <div onClick="{{ prevExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">←</div>
+          <div style="opacity:.35">{{ exPos }}</div>
+          <div onClick="{{ nextExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">→</div>
+        </div>
+      </div>
+      <div style="max-width:1760px;padding:0 0 30px">
+        <div data-r="exhdr" style="display:grid;grid-template-columns:minmax(0,1.3fr) auto;grid-template-areas:'title venue' 'summary venue';gap:22px 56px;align-items:start">
+          <div style="grid-area:title">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(28px,2.7vw,46px);letter-spacing:.045em;text-transform:uppercase;line-height:1.14;font-weight:400;max-width:24ch;text-wrap:balance;color:#1a1a1c">{{ exTitle }}</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;font-weight:500;letter-spacing:.01em;color:#2e2e30;margin-top:16px">{{ exVenue }}</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#8c8c8e;margin-top:5px">{{ exPlaceDate }}</div>
+          </div>
+          <div data-r="venuecol" style="grid-area:venue;display:flex;justify-content:flex-end;align-items:flex-start">
+            <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
+              <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
+                <div style="{{ v.boxStyle }}">
+                  <img ref="{{ v.imgRef }}" alt="" style="display:block;width:100%;height:auto">
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div data-r="exsummary" style="grid-area:summary">
+            <div style="display:flex;flex-direction:column;gap:14px;max-width:52ch">
+              <sc-for list="{{ exSummaryParas }}" as="p" hint-placeholder-count="1">
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#4a4a4c;text-wrap:pretty">{{ p.text }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ toggleExText }}" style="cursor:pointer;display:inline-block;margin-top:18px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="border-bottom:1px dotted rgba(20,20,20,.45);margin-top:26px"></div>
+      </div>
+      <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:1760px;padding:6px 0 44px;display:flex;flex-direction:column;gap:20px">
+          <sc-for list="{{ exAllParas }}" as="p" hint-placeholder-count="3">
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.68;color:#4a4a4c;text-wrap:pretty;max-width:88ch">{{ p.text }}</div>
+          </sc-for>
+          <div style="display:flex;flex-wrap:wrap;gap:26px">
+            <sc-if value="{{ exHasUrl }}" hint-placeholder-val="{{ false }}">
+              <a href="{{ exUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exUrlLabel }}</a>
+            </sc-if>
+            <sc-if value="{{ exHasPdf }}" hint-placeholder-val="{{ false }}">
+              <a href="{{ exPdf }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Download press release</a>
+            </sc-if>
+          </div>
+          <div onClick="{{ toggleExText }}" style="cursor:pointer;align-self:flex-start;margin-top:10px;width:34px;height:26px;display:flex;align-items:center;justify-content:center;color:#5c5c5e">
+            <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M1 12 L13 2 L25 12"></path></svg>
+          </div>
+        </div>
+      </sc-if>
+      <div ref="{{ exGridRef }}" data-r="galcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;align-items:start;max-width:1760px">
+        <sc-for list="{{ exColumns }}" as="col" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:22px">
+            <sc-for list="{{ col.items }}" as="g" hint-placeholder-count="3">
+              <div onClick="{{ g.open }}" style="cursor:pointer">
+                <div style="background:#f6f5f2">
+                  <img ref="{{ g.imgRef }}" alt="{{ g.caption }}" style="display:block;width:100%;height:auto">
+                </div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#6b6b6d;padding:9px 0 0;text-align:center">{{ g.artist }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vNews }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
+      <div style="display:flex;align-items:baseline;gap:26px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
+        <div style="display:flex;gap:26px">
+          <sc-for list="{{ newsFilters }}" as="f" hint-placeholder-count="3">
+            <div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:70px 60px;align-items:start;justify-items:center;max-width:1180px;margin:0 auto;padding:48px 0 0">
+        <sc-for list="{{ newsList }}" as="n" hint-placeholder-count="6">
+          <a href="{{ n.url }}" target="_blank" rel="noopener" style="display:block;width:100%;max-width:520px;text-decoration:none;color:inherit">
+            <img ref="{{ n.imgRef }}" alt="{{ n.title }}" style="display:block;width:100%;height:auto">
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vInfo }}" hint-placeholder-val="{{ true }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;overflow-x:hidden;padding:0 0 90px">
+
+      <div style="position:relative;padding:0 44px">
+        <div data-r="infotint" style="position:absolute;left:0;top:-18px;width:50%;height:calc(100% + 48px);background:oklch(0.962 0.012 62);z-index:0;pointer-events:none"></div>
+        <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-18px;width:50%;height:calc(100% + 48px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
+        <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:40px 0 0;align-items:start">
+        <div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:16px;line-height:1.72;letter-spacing:.004em;color:#2a2a2b;max-width:56ch;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks.</div>
+        </div>
+        <div style="padding-top:3px">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 22px;margin-top:0;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#5c5c5e;max-width:460px">
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Email</div>
+            <div><a href="mailto:doug@allart.la">doug@allart.la</a></div>
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Studio</div>
+            <div>Los Angeles, California — visits by appointment</div>
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Born</div>
+            <div>Albuquerque, New Mexico</div>
+          </div>
+          <div style="margin-top:26px">
+            <a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div data-r="c2" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
+        <div style="display:flex;flex-direction:column;gap:44px">
+          <div style="grid-area:title">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Education</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
+              2004 &nbsp;Master of Fine Arts, Claremont Graduate University, Claremont, CA<br>
+              2001 &nbsp;Graduate Studies, University of Miami, Coral Gables, FL<br>
+              2000 &nbsp;Bachelor of Fine Arts, Florida State University, Tallahassee, FL
+            </div>
+          </div>
+          <div style="grid-area:title">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Solo &amp; two person</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
+              2011 &nbsp;Doug Crocco &amp; Aramis Gutierrez, Legalarts, Miami, FL<br>
+              2010 &nbsp;<em>Entropy</em>, Art and Culture Center of Hollywood, FL<br>
+              2006 &nbsp;<em>Drawing and Sculpture</em>, The Happy Lion, Los Angeles, CA<br>
+              2003 &nbsp;MFA Thesis, East Gallery, Claremont Graduate University, CA
+            </div>
+          </div>
+          <div style="grid-area:title">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Curatorial — Big Pictures Los Angeles, 2015–2020</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
+              2019 &nbsp;<em>Holding Space</em> · <em>Flat Earth Society</em><br>
+              2019 &nbsp;<em>I Have Always Imagined That Paradise Will Be a Kind of Library</em>, Blake and Vargas, Berlin<br>
+              2018 &nbsp;<em>Transmutation</em><br>
+              2017 &nbsp;<em>Staring at The Sun</em> · <em>Polaroid Black</em><br>
+              2016 &nbsp;<em>Slamdance DIG 2</em><br>
+              2015 &nbsp;<em>Slamdance DIG</em><br>
+              2012 &nbsp;<em>NeoNatural</em>, Steve Turner Contemporary, Los Angeles, CA
+            </div>
+          </div>
+          <div style="grid-area:title">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Awards &amp; residencies</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
+              2012 &nbsp;The Adolf &amp; Esther Gottlieb Foundation, Grant Recipient<br>
+              2009 &nbsp;The Armory Art Center, Palm Beach, FL, Artist in Residence
+            </div>
+          </div>
+          <div style="grid-area:title">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected press</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
+              2017 &nbsp;David Pagel, “Where dread and beauty collide,” <em>Los Angeles Times</em>, September 11<br>
+              2017 &nbsp;Catherine Wagley, “5 Shows to See,” <em>L.A. Weekly</em>, April 26<br>
+              2008 &nbsp;Christine Davis, “Art Connections,” <em>Palm Beach Post</em>, August 3
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected group exhibitions</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
+            2024 &nbsp;<em>Getting The Band Back Together</em>, Claremont Graduate University, CA<br>
+            2024 &nbsp;<em>Hollywood Dream Bubble: Ed Ruscha’s Influence</em>, The Hole, Los Angeles, CA<br>
+            2021 &nbsp;<em>The Design Shop</em>, Tile Blush, Miami, FL<br>
+            2019 &nbsp;<em>Holding Space</em>, Big Pictures Los Angeles, CA<br>
+            2019 &nbsp;<em>I Wake Up and Write Down My Dreams</em>, No Gallery, Los Angeles, CA<br>
+            2019 &nbsp;<em>Dreamhouse vs. Punk House</em>, Serious Topics, Los Angeles, CA<br>
+            2019 &nbsp;<em>House Museum</em>, O-K-O-K, Los Angeles, CA<br>
+            2018 &nbsp;<em>The Mushroom Show</em>, Craryville, NY<br>
+            2018 &nbsp;<em>The Art Den</em>, Odd Ark, Los Angeles, CA<br>
+            2017 &nbsp;<em>Pensive</em>, Tile Blush, Miami, FL<br>
+            2017 &nbsp;<em>The Cactus Show</em>, Craryville, NY<br>
+            2017 &nbsp;<em>Polaroid Black</em>, Big Pictures Los Angeles, CA<br>
+            2017 &nbsp;<em>DBA</em>, Big Pictures Los Angeles, CA<br>
+            2015 &nbsp;<em>Works of Paper II</em>, ACME, Los Angeles, CA<br>
+            2015 &nbsp;<em>Sharp Contrast</em>, Palomar College, San Marcos, CA<br>
+            2013 &nbsp;<em>Random Ceremonies</em>, The Sacred Door, Venice, CA<br>
+            2012 &nbsp;<em>Things Fall Together</em>, Claremont Graduate University, CA<br>
+            2008 &nbsp;<em>The Palm Beach Biennial</em>, Gavlak Gallery, Palm Beach, FL<br>
+            2007 &nbsp;<em>Tugboat</em>, ACME at Domestic, Los Angeles, CA<br>
+            2007 &nbsp;<em>Big Secret Cache</em>, Angstrom Gallery, Los Angeles, CA<br>
+            2005 &nbsp;<em>L.A. Times</em>, Bernard Toale Gallery, Boston, MA<br>
+            2005 &nbsp;<em>Pacific Lines</em>, Yancey Richardson Gallery, New York, NY<br>
+            2004 &nbsp;<em>Supersonic</em>, Art Center College of Design, Pasadena, CA<br>
+            2003 &nbsp;<em>Drawings from LA</em>, Uplands Gallery, Melbourne, Australia<br>
+            2002 &nbsp;<em>Graduate School Show</em>, Lowe Art Museum, Miami, FL
+          </div>
+        </div>
+      </div>
+
+      <div style="margin:60px 0 -90px;background:#f2f1ee;height:340px;overflow:hidden">
+        <img ref="{{ infoBgRef2 }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+      </div>
+
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vVenue }}" hint-placeholder-val="{{ false }}">
+    <div data-live-layer style="position:fixed;inset:0;z-index:21;background:#ffffff;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ venueCaption }}</div>
+        <div onClick="{{ closeVenue }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
+      </div>
+      <div onClick="{{ closeVenue }}" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:26px 44px 44px;cursor:pointer">
+        <img ref="{{ venueImgRef }}" alt="" style="max-width:100%;max-height:calc(100vh - 150px);width:auto;height:auto;object-fit:contain">
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vLightbox }}" hint-placeholder-val="{{ false }}">
+    <div data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ lbShow }}</div>
+        <div style="display:flex;align-items:center;gap:26px">
+          <div style="font-size:11px;letter-spacing:.16em;opacity:.5">{{ lbCount }}</div>
+          <div onClick="{{ closeLb }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
+        </div>
+      </div>
+      <div style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:20px 44px">
+        <div onClick="{{ prevLb }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
+        <div style="flex:1;min-width:0;height:calc(100vh - 210px);display:flex;align-items:center;justify-content:center">
+          <img ref="{{ lbImgRef }}" alt="{{ lbCaption }}" style="max-width:100%;max-height:calc(100vh - 210px);width:auto;height:auto;object-fit:contain">
+        </div>
+        <div onClick="{{ nextLb }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
+      </div>
+      <div style="flex:none;padding:0 118px 30px;display:flex;justify-content:center">
+        <div style="font-size:13px;line-height:1.7;opacity:.7;max-width:760px;text-align:center;text-wrap:pretty">{{ lbCaption }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="position:absolute;top:0;left:0;right:0;height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;z-index:5;pointer-events:none">
+    <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em">Doug Crocco</div>
+    <div style="pointer-events:auto;display:flex;gap:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
+      <span onClick="{{ toWorks }}" style="cursor:pointer;opacity:{{ oWorks }}">Works</span>
+      <span onClick="{{ toExhibits }}" style="cursor:pointer;opacity:{{ oExhibits }}">Exhibits</span>
+      <span onClick="{{ toNews }}" style="cursor:pointer;opacity:{{ oNews }}">News</span>
+      <span onClick="{{ toInfo }}" style="cursor:pointer;opacity:{{ oInfo }}">Info</span>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+const D = () => window.DC || { works: [], series: [], exhibits: [] };
+const PLATE = { position: 'relative', overflow: 'hidden', backgroundColor: '#f1f0ed', boxShadow: 'inset 0 0 0 1px rgba(20,20,20,.13)' };
+const artistOf = c => {
+  if (!c) return '';
+  const first = c.split(',')[0].trim();
+  if (/^installation view/i.test(first)) return 'Installation view';
+  return first;
+};
+const mkRef = (url, onFail) => el => {
+  if (!el || !url || el.getAttribute('src') === url) return;
+  el.style.display = '';
+  el.onerror = () => { el.style.display = 'none'; if (onFail) onFail(url); };
+  el.src = url;
+};
+
+class Component extends DCLogic {
+  state = { colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', broken: {} };
+  markBroken = url => {
+    if (!url || this.state.broken[url]) return;
+    this.setState(s => { const b = Object.assign({}, s.broken); b[url] = 1; return { broken: b }; });
+  };
+
+  preload() {
+    const d = window.DC;
+    if (!d || this._preloaded) return;
+    this._preloaded = true;
+    const urls = [];
+    (d.exhibits || []).forEach(e => {
+      (e.venue_img || []).forEach(u => urls.push(u));
+      if (e.img) urls.push(e.img);
+    });
+    (d.splash || []).forEach(s => { if (s.img) urls.push(s.img); });
+    // warm the cache in the background so prev/next never waits on a fetch
+    urls.forEach(u => { const im = new Image(); im.decoding = 'async'; im.src = u; });
+  }
+
+  stepSeries(n) {
+    const list = (window.DC && window.DC.series) || [];
+    if (!list.length) return;
+    const i = list.findIndex(x => x.name === this.state.series);
+    const next = list[((i < 0 ? 0 : i) + n + list.length) % list.length];
+    this.setState({ series: next.name, sel: 0 });
+  }
+
+  splitCols(items, n) {
+    const cols = []; for (let k = 0; k < n; k++) cols.push([]);
+    items.forEach((it, i) => cols[i % n].push(it));
+    return cols.map((items, i) => ({ items, i }));
+  }
+
+  colsFor(w) { return w <= 768 ? 1 : (w <= 1024 ? 2 : 3); }
+
+  componentDidMount() {
+    this._resize = () => {
+      const n = this.colsFor(window.innerWidth);
+      if (n !== this.state.colCount) this.setState({ colCount: n });
+    };
+    this._resize();
+    window.addEventListener('resize', this._resize);
+    if (window.DC) {
+      this.preload();
+    } else {
+      this._wait = setInterval(() => {
+        if (window.DC) { clearInterval(this._wait); this.preload(); this.forceUpdate(); }
+      }, 120);
+    }
+    this._tick = setInterval(() => {
+      if (this.state.view === 'home') this.setState(s => ({ slide: s.slide + 1 }));
+    }, 5200);
+    this._key = e => {
+      if (this.state.venue) {
+        if (e.key === 'Escape') this.setState({ venue: '' });
+        return;
+      }
+      if (this.state.lb) {
+        if (e.key === 'ArrowRight') this.stepLb(1);
+        if (e.key === 'ArrowLeft') this.stepLb(-1);
+        if (e.key === 'Escape') this.setState({ lb: '' });
+        return;
+      }
+      if (this.state.view !== 'work') return;
+      if (e.key === 'ArrowRight') this.step(1);
+      if (e.key === 'ArrowLeft') this.step(-1);
+      if (e.key === 'Escape') this.setState({ view: 'series' });
+    };
+    window.addEventListener('keydown', this._key);
+  }
+  componentWillUnmount() {
+    clearInterval(this._tick); clearInterval(this._wait);
+    window.removeEventListener('keydown', this._key);
+    window.removeEventListener('resize', this._resize);
+  }
+
+  list() { return D().works.filter(w => w.s === this.state.series); }
+  step(n) {
+    const len = this.list().length || 1;
+    this.setState(s => ({ sel: (s.sel + n + len) % len }));
+  }
+  go(view) { return () => this.setState({ view }); }
+  lbUrls() {
+    const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
+    if (!e) return [];
+    return (e.gal || []).map(g => g.u);
+  }
+  galList() {
+    const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
+    if (!e || !e.gal) return [];
+    return e.gal.filter(g => !this.state.broken[g.u]);
+  }
+  stepLb(n) {
+    const list = this.galList();
+    if (!list.length) return;
+    const i = list.findIndex(g => g.u === this.state.lb);
+    const next = list[((i < 0 ? 0 : i) + n + list.length) % list.length];
+    this.setState({ lb: next.u, lbC: next.c || '' });
+  }
+  openLb(u, c) { return () => this.setState({ lb: u, lbC: c || '' }); }
+  stepExhibit(n) {
+    const list = window.DC ? window.DC.exhibits : [];
+    if (!list.length) return;
+    const i = list.findIndex(e => e.title === this.state.exhibit);
+    const next = list[((i < 0 ? 0 : i) + n + list.length) % list.length];
+    this.setState({ exhibit: next.title, exOpen: false, lb: '', venue: '' });
+    const sc = document.querySelector('[data-live-layer]');
+    if (sc && sc.scrollTop) sc.scrollTop = 0;
+  }
+
+  renderVals() {
+    const d = D();
+    const st = this.state;
+    const view = st.view;
+    const ex = d.exhibits;
+    const slides = (d.splash && d.splash.length) ? d.splash : ex;
+    const si = slides.length ? st.slide % slides.length : 0;
+    const even = si % 2 === 0;
+    const prevI = slides.length ? (si - 1 + slides.length) % slides.length : 0;
+    const cur = slides[si] || {};
+
+    const seriesWorks = d.works.filter(w => w.s === st.series);
+    const w = seriesWorks[st.sel] || {};
+
+    const exhF = st.exhFilter;
+    const exhList = exhF === 'All' ? ex : ex.filter(e => e.kinds.indexOf(exhF) >= 0);
+    const cxI = ex.findIndex(e => e.title === st.exhibit);
+    const cx = ex[cxI] || {};
+    const nAll = d.news || [];
+    const nF = st.newsFilter || 'All';
+    const nList = nF === 'All' ? nAll : nAll.filter(n => n.kind === nF);
+    const lbOpen = view === 'exhibit' && !!st.lb;
+    const paras = cx.paras || [];
+    const p0 = paras[0] || '';
+    const ABBR = /(?:\b(?:Vs|Mr|Mrs|Ms|Dr|St|Ave|Blvd|Inc|Co|Jr|Sr|No|vol|pp|Feb|Sept|Oct|Nov|Dec|Jan|Mar|Apr|Jun|Jul|Aug)|\s[A-Z])\.$/;
+    // first real sentence: long enough and not ending on an abbreviation
+    const firstSentenceOf = t => {
+      const re = /[^.!?]*[.!?]+/g;
+      let m, acc = '';
+      while ((m = re.exec(t))) {
+        acc += m[0];
+        const trimmed = acc.trim();
+        if (trimmed.length >= 40 && !ABBR.test(trimmed)) return trimmed;
+        if (trimmed.length > 320) return trimmed;
+      }
+      return '';
+    };
+    const chunk = t => {
+      const sents = t.match(/[^.!?]+[.!?]+(?:\s|$)/g) || (t.trim() ? [t] : []);
+      const out = [];
+      for (let i = 0; i < sents.length; i += 3) out.push(sents.slice(i, i + 3).join('').trim());
+      return out;
+    };
+    const cut = firstSentenceOf(p0);
+    const lead = cut || p0;
+    // header already shows venue / city / year — drop that tail from the summary
+    const MONTHS = /\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/i;
+    const trimLead = t => {
+      const i = t.indexOf(',');
+      if (i <= 0) return t;
+      const tail = t.slice(i + 1).trim().replace(/\.$/, '');
+      if (!tail) return t;
+      const placeish = /\d{4}/.test(tail) || MONTHS.test(tail) ||
+        (cx.city && tail.indexOf(cx.city) >= 0) ||
+        (cx.venue && tail.indexOf(cx.venue) >= 0) ||
+        /^(?:[A-Z][A-Za-z.]*(?:\s[A-Z][A-Za-z.]*)*)(?:,\s*[A-Z][A-Za-z.]*(?:\s[A-Z][A-Za-z.]*)*)*$/.test(tail);
+      return placeish ? t.slice(0, i).replace(/[.,\s]+$/, '') + '.' : t;
+    };
+    const summary = cx.sum || trimLead(lead);
+    // with a hand-written summary the body keeps every paragraph intact
+    const remainder = cx.sum ? p0 : (cut && p0.indexOf(cut) === 0 ? p0.slice(cut.length).trim() : '');
+    const body = chunk(remainder)
+      .concat(paras.slice(1))
+      .filter(t => t && t.trim().length > 1);
+    const venueCap = [cx.venue, cx.city, cx.y].filter(Boolean).join(', ');
+    const vImgs = (cx.venue_img || []).map(u => ({ u, c: venueCap }));
+    const lbAll = (cx.gal || []).filter(g => !st.broken[g.u]);
+    const restItems = lbAll;
+    const lbI = lbOpen ? lbAll.findIndex(x => x.u === st.lb) : -1;
+    const lbItem = { u: st.lb, c: st.lbC || (lbI >= 0 ? lbAll[lbI].c : '') };
+
+    return {
+      vHome: view === 'home', vWorks: view === 'works', vSeries: view === 'series',
+      vWork: view === 'work', vExhibits: view === 'exhibits', vInfo: view === 'info',
+      vOverview: view === 'overview',
+      vYear: view === 'year',
+      toYear: () => this.setState({ view: 'year' }),
+      wallRef: el => { if (el && !el._wheel) { el._wheel = true; el.addEventListener('wheel', ev => { if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) { el.scrollLeft += ev.deltaY; ev.preventDefault(); } }, { passive: false }); } },
+      yearGroups: (() => {
+        const works = (d.works || []).filter(w => w.y);
+        const years = [];
+        works.forEach(w => { if (years.indexOf(w.y) < 0) years.push(w.y); });
+        years.sort((a, b) => b - a);
+        return years.map(y => {
+          const items = works.filter(w => w.y === y);
+          return {
+            year: String(y),
+            items: items.map((w, i) => ({
+              title: w.t || '',
+              // scale varies with the work's real size so the run reads like a hang
+              style: { cursor: 'pointer', flex: 'none', height: 'min(' + (i % 3 === 0 ? 44 : (i % 3 === 1 ? 32 : 38)) + 'vh, ' + (i % 3 === 0 ? 400 : (i % 3 === 1 ? 290 : 340)) + 'px)' },
+              imgRef: mkRef(w.img, this.markBroken),
+              open: () => {
+                const list = (d.works || []).filter(x => x.s === w.s);
+                this.setState({ view: 'work', series: w.s, sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
+              }
+            }))
+          };
+        });
+      })(),
+      toOverview: () => this.setState({ view: 'overview' }),
+      ovFilters: ['All', 'Drawing', 'Print', 'Sculpture', 'Public'].map(f => ({
+        label: f,
+        pick: () => this.setState({ ovFilter: f }),
+        style: {
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 11,
+          letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
+          opacity: f === (st.ovFilter || 'All') ? 1 : 0.45,
+          borderBottom: '1px solid ' + (f === (st.ovFilter || 'All') ? 'rgba(20,20,20,.85)' : 'transparent')
+        }
+      })),
+      ovColumns: this.splitCols((d.works || [])
+        .filter(w => { const f = st.ovFilter || 'All'; return f === 'All' || (w.k || []).indexOf(f) >= 0; })
+        .slice()
+        .sort((a, b) => (b.y || 0) - (a.y || 0))
+        .map((w, i) => ({
+          title: w.t || '',
+          meta: [(w.k || [])[0] ? (w.k || [])[0].toUpperCase() : '', w.y].filter(Boolean).join(' - '),
+          open: () => {
+            const list = (d.works || []).filter(x => x.s === w.s);
+            this.setState({ view: 'work', series: w.s, sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
+          },
+          imgRef: mkRef(w.img, this.markBroken)
+        })), this.state.colCount || 3),
+      vExhibit: view === 'exhibit',
+      oWorks: (view === 'works' || view === 'series' || view === 'work' || view === 'overview' || view === 'year') ? 1 : 0.5,
+      oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.5,
+      oInfo: view === 'info' ? 1 : 0.5,
+      toHome: this.go('home'), toWorks: () => this.setState({ view: 'works' }),
+      toExhibits: this.go('exhibits'), toInfo: this.go('info'), toContact: this.go('info'),
+      backToSeries: this.go('series'),
+      nextSlide: () => this.setState(s => ({ slide: s.slide + 1 })),
+      prevSlide: () => this.setState(s => ({ slide: s.slide - 1 + slides.length })),
+      openSlideShow: () => { if (cur.title) this.setState({ view: 'exhibit', exhibit: cur.title, exOpen: false, lb: '', venue: '' }); },
+      nextWork: () => this.step(1), prevWork: () => this.step(-1),
+
+      slideA: mkRef((slides[even ? si : prevI] || {}).img),
+      slideB: mkRef((slides[even ? prevI : si] || {}).img),
+      slideAOpacity: even ? 1 : 0,
+      slideBOpacity: even ? 0 : 1,
+      slideTitle: cur.title || '',
+      slideVenue: [cur.venue, cur.y].filter(Boolean).join(', '),
+      slideCount: slides.length ? (si + 1) + ' / ' + slides.length : '',
+
+      workCount: d.works.length,
+      seriesCount: d.series.length,
+      seriesColumns: (() => {
+        const items = d.series.map(x => ({
+          name: x.name,
+          open: () => this.setState({ view: 'series', series: x.name, sel: 0 }),
+          imgRef: mkRef(x.cover, this.markBroken)
+        }));
+        return this.splitCols(items, this.state.colCount >= 2 ? 2 : 1);
+      })(),
+      seriesWorkColumns: (() => {
+        const items = seriesWorks.map((it, i) => ({
+          title: it.t,
+          open: () => this.setState({ view: 'work', sel: i }),
+          imgRef: mkRef(it.img, this.markBroken)
+        }));
+        return this.splitCols(items, this.state.colCount >= 2 ? 2 : 1);
+      })(),
+      prevSeries: () => this.stepSeries(-1),
+      nextSeries: () => this.stepSeries(1),
+      curSeries: st.series || '',
+      wImgRef: mkRef(w.img),
+      wTitle: w.t || '', wYear: w.y ? String(w.y) : '',
+      wMedium: w.m || '', wDims: w.d || '', wSeries: st.series || 'Works',
+      wCaption: [w.t, w.y, w.m, w.d].filter(Boolean).join(', '),
+      wPos: seriesWorks.length ? (st.sel + 1) + ' of ' + seriesWorks.length : '',
+
+      exhFilters: ['All', 'Solo', 'Group', 'Curated'].map(f => ({
+        label: f,
+        pick: () => this.setState({ exhFilter: f }),
+        style: {
+          cursor: 'pointer', fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase',
+          paddingBottom: 4, opacity: f === exhF ? 1 : 0.45,
+          borderBottom: '1px solid ' + (f === exhF ? 'rgba(20,20,20,.85)' : 'transparent')
+        }
+      })),
+      vNews: view === 'news',
+      oNews: view === 'news' ? 1 : 0.5,
+      toNews: this.go('news'),
+      newsLabel: 'News',
+      newsFilters: ['All', 'Press', 'Event'].map(f => ({
+        label: f === 'Event' ? 'Events' : f,
+        pick: () => this.setState({ newsFilter: f }),
+        style: {
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 11,
+          letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
+          opacity: f === nF ? 1 : 0.45,
+          borderBottom: '1px solid ' + (f === nF ? 'rgba(20,20,20,.85)' : 'transparent')
+        }
+      })),
+      newsList: nList.map(n => ({
+        title: n.title, year: n.y, url: n.url || '#',
+        linkLabel: n.url ? (n.url.indexOf('.pdf') > 0 ? 'PDF' : 'Read') : '',
+        imgRef: mkRef(n.img, this.markBroken)
+      })),
+      infoBgRef: mkRef('https://allart.la/artwork/uploads/2019/02/19-1.jpg'),
+      infoBgRef2: mkRef('https://allart.la/artwork/uploads/2014/10/PB3.jpg'),
+      onContactSubmit: e => {
+        e.preventDefault();
+        const f = e.target;
+        const from = (f.email && f.email.value) || '';
+        const msg = (f.message && f.message.value) || '';
+        window.location.href = 'mailto:doug@allart.la?subject=' + encodeURIComponent('Website enquiry') +
+          '&body=' + encodeURIComponent(msg + (from ? '\n\nFrom: ' + from : ''));
+      },
+      cvSections: (d.cv || []).map(sec => ({
+        h: sec.h,
+        items: (sec.items || []).map(r => ({ y: r.y, t: r.t, v: r.v ? '  ·  ' + r.v : '' }))
+      })),
+      exhibitLabel: 'Exhibitions · ' + exhList.length + (exhF === 'All' ? '' : ' ' + exhF.toLowerCase()) + ' · 2005 – 2024',
+      exhibits: exhList.map(e => ({
+        year: e.y ? String(e.y) : '', title: e.title,
+        venue: [e.venue, e.city].filter(Boolean).join(', '),
+        kind: e.kinds.join(' · '),
+        open: () => this.setState({ view: 'exhibit', exhibit: e.title, exOpen: false, lb: '', venue: '' }),
+        imgRef: mkRef(e.img),
+        plateStyle: Object.assign({ aspectRatio: '16 / 10' }, PLATE)
+      })),
+
+      exTitle: cx.title || '',
+      exVenue: cx.venue || '',
+      exYear: cx.y ? String(cx.y) : '',
+      exKind: (cx.kinds || []).join(' · '),
+      exHeroRef: mkRef(cx.img),
+      exHeroStyle: Object.assign({ aspectRatio: '16 / 10' }, PLATE),
+      exPlaceDate: [cx.city, cx.y].filter(Boolean).join(' · '),
+      exPos: cxI >= 0 ? (cxI + 1) + ' / ' + ex.length : '',
+      prevExhibit: () => this.stepExhibit(-1),
+      nextExhibit: () => this.stepExhibit(1),
+      exScrollRef: el => { this._exScroll = el; },
+      exGridRef: el => { this._exGrid = el; },
+      exUrl: cx.url || '',
+      exUrlLabel: cx.urlLabel || 'Gallery website',
+      exHasUrl: !!cx.url,
+      exPdf: cx.pdf || '',
+      exHasPdf: !!cx.pdf,
+      exSummary: summary,
+      exSummaryParas: String(summary).split(/\n{2,}/).map((t, i) => ({ text: t.trim(), i })).filter(p => p.text),
+      exAllParas: body.map((t, i) => ({ text: t, i })),
+      exHasMore: body.length > 0,
+      exExpanded: !!st.exOpen,
+      exMoreLabel: st.exOpen ? 'Less' : 'See more',
+      toggleExText: () => this.setState(x => ({ exOpen: !x.exOpen }), () => {
+        if (this.state.exOpen) return;
+        const sc = this._exScroll, g = this._exGrid;
+        if (!sc || !g) return;
+        requestAnimationFrame(() => {
+          const top = g.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop;
+          sc.scrollTo({ top: Math.max(0, top - 12), behavior: 'smooth' });
+        });
+      }),
+      exVenueImgs: vImgs.map(v => ({
+        imgRef: mkRef(v.u),
+        open: () => this.setState({ venue: v.u }),
+        wrapStyle: { cursor: 'pointer', width: (cx.vw || 340) + 'px', maxWidth: '100%', display: 'flex', flexDirection: 'column', gap: 8 },
+        boxStyle: { width: '100%', overflow: 'hidden', background: '#f6f5f2' }
+      })),
+      vVenue: view === 'exhibit' && !!st.venue,
+      venueImgRef: el => { if (el && st.venue) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== st.venue) el.src = st.venue; } },
+      venueCaption: venueCap,
+      closeVenue: () => this.setState({ venue: '' }),
+      exColumns: (() => {
+        const items = restItems.map((g, i) => ({
+          caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
+          open: this.openLb(g.u, g.c)
+        }));
+        const n = this.state.colCount || 3;
+        const cols = []; for (let k = 0; k < n; k++) cols.push([]);
+        items.forEach((it, i) => cols[i % n].push(it));
+        return cols.map((items, i) => ({ items, i }));
+      })(),
+      exGallery: lbAll.map((g, i) => ({
+        caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
+        open: this.openLb(g.u, g.c),
+        plateStyle: Object.assign({ aspectRatio: '1 / 1' }, PLATE)
+      })),
+
+      vLightbox: lbOpen,
+      lbImgRef: el => { if (el && lbItem.u) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== lbItem.u) el.src = lbItem.u; } },
+      lbCaption: lbItem.c || '',
+      lbShow: cx.title ? cx.title + (cx.venue ? ', ' + cx.venue : '') + (cx.y ? ', ' + cx.y : '') : '',
+      lbCount: lbOpen && lbI >= 0 ? (lbI + 1) + ' / ' + lbAll.length : '',
+      lbDebug: '',
+      closeLb: () => this.setState({ lb: '', lbC: '' }),
+      nextLb: () => this.stepLb(1),
+      prevLb: () => this.stepLb(-1)
+    };
+  }
+}
+
+</script>
+</body>
+</html>
