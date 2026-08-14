@@ -13,6 +13,7 @@
   a { color:#141414; text-decoration:none; }
   a:hover { text-decoration:none; color:#000000; }
   x-dc:not(:defined) [data-live-layer] { display:none !important; }
+  [data-r~="taphalf"], [data-r~="fullarrow"] { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; }
   @media only screen and (max-width: 900px) {
     [data-r~="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
@@ -37,9 +38,8 @@
     [data-r~="gut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="fullarrow"] { display:none !important; }
-    [data-r~="taphalf"] { display:block !important; }
+    [data-r~="fullpad"] { min-height:calc(100dvh - 40px) !important; }
     [data-r~="fullpad"] { padding-bottom:20px !important; }
-    [data-r~="taphalf"] { display:block !important; }
     [data-r~="arrowgut"] { align-items:center !important; min-height:calc(100dvh - 300px) !important; }
     [data-r~="navlinks"] { display: none !important; }
     [data-r~="navburger"] { display: flex !important; }
@@ -284,9 +284,14 @@
               <div style="{{ exFadeStyle }}"></div>
             </sc-if>
           </div>
-          <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
-            <div onClick="{{ toggleExText }}" style="display:inline-block;cursor:pointer;margin-top:20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
-          </sc-if>
+          <div style="display:flex;align-items:flex-end;gap:30px;margin-top:20px;max-width:1760px">
+            <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ toggleExText }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+            </sc-if>
+            <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
+            </sc-if>
+          </div>
               <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:20px">
                   <sc-if value="{{ exHasPress }}" hint-placeholder-val="{{ false }}">
@@ -312,9 +317,6 @@
           <div style="border-bottom:1px dotted rgba(20,20,20,.45);margin-top:34px"></div>
         </div>
       <div ref="{{ viewsRowRef }}" style="display:flex;align-items:center;gap:30px;max-width:1760px;padding:0 0 20px">
-        <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
-          <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
-        </sc-if>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <div onClick="{{ setFullMode }}" style="{{ fullBtnStyle }}">
             <svg width="17" height="13" viewBox="0 0 17 13" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="0.65" y="0.65" width="15.7" height="11.7"></rect></svg>
@@ -329,23 +331,15 @@
           <div style="position:relative">
             <div ref="{{ fullSwipeRef }}" data-r="arrowgut" style="padding:0 46px;display:flex;align-items:flex-start;justify-content:center;min-height:340px">
               <div style="display:inline-flex;flex-direction:column;align-items:center;max-width:100%">
-                <div style="position:relative;max-width:100%">
-                  <div style="position:relative;max-width:100%">
-                  <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:min(calc(100dvh - 250px), 74vh);width:auto;height:auto;object-fit:contain">
-                  <div onClick="{{ prevFull }}" data-r="taphalf" style="display:none;position:absolute;left:0;top:0;bottom:0;width:50%;cursor:pointer"></div>
-                  <div onClick="{{ nextFull }}" data-r="taphalf" style="display:none;position:absolute;right:0;top:0;bottom:0;width:50%;cursor:pointer"></div>
-                </div>
-                  <div onClick="{{ prevFull }}" data-r="taphalf" style="display:none;position:absolute;left:0;top:0;bottom:0;width:50%;cursor:pointer"></div>
-                  <div onClick="{{ nextFull }}" data-r="taphalf" style="display:none;position:absolute;right:0;top:0;bottom:0;width:50%;cursor:pointer"></div>
-                </div>
+                <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:min(calc(100dvh - 250px), 74vh);width:auto;height:auto;object-fit:contain">
                 <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
                   <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
                 </sc-if>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:min(80ch,100%);padding-top:14px">{{ fullCaption }}</div>
               </div>
             </div>
-            <div onClick="{{ prevFull }}" data-r="fullarrow" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
-            <div onClick="{{ nextFull }}" data-r="fullarrow" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</div>
+            <div onClick="{{ prevFull }}" data-r="fullarrow" style="position:absolute;left:0;top:calc(min(calc(100dvh - 250px), 74vh) / 2);transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
+            <div onClick="{{ nextFull }}" data-r="fullarrow" style="position:absolute;right:0;top:calc(min(calc(100dvh - 250px), 74vh) / 2);transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</div>
           </div>
           <div style="text-align:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;color:#9c9ca0;padding-top:8px">{{ fullCount }}</div>
         </div>
@@ -663,14 +657,34 @@ class Component extends DCLogic {
     const d = window.DC;
     if (!d || this._preloaded) return;
     this._preloaded = true;
-    const urls = [];
+    // splash first — those are the images a visitor can step through immediately,
+    // and they used to queue behind every exhibit thumbnail
+    const first = [], rest = [];
+    (d.splash || []).forEach(s => { if (s.img) first.push(s.img); });
     (d.exhibits || []).forEach(e => {
-      (e.venue_img || []).forEach(u => urls.push(u));
-      if (e.img) urls.push(e.img);
+      (e.venue_img || []).forEach(u => rest.push(u));
+      if (e.img) rest.push(e.img);
     });
-    (d.splash || []).forEach(s => { if (s.img) urls.push(s.img); });
-    // warm the cache in the background so prev/next never waits on a fetch
-    urls.forEach(u => { const im = new Image(); im.decoding = 'async'; im.src = u; });
+    this.warm(first);
+    setTimeout(() => this.warm(rest), 400);
+  }
+
+  warmNear(i) {
+    const sl = (window.DC && window.DC.splash) || [];
+    if (!sl.length) return;
+    const at = ((i % sl.length) + sl.length) % sl.length;
+    this.warm([(sl[at] || {}).img]);
+  }
+
+  warm(urls) {
+    this._warmed = this._warmed || {};
+    (urls || []).forEach(u => {
+      if (!u || this._warmed[u]) return;
+      this._warmed[u] = 1;
+      const im = new Image();
+      im.decoding = 'async';
+      im.src = u;
+    });
   }
 
   stepSeries(n) {
@@ -887,7 +901,6 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this._key);
     window.removeEventListener('resize', this._resize);
     window.removeEventListener('hashchange', this._hashNav);
-    clearInterval(this._hold);
   }
 
   list() { return D().works.filter(w => w.s === this.state.series); }
@@ -949,24 +962,9 @@ class Component extends DCLogic {
         const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
         box.scrollTop = from + dist * e;
         if (p < 1) this._glide = requestAnimationFrame(step);
-        else this.holdLanding(target, offset || 0);
       };
       this._glide = requestAnimationFrame(step);
     }));
-  }
-
-  // images above the target finish loading after the glide and push it down —
-  // re-assert the landing for a beat so it settles where it was aimed
-  holdLanding(target, offset) {
-    const box = this._exScroll;
-    if (!box || !target) return;
-    clearInterval(this._hold);
-    const t0 = performance.now();
-    this._hold = setInterval(() => {
-      if (!box.isConnected || performance.now() - t0 > 1600) { clearInterval(this._hold); return; }
-      const to = Math.max(0, target.offsetTop - offset);
-      if (Math.abs(box.scrollTop - to) > 2) box.scrollTop = to;
-    }, 120);
   }
 
   openFullAt(u) {
@@ -1228,8 +1226,8 @@ class Component extends DCLogic {
       toExhibits: this.go('exhibits'), toInfo: this.go('info'), toContact: this.go('info'),
       backToSeries: () => this.setState({ view: st.workFrom || 'series' }),
       wBackLabel: st.workFrom === 'overview' ? 'Overview' : (st.workFrom === 'year' ? 'By year' : (st.series || 'Works')),
-      nextSlide: () => this.setState(s => ({ slide: s.slide + 1 })),
-      prevSlide: () => this.setState(s => ({ slide: s.slide - 1 + slides.length })),
+      nextSlide: () => { this.warmNear(si + 2); this.setState(s => ({ slide: s.slide + 1 })); },
+      prevSlide: () => { this.warmNear(si - 2); this.setState(s => ({ slide: s.slide - 1 + slides.length })); },
       openSlideShow: () => { if (cur.title) this.openExhibit(cur.title); },
       nextWork: () => this.step(1), prevWork: () => this.step(-1),
 
@@ -1407,7 +1405,15 @@ class Component extends DCLogic {
       exCollapsedParas: (() => {
         const sp = String(summary).split(/\n{2,}/).map(t => t.trim()).filter(Boolean);
         const all = sp.concat(body);
-        const cutAt = rosterAt >= 0 ? rosterAt : (cx.sum ? sp.length : -1);
+        // cut on a paragraph boundary: roster, else the paragraph that fills the
+        // column beside the venue photograph (never mid-sentence, never a fade)
+        let cutAt = rosterAt;
+        if (cutAt < 0) {
+          const target = st.phone ? 560 : 700;
+          let acc = 0, k = 0;
+          while (k < all.length && acc < target) { acc += all[k].length; k++; }
+          cutAt = (k < all.length) ? k : -1;
+        }
         const keep = (!st.exOpen && cutAt >= 0) ? all.slice(0, cutAt) : all;
         return keep.map((t, i) => ({ text: t, i }));
       })(),
@@ -1417,10 +1423,8 @@ class Component extends DCLogic {
       exVenueColStyle: st.phone
         ? { float: 'none', width: '100%', margin: '0 0 24px' }
         : { float: 'right', width: 'clamp(240px, 26vw, 320px)', margin: '6px 0 26px 52px' },
-      exCopyWrapStyle: (st.exOpen || !body.length || rosterAt >= 0 || !!cx.sum)
-        ? { position: 'relative' }
-        : { position: 'relative', maxHeight: (st.phone ? 690 : (st.colCount === 3 ? 434 : 334)), overflow: 'hidden' },
-      exCollapsedFade: !st.exOpen && body.length > 0 && rosterAt < 0 && !cx.sum,
+      exCopyWrapStyle: { position: 'relative' },
+      exCollapsedFade: false,
       exFadeStyle: {
         position: 'absolute', left: 0, bottom: 0, height: st.phone ? 56 : 120, pointerEvents: 'none',
         right: st.phone ? 0 : 'calc(clamp(240px, 26vw, 320px) + 52px)',
