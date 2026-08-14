@@ -18,8 +18,6 @@
   }
   @media only screen and (max-width: 1024px) {
     [data-r="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
-    [data-r="exhdr"] { grid-template-columns: minmax(0,1fr) minmax(180px,280px) !important; gap: 24px !important; }
-    [data-r="venuecol"] > * { width: 100% !important; }
   }
   @media only screen and (max-width: 768px) {
     [data-r="galcols"], [data-r="feature"], [data-r="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
@@ -28,11 +26,14 @@
     [data-r="infotint"] { width: 100% !important; }
     [data-r="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
   }
+  @media only screen and (max-width: 900px) {
+    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) minmax(180px,240px) !important; gap: 30px !important; }
+  }
   @media only screen and (max-width: 640px) {
+    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r="venuecol"] { justify-content: flex-start !important; }
     [data-r="navlinks"] { display: none !important; }
     [data-r="navburger"] { display: flex !important; }
-    [data-r="exhdr"] { display: flex !important; flex-direction: column !important; }
-    [data-r="venuecol"] { justify-content: flex-start !important; }
   }
   ::-webkit-scrollbar { width:0; height:0; }
   * { scrollbar-width:none; -ms-overflow-style:none; }
@@ -70,6 +71,9 @@
         <div style="color:#b4b4b6">/</div>
         <div onClick="{{ toOverview }}" style="cursor:pointer;color:#9a9a9c">Overview</div>
       </div>
+      <div style="max-width:62ch;padding:0 0 44px">
+        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.7;color:#2a2a2b;text-wrap:pretty">{{ statement }}</div>
+      </div>
       <div data-r="w2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1500px;padding:6px 0 0">
         <sc-for list="{{ seriesColumns }}" as="col" hint-placeholder-count="2">
           <div style="display:flex;flex-direction:column;gap:30px">
@@ -96,6 +100,11 @@
           <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5c5c5e">→</div>
         </div>
       </div>
+      <sc-if value="{{ hasSeriesNote }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:60ch;padding:0 0 38px">
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;color:#3c3c3d;text-wrap:pretty">{{ seriesNote }}</div>
+        </div>
+      </sc-if>
       <div data-r="w2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1500px;padding:6px 0 0">
         <sc-for list="{{ seriesWorkColumns }}" as="col" hint-placeholder-count="2">
           <div style="display:flex;flex-direction:column;gap:30px">
@@ -175,18 +184,18 @@
   <sc-if value="{{ vWork }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">← {{ wSeries }}</div>
+        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5c5c5e;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414">← {{ wBackLabel }}</div>
         <div style="display:flex;align-items:center;gap:26px">
-          <div onClick="{{ toContact }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Enquire</div>
-          <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
+          <div onClick="{{ toContact }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Enquire</div>
+          <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 0 14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Close</div>
         </div>
       </div>
       <div style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
-        <div onClick="{{ prevWork }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
+        <div onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
         <div style="flex:1;min-width:0;height:calc(100vh - 210px);display:flex;align-items:center;justify-content:center">
           <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:calc(100vh - 210px);width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
         </div>
-        <div onClick="{{ nextWork }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
+        <div onClick="{{ nextWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
       </div>
       <div style="flex:none;padding:0 118px 30px;display:flex;justify-content:center">
         <div style="font-size:13px;line-height:1.7;opacity:.7;max-width:760px;text-align:center;text-wrap:pretty">{{ wCaption }}</div>
@@ -232,35 +241,39 @@
           <div onClick="{{ nextExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">→</div>
         </div>
       </div>
-      <div style="max-width:1760px;padding:0 0 30px">
-        <div data-r="exhdr" style="display:grid;grid-template-columns:minmax(0,1.3fr) auto;grid-template-areas:'title venue' 'summary venue';gap:22px 56px;align-items:start">
-          <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(28px,2.7vw,46px);letter-spacing:.045em;text-transform:uppercase;line-height:1.14;font-weight:400;max-width:24ch;text-wrap:balance;color:#1a1a1c">{{ exTitle }}</div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;font-weight:500;letter-spacing:.01em;color:#2e2e30;margin-top:16px">{{ exVenue }}</div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#8c8c8e;margin-top:5px">{{ exPlaceDate }}</div>
+        <div style="{{ exTitleBlockStyle }}">
+          <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(26px,2.4vw,42px);letter-spacing:.04em;text-transform:uppercase;line-height:1.16;font-weight:400;max-width:min(100%,44ch);text-wrap:balance;color:#1a1a1c">{{ exTitle }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;font-weight:500;letter-spacing:.01em;color:#2e2e30;margin-top:14px">{{ exVenue }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#8c8c8e;margin-top:5px">{{ exPlaceDate }}</div>
+        </div>
+        <sc-if value="{{ exHasHero }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ heroFrameStyle }}">
+            <img ref="{{ heroImgRef }}" alt="{{ exTitle }}" style="display:block;width:100%;height:100%;object-fit:cover">
           </div>
-          <div data-r="venuecol" style="grid-area:venue;display:flex;justify-content:flex-end;align-items:flex-start">
-            <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
-              <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
-                <div style="{{ v.boxStyle }}">
-                  <img ref="{{ v.imgRef }}" alt="" style="display:block;width:100%;height:auto">
+        </sc-if>
+        <div ref="{{ pressBlockRef }}" style="max-width:1760px;padding:0 0 30px">
+          <div ref="{{ pressRowRef }}" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8c8c8e;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:30px">Press release</div>
+          <div data-r="herocopy" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,320px);gap:52px;align-items:start">
+            <div style="display:flex;flex-direction:column;gap:18px;max-width:70ch">
+              <sc-for list="{{ exSummaryParas }}" as="p" hint-placeholder-count="2">
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty">{{ p.text }}</div>
+              </sc-for>
+              <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleExText }}" style="cursor:pointer;align-self:flex-start;margin-top:4px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+              </sc-if>
+            </div>
+            <div data-r="venuecol" style="display:flex;justify-content:flex-end;align-items:flex-start">
+              <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
+                <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
+                  <div style="{{ v.boxStyle }}">
+                    <img ref="{{ v.imgRef }}" alt="" style="display:block;width:100%;height:auto">
+                  </div>
                 </div>
-              </div>
-            </sc-for>
-          </div>
-          <div data-r="exsummary" style="grid-area:summary">
-            <div style="display:flex;flex-direction:column;gap:14px;max-width:52ch">
-              <sc-for list="{{ exSummaryParas }}" as="p" hint-placeholder-count="1">
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#4a4a4c;text-wrap:pretty">{{ p.text }}</div>
               </sc-for>
             </div>
-            <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ toggleExText }}" style="cursor:pointer;display:inline-block;margin-top:18px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
-            </sc-if>
           </div>
+          <div style="border-bottom:1px dotted rgba(20,20,20,.45);margin-top:34px"></div>
         </div>
-        <div style="border-bottom:1px dotted rgba(20,20,20,.45);margin-top:26px"></div>
-      </div>
       <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:1760px;padding:6px 0 44px;display:flex;flex-direction:column;gap:20px">
           <sc-for list="{{ exAllParas }}" as="p" hint-placeholder-count="3">
@@ -306,11 +319,14 @@
       <sc-if value="{{ exFullMode }}" hint-placeholder-val="{{ true }}">
         <div style="max-width:1760px;padding:0 0 56px">
           <div style="position:relative">
-            <div onClick="{{ openFull }}" style="cursor:pointer;padding:0 46px;display:flex;align-items:center;justify-content:center;height:calc(100vh - 180px);min-height:420px">
+            <div ref="{{ fullSwipeRef }}" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:calc(100vh - 180px);min-height:420px">
               <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain">
+              <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#b4b4b6">Image unavailable</div>
+              </sc-if>
             </div>
-            <div onClick="{{ prevFull }}" style="position:absolute;left:0;top:50%;transform:translateY(-50%);cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❮</div>
-            <div onClick="{{ nextFull }}" style="position:absolute;right:0;top:50%;transform:translateY(-50%);cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❯</div>
+            <div onClick="{{ prevFull }}" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❮</div>
+            <div onClick="{{ nextFull }}" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❯</div>
           </div>
           <div style="display:flex;justify-content:center;gap:20px;padding:16px 56px 0">
             <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:80ch">{{ fullCaption }}</div>
@@ -324,7 +340,10 @@
           <div style="display:flex;flex-direction:column;gap:22px">
             <sc-for list="{{ col.items }}" as="g" hint-placeholder-count="3">
               <div onClick="{{ g.open }}" style="cursor:pointer">
-                <div style="background:#f6f5f2">
+                <div style="{{ g.boxStyle }}">
+                  <sc-if value="{{ g.missing }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#b4b4b6">Image unavailable</div>
+                  </sc-if>
                   <img ref="{{ g.imgRef }}" alt="{{ g.caption }}" style="display:block;width:100%;height:auto">
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#6b6b6d;padding:9px 0 0;text-align:center">{{ g.artist }}</div>
@@ -333,6 +352,7 @@
           </div>
         </sc-for>
       </div>
+      </sc-if>
     </div>
   </sc-if>
 
@@ -352,6 +372,36 @@
           </a>
         </sc-for>
       </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vSearch }}" hint-placeholder-val="{{ false }}">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 26px 80px">
+      <form onSubmit="{{ onSearchSubmit }}" style="max-width:560px;padding:6px 0 0">
+        <input ref="{{ searchPageRef }}" type="search" placeholder="Search works, exhibitions, press" onInput="{{ onSearchInput }}" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:20px;letter-spacing:.02em;color:#141414;width:100%;box-sizing:border-box;padding:0 0 11px;border:none;border-bottom:1px solid rgba(20,20,20,.4);background:transparent;border-radius:0;outline:none">
+      </form>
+      <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;padding:16px 0 0">{{ searchStatus }}</div>
+          <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
+            <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
+              <div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;margin-bottom:14px">{{ g.label }}</div>
+                <div data-r="galcols" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 18px;align-items:start">
+                  <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
+                    <div onClick="{{ r.open }}" style="cursor:pointer">
+                      <div style="background:#f6f5f2">
+                        <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
+                      </div>
+                      <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
+                      <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#9a9a9c;padding:2px 0 0">{{ r.meta }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
       </sc-if>
     </div>
   </sc-if>
@@ -364,6 +414,9 @@
         <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-18px;width:50%;height:calc(100% + 48px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
         <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:40px 0 0;align-items:start">
         <div>
+          <div style="width:190px;margin:0 0 24px;background:#f2f1ee">
+            <img ref="{{ portraitRef }}" alt="Doug Crocco" style="display:block;width:100%;height:auto">
+          </div>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:16px;line-height:1.72;letter-spacing:.004em;color:#2a2a2b;max-width:56ch;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks.</div>
         </div>
         <div style="padding-top:3px">
@@ -378,10 +431,50 @@
           <div style="margin-top:26px">
             <a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
           </div>
+          <div style="margin-top:34px;max-width:400px">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:14px">Enquire</div>
+            <form onSubmit="{{ onContactSubmit }}" style="display:flex;flex-direction:column;gap:10px">
+              <input type="email" name="email" placeholder="Your email" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none">
+              <textarea name="message" rows="4" placeholder="Message" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.55;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none;resize:vertical"></textarea>
+              <div style="display:flex;align-items:center;gap:16px">
+                <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:rgba(255,255,255,.9);border:1px solid rgba(20,20,20,.45);padding:10px 22px;cursor:pointer;border-radius:0">Send</button>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;color:#9a9a9c">Opens in your mail app</div>
+              </div>
+            </form>
+          </div>
         </div>
         </div>
       </div>
 
+
+      <div style="max-width:1500px;padding:70px 44px 0">
+        <form onSubmit="{{ onSearchSubmit }}" style="max-width:560px">
+          <input ref="{{ searchInputRef }}" type="search" placeholder="Search works, exhibitions, press" onInput="{{ onSearchInput }}" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:20px;letter-spacing:.02em;color:#141414;width:100%;box-sizing:border-box;padding:0 0 11px;border:none;border-bottom:1px solid rgba(20,20,20,.4);background:transparent;border-radius:0;outline:none">
+        </form>
+        <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;padding:16px 0 0">{{ searchStatus }}</div>
+            <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
+              <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
+                <div>
+                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;margin-bottom:14px">{{ g.label }}</div>
+                  <div data-r="galcols" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 20px;align-items:start">
+                    <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
+                      <div onClick="{{ r.open }}" style="cursor:pointer">
+                        <div style="background:#f6f5f2">
+                          <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
+                        </div>
+                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
+                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#9a9a9c;padding:2px 0 0">{{ r.meta }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
       <div data-r="c2" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
         <div style="display:flex;flex-direction:column;gap:44px">
           <div style="grid-area:title">
@@ -411,6 +504,10 @@
               2016 &nbsp;<em>Slamdance DIG 2</em><br>
               2015 &nbsp;<em>Slamdance DIG</em><br>
               2012 &nbsp;<em>NeoNatural</em>, Steve Turner Contemporary, Los Angeles, CA
+            </div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.75;color:#5c5c5e;margin-top:16px;max-width:52ch;text-wrap:pretty">Big Pictures Los Angeles was a project space in mid-city Los Angeles, founded in 2014 to show underserved mid-career artists, present new forms of digital media, and collaborate with artists in Miami and New York. It was part of a cluster of galleries that opened on Washington Blvd around 2015 — Hilde, Kamra International, Park View, Kristina Kite, Ochi Projects, Shoot the Lobster, Michael Thibault and The Underground Museum. It closed in 2020.</div>
+            <div style="margin-top:14px">
+              <a href="https://www.bigpictures.la" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">bigpictures.la</a>
             </div>
           </div>
           <div style="grid-area:title">
@@ -481,28 +578,6 @@
     </div>
   </sc-if>
 
-  <sc-if value="{{ vLightbox }}" hint-placeholder-val="{{ false }}">
-    <div ref="{{ lbSwipeRef }}" data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ lbShow }}</div>
-        <div style="display:flex;align-items:center;gap:26px">
-          <div style="font-size:11px;letter-spacing:.16em;opacity:.5">{{ lbCount }}</div>
-          <div onClick="{{ closeLb }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
-        </div>
-      </div>
-      <div style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:20px 44px">
-        <div onClick="{{ prevLb }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
-        <div style="flex:1;min-width:0;height:calc(100vh - 210px);display:flex;align-items:center;justify-content:center">
-          <img ref="{{ lbImgRef }}" alt="{{ lbCaption }}" style="max-width:100%;max-height:calc(100vh - 210px);width:auto;height:auto;object-fit:contain">
-        </div>
-        <div onClick="{{ nextLb }}" style="cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
-      </div>
-      <div style="flex:none;padding:0 118px 30px;display:flex;justify-content:center">
-        <div style="font-size:13px;line-height:1.7;opacity:.7;max-width:760px;text-align:center;text-wrap:pretty">{{ lbCaption }}</div>
-      </div>
-    </div>
-  </sc-if>
-
   <div style="{{ navStyle }}">
     <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap">Doug Crocco</div>
     <div data-r="navlinks" style="pointer-events:auto;display:flex;gap:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
@@ -528,7 +603,8 @@
         <div onClick="{{ toWorksMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Works</div>
         <div onClick="{{ toExhibitsMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Exhibits</div>
         <div onClick="{{ toNewsMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">News</div>
-        <div onClick="{{ toInfoMenu }}" style="cursor:pointer;padding:12px 0">Info</div>
+        <div onClick="{{ toInfoMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Info</div>
+        <div onClick="{{ toSearchMenu }}" style="cursor:pointer;padding:12px 0">Search</div>
       </div>
     </div>
   </sc-if>
@@ -547,19 +623,16 @@ const artistOf = c => {
 };
 const mkRef = (url, onFail) => el => {
   if (!el || !url) return;
-  el.onload = () => { el.style.display = ''; };
-  el.onerror = () => { el.style.display = 'none'; if (onFail) onFail(url); };
-  if (el.getAttribute('src') === url) {
-    // already pointed here — re-show it if a previous attempt hid it
-    if (el.complete && el.naturalWidth > 0) el.style.display = '';
-    return;
-  }
-  el.style.display = '';
+  el.onload = () => { el.style.visibility = ''; };
+  // keep the element in the layout so nothing disappears from a gallery
+  el.onerror = () => { el.style.visibility = 'hidden'; if (onFail) onFail(url); };
+  if (el.getAttribute('src') === url) return;
+  el.style.visibility = '';
   el.src = url;
 };
 
 class Component extends DCLogic {
-  state = { colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', broken: {} };
+  state = { q: '', colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', broken: {} };
   markBroken = url => {
     if (!url || this.state.broken[url]) return;
     this.setState(s => { const b = Object.assign({}, s.broken); b[url] = 1; return { broken: b }; });
@@ -617,10 +690,15 @@ class Component extends DCLogic {
         if (e.key === 'Escape') this.setState({ venue: '' });
         return;
       }
-      if (this.state.lb) {
-        if (e.key === 'ArrowRight') this.stepLb(1);
-        if (e.key === 'ArrowLeft') this.stepLb(-1);
-        if (e.key === 'Escape') this.setState({ lb: '' });
+      if (this.state.view === 'exhibit' && this.state.exMode === 'full') {
+        if (e.key === 'ArrowRight') this.stepFull(1);
+        if (e.key === 'ArrowLeft') this.stepFull(-1);
+        return;
+      }
+      if (this.state.view === 'work') {
+        if (e.key === 'ArrowRight') this.step(1);
+        if (e.key === 'ArrowLeft') this.step(-1);
+        if (e.key === 'Escape') this.setState({ view: this.state.workFrom || 'series' });
         return;
       }
       if (this.state.view !== 'work') return;
@@ -642,23 +720,6 @@ class Component extends DCLogic {
     this.setState(s => ({ sel: (s.sel + n + len) % len }));
   }
   go(view) { return () => this.setState({ view }); }
-  lbUrls() {
-    const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
-    if (!e) return [];
-    return (e.gal || []).map(g => g.u);
-  }
-  galList() {
-    const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
-    if (!e || !e.gal) return [];
-    return e.gal.filter(g => !this.state.broken[g.u]);
-  }
-  stepLb(n) {
-    const list = this.galList();
-    if (!list.length) return;
-    const i = list.findIndex(g => g.u === this.state.lb);
-    const next = list[((i < 0 ? 0 : i) + n + list.length) % list.length];
-    this.setState({ lb: next.u, lbC: next.c || '' });
-  }
   attachSwipe(el, onSwipe) {
     if (!el || el._swipe) return;
     el._swipe = true;
@@ -670,6 +731,9 @@ class Component extends DCLogic {
       const t = ev.changedTouches[0];
       const dx = t.clientX - x0, dy = t.clientY - y0;
       if (Date.now() - t0 < 600 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+        el._swiped = true;
+        clearTimeout(el._swipedT);
+        el._swipedT = setTimeout(() => { el._swiped = false; }, 400);
         onSwipe(dx < 0 ? 1 : -1);
       }
     }, { passive: true });
@@ -677,12 +741,15 @@ class Component extends DCLogic {
 
 
   openExhibit(title) {
-    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFull: 0, exInfoHidden: false });
+    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFullU: '', exInfoHidden: false });
   }
 
   setViewMode(mode) {
-    this.setState({ exMode: mode, exFull: 0, exInfoHidden: true }, () => this.scrollToViews());
+    const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
+    const first = e && e.gal ? e.gal[0] : null;
+    this.setState({ exMode: mode, exFullU: first ? first.u : '', exInfoHidden: true }, () => this.scrollToViews());
   }
+
 
   scrollToViews() {
     const box = this._exScroll, row = this._viewsRow;
@@ -700,18 +767,19 @@ class Component extends DCLogic {
 
   openFullAt(u) {
     return () => {
-      const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
-      const list = e && e.gal ? e.gal.filter(g => !this.state.broken[g.u]) : [];
-      const i = list.findIndex(g => g.u === u);
-      this.setState({ exMode: 'full', exFull: Math.max(0, i), exInfoHidden: true }, () => this.scrollToViews());
+      this.setState({ exMode: 'full', exFullU: u, exInfoHidden: true }, () => this.scrollToViews());
     };
   }
 
   stepFull(n) {
     const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
-    const list = e && e.gal ? e.gal.filter(g => !this.state.broken[g.u]) : [];
+    const list = e && e.gal ? e.gal : [];
     if (!list.length) return;
-    this.setState(s => ({ exFull: ((s.exFull || 0) + n + list.length) % list.length }));
+    this.setState(st => {
+      const cur = list.findIndex(g => g.u === st.exFullU);
+      const next = list[((cur < 0 ? 0 : cur) + n + list.length) % list.length];
+      return { exFullU: next.u };
+    });
   }
 
   stepExhibit(n) {
@@ -744,10 +812,41 @@ class Component extends DCLogic {
     const cx = ex[cxI] || {};
     // the nav only hides while you're inside an exhibit
     const navHidden = view === 'exhibit' && !!st.exInfoHidden;
+    // search runs across works, exhibitions and press notes
+    const searchHits = (() => {
+      const q = (st.q || '').trim().toLowerCase();
+      if (!q) return { total: 0, groups: [] };
+      const has = (...parts) => parts.filter(Boolean).join(' ').toLowerCase().indexOf(q) >= 0;
+      const works = (d.works || []).filter(w => has(w.t, w.m, w.d, w.s, w.y));
+      const shows = ex.filter(e => has(e.title, e.venue, e.city, e.y, e.sum, (e.paras || []).join(' ')));
+      const notes = (d.news || []).filter(n => has(n.title, n.kind, n.y));
+      const groups = [];
+      if (shows.length) groups.push({ label: 'Exhibitions', items: shows.map(e => ({
+        title: e.title,
+        meta: [e.venue, e.city, e.y].filter(Boolean).join(' · '),
+        imgRef: mkRef(e.img, this.markBroken),
+        open: () => this.openExhibit(e.title)
+      })) });
+      if (works.length) groups.push({ label: 'Works', items: works.map(w => ({
+        title: w.t || 'Untitled',
+        meta: [w.y, w.m].filter(Boolean).join(' · '),
+        imgRef: mkRef(w.img, this.markBroken),
+        open: () => {
+          const list = (d.works || []).filter(x => x.s === w.s);
+          this.setState({ view: 'work', series: w.s, from: 'search', sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
+        }
+      })) });
+      if (notes.length) groups.push({ label: 'Press', items: notes.map(n => ({
+        title: n.title,
+        meta: [n.kind, n.y].filter(Boolean).join(' · '),
+        imgRef: mkRef(n.img, this.markBroken),
+        open: () => { if (n.url) window.open(n.url, '_blank'); }
+      })) });
+      return { total: works.length + shows.length + notes.length, groups };
+    })();
     const nAll = d.news || [];
     const nF = st.newsFilter || 'All';
     const nList = nF === 'All' ? nAll : nAll.filter(n => n.kind === nF);
-    const lbOpen = view === 'exhibit' && !!st.lb;
     const paras = cx.paras || [];
     const p0 = paras[0] || '';
     const ABBR = /(?:\b(?:Vs|Mr|Mrs|Ms|Dr|St|Ave|Blvd|Inc|Co|Jr|Sr|No|vol|pp|Feb|Sept|Oct|Nov|Dec|Jan|Mar|Apr|Jun|Jul|Aug)|\s[A-Z])\.$/;
@@ -792,11 +891,10 @@ class Component extends DCLogic {
       .filter(t => t && t.trim().length > 1);
     const venueCap = [cx.venue, cx.city, cx.y].filter(Boolean).join(', ');
     const vImgs = (cx.venue_img || []).map(u => ({ u, c: venueCap }));
-    const lbAll = (cx.gal || []).filter(g => !st.broken[g.u]);
-    const fullI = Math.min(st.exFull || 0, Math.max(0, lbAll.length - 1));
+    const lbAll = (cx.gal || []);
+    const byU = lbAll.findIndex(g => g.u === st.exFullU);
+    const fullI = byU >= 0 ? byU : 0;
     const restItems = lbAll;
-    const lbI = lbOpen ? lbAll.findIndex(x => x.u === st.lb) : -1;
-    const lbItem = { u: st.lb, c: st.lbC || (lbI >= 0 ? lbAll[lbI].c : '') };
 
     return {
       vHome: view === 'home', vWorks: view === 'works', vSeries: view === 'series',
@@ -821,7 +919,7 @@ class Component extends DCLogic {
               imgRef: mkRef(w.img, this.markBroken),
               open: () => {
                 const list = (d.works || []).filter(x => x.s === w.s);
-                this.setState({ view: 'work', series: w.s, sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
+                this.setState({ view: 'work', series: w.s, workFrom: 'year', sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
               }
             }))
           };
@@ -847,7 +945,7 @@ class Component extends DCLogic {
           meta: [(w.k || [])[0] ? (w.k || [])[0].toUpperCase() : '', w.y].filter(Boolean).join(' - '),
           open: () => {
             const list = (d.works || []).filter(x => x.s === w.s);
-            this.setState({ view: 'work', series: w.s, sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
+            this.setState({ view: 'work', series: w.s, workFrom: 'overview', sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
           },
           imgRef: mkRef(w.img, this.markBroken)
         })), this.state.colCount || 3),
@@ -855,6 +953,28 @@ class Component extends DCLogic {
       oWorks: (view === 'works' || view === 'series' || view === 'work' || view === 'overview' || view === 'year') ? 1 : 0.5,
       oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.5,
       oInfo: view === 'info' ? 1 : 0.5,
+      hasQuery: !!(st.q || '').trim(),
+      vSearch: view === 'search',
+      toSearchMenu: () => this.setState({ view: 'search', menuOpen: false }),
+      searchPageRef: el => {
+        if (!el || el._init) return;
+        el._init = true;
+        el.value = st.q || '';
+        setTimeout(() => el.focus(), 80);
+      },
+      searchInputRef: el => {
+        if (!el || el._init) return;
+        el._init = true;
+        el.value = st.q || '';
+      },
+      onSearchInput: e => this.setState({ q: e.target.value }),
+      onSearchSubmit: e => e.preventDefault(),
+      searchStatus: (() => {
+        const q = (st.q || '').trim();
+        if (!q) return 'Type to search the catalogue';
+        return searchHits.total + (searchHits.total === 1 ? ' result' : ' results') + ' for “' + q + '”';
+      })(),
+      searchGroups: searchHits.groups,
       menuOpen: !!st.menuOpen,
       toggleMenu: () => this.setState(p => ({ menuOpen: !p.menuOpen })),
       toHomeMenu: () => this.setState({ view: 'home', menuOpen: false }),
@@ -864,7 +984,8 @@ class Component extends DCLogic {
       toInfoMenu: () => this.setState({ view: 'info', menuOpen: false }),
       toHome: this.go('home'), toWorks: () => this.setState({ view: 'works' }),
       toExhibits: this.go('exhibits'), toInfo: this.go('info'), toContact: this.go('info'),
-      backToSeries: this.go('series'),
+      backToSeries: () => this.setState({ view: st.workFrom || 'series' }),
+      wBackLabel: st.workFrom === 'overview' ? 'Overview' : (st.workFrom === 'year' ? 'By year' : (st.series || 'Works')),
       nextSlide: () => this.setState(s => ({ slide: s.slide + 1 })),
       prevSlide: () => this.setState(s => ({ slide: s.slide - 1 + slides.length })),
       openSlideShow: () => { if (cur.title) this.openExhibit(cur.title); },
@@ -891,7 +1012,7 @@ class Component extends DCLogic {
       seriesWorkColumns: (() => {
         const items = seriesWorks.map((it, i) => ({
           title: it.t,
-          open: () => this.setState({ view: 'work', sel: i }),
+          open: () => this.setState({ view: 'work', workFrom: 'series', sel: i }),
           imgRef: mkRef(it.img, this.markBroken)
         }));
         return this.splitCols(items, this.state.colCount >= 2 ? 2 : 1);
@@ -899,7 +1020,16 @@ class Component extends DCLogic {
       prevSeries: () => this.stepSeries(-1),
       nextSeries: () => this.stepSeries(1),
       curSeries: st.series || '',
-      wImgRef: mkRef(w.img),
+      statement: (d.statement || ''),
+      seriesNote: ((d.series || []).find(x => x.name === st.series) || {}).note || '',
+      hasSeriesNote: !!((d.series || []).find(x => x.name === st.series) || {}).note,
+      wImgRef: el => {
+        if (!el || !w.img) return;
+        el.onerror = () => { el.style.visibility = 'hidden'; };
+        el.onload = () => { el.style.visibility = ''; };
+        if (el.getAttribute('src') !== w.img) { el.style.visibility = ''; el.src = w.img; }
+      },
+      wMissing: false,
       wTitle: w.t || '', wYear: w.y ? String(w.y) : '',
       wMedium: w.m || '', wDims: w.d || '', wSeries: st.series || 'Works',
       wCaption: [w.t, w.y, w.m, w.d].filter(Boolean).join(', '),
@@ -933,6 +1063,7 @@ class Component extends DCLogic {
         linkLabel: n.url ? (n.url.indexOf('.pdf') > 0 ? 'PDF' : 'Read') : '',
         imgRef: mkRef(n.img, this.markBroken)
       })),
+      portraitRef: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
       infoBgRef: mkRef('https://allart.la/artwork/uploads/2019/02/19-1.jpg'),
       infoBgRef2: mkRef('https://allart.la/artwork/uploads/2014/10/PB3.jpg'),
       onContactSubmit: e => {
@@ -969,26 +1100,35 @@ class Component extends DCLogic {
       nextExhibit: () => this.stepExhibit(1),
       exScrollRef: el => {
         this._exScroll = el;
-        this.attachSwipe(el, d => this.stepExhibit(d));
         if (el && !el._track) {
           el._track = true;
           el.addEventListener('scroll', () => {
             if (this._autoScroll) return;
-            const hidden = el.scrollTop > 8;
-            if (hidden !== this.state.exInfoHidden) this.setState({ exInfoHidden: hidden });
+            const block = this._pressBlock;
+            // offsetTop is relative to the scroll content, so moving the container can't skew it
+            const past = block ? (block.offsetTop + block.offsetHeight) - el.scrollTop : el.scrollTop;
+            // hysteresis: hide once it clears the top, restore only well after it returns
+            const gone = block
+              ? (this.state.exInfoHidden ? past <= 64 : past <= 4)
+              : el.scrollTop > 8;
+            if (gone !== this.state.exInfoHidden) this.setState({ exInfoHidden: gone });
           }, { passive: true });
         }
       },
       showInfo: () => {
-        const box = this._exScroll;
+        const box = this._exScroll, row = this._pressRow;
         if (!box) return;
-        this._autoScroll = true;
-        clearTimeout(this._autoScrollT);
-        this._autoScrollT = setTimeout(() => { this._autoScroll = false; this.setState({ exInfoHidden: false }); }, 700);
-        box.scrollTo({ top: 0, behavior: 'smooth' });
-        this.setState({ exInfoHidden: false });
+        if (row) {
+          const top = Math.max(0, box.scrollTop + row.getBoundingClientRect().top - box.getBoundingClientRect().top - 26);
+          this._autoScroll = true;
+          clearTimeout(this._autoScrollT);
+          this._autoScrollT = setTimeout(() => { this._autoScroll = false; }, 700);
+          this.setState({ exInfoHidden: false });
+          box.scrollTo({ top: top, behavior: 'smooth' });
+          return;
+        }
       },
-      lbSwipeRef: el => { this.attachSwipe(el, d => this.stepLb(d)); },
+      fullSwipeRef: el => { this._fullFrame = el; this.attachSwipe(el, d => this.stepFull(d)); },
       exGridRef: el => { this._exGrid = el; },
       exUrl: cx.url || '',
       exUrlLabel: cx.urlLabel || 'Gallery website',
@@ -1012,25 +1152,39 @@ class Component extends DCLogic {
       exMoreLabel: st.exOpen ? 'Less' : 'See more',
       toggleExText: () => this.setState(x => ({ exOpen: !x.exOpen }), () => {
         if (this.state.exOpen) return;
-        const sc = this._exScroll, g = this._exGrid;
-        if (!sc || !g) return;
+        const sc = this._exScroll, row = this._pressRow;
+        if (!sc || !row) return;
         requestAnimationFrame(() => {
-          const top = g.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop;
-          sc.scrollTo({ top: Math.max(0, top - 12), behavior: 'smooth' });
+          const top = row.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop;
+          this._autoScroll = true;
+          clearTimeout(this._autoScrollT);
+          this._autoScrollT = setTimeout(() => { this._autoScroll = false; }, 700);
+          sc.scrollTo({ top: Math.max(0, top - 26), behavior: 'smooth' });
         });
       }),
-      exVenueImgs: vImgs.map(v => ({
-        imgRef: mkRef(v.u),
-        open: () => this.setState({ venue: v.u, venueCap: '' }),
-        wrapStyle: { cursor: 'pointer', width: (cx.vw || 340) + 'px', maxWidth: '100%', display: 'flex', flexDirection: 'column', gap: 8 },
-        boxStyle: { width: '100%', overflow: 'hidden', background: '#f6f5f2' }
-      })),
       vVenue: view === 'exhibit' && !!st.venue,
       venueImgRef: el => { if (el && st.venue) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== st.venue) el.src = st.venue; } },
       venueCaption: st.venueCap || venueCap,
       closeVenue: () => this.setState({ venue: '', venueCap: '' }),
       viewsRowRef: el => { this._viewsRow = el; },
+      pressRowRef: el => { this._pressRow = el; },
+      pressBlockRef: el => { this._pressBlock = el; },
       exInfoHidden: !!st.exInfoHidden,
+      exVenueImgs: vImgs.filter(v => v.u !== cx.hero).map(v => ({
+        imgRef: mkRef(v.u, this.markBroken),
+        open: () => this.setState({ venue: v.u, venueCap: '' }),
+        wrapStyle: { cursor: 'pointer', width: '100%' },
+        boxStyle: { width: '100%', overflow: 'hidden', background: '#f6f5f2' }
+      })),
+      heroFrameStyle: {
+        width: '100vw', marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)',
+        marginBottom: 34, overflow: 'hidden',
+        aspectRatio: '2 / 1', height: 'auto', maxHeight: 'min(62vh, 560px)',
+        background: '#f2f1ee'
+      },
+      heroImgRef: mkRef(cx.hero || '', this.markBroken),
+      exHasHero: !!cx.hero,
+      exTitleBlockStyle: { maxWidth: 1760, padding: cx.hero ? '0 0 24px' : '0 0 40px' },
       exScrollStyle: {
         position: 'absolute', top: navHidden ? 0 : 86, left: 0, right: 0, bottom: 0,
         overflowY: 'auto', padding: (navHidden ? '26px' : '0') + ' 44px 70px',
@@ -1050,15 +1204,23 @@ class Component extends DCLogic {
       setFullMode: () => this.setViewMode('full'),
       gridBtnStyle: { cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 3, color: (st.exMode === 'full' ? '#c4c4c6' : '#1a1a1c') },
       fullBtnStyle: { cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 3, color: (st.exMode === 'full' ? '#1a1a1c' : '#c4c4c6') },
-      fullImgRef: mkRef((lbAll[fullI] || {}).u, this.markBroken),
+      fullImgRef: el => {
+        const u = (lbAll[fullI] || {}).u;
+        if (!el || !u) return;
+        el.onerror = () => { el.style.visibility = 'hidden'; this.markBroken(u); };
+        el.onload = () => { el.style.visibility = ''; };
+        if (el.getAttribute('src') !== u) { el.style.visibility = ''; el.src = u; }
+      },
+      fullMissing: !!st.broken[(lbAll[fullI] || {}).u],
       fullCaption: (lbAll[fullI] || {}).c || '',
       fullCount: lbAll.length ? (fullI + 1) + ' / ' + lbAll.length : '',
       prevFull: () => this.stepFull(-1),
       nextFull: () => this.stepFull(1),
-      openFull: () => { const g = lbAll[fullI]; if (g) this.setState({ lb: g.u, lbC: g.c || '' }); },
       exColumns: (() => {
         const items = restItems.map((g, i) => ({
           caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
+          missing: !!st.broken[g.u],
+          boxStyle: { position: 'relative', background: '#f6f5f2', minHeight: st.broken[g.u] ? 200 : 0 },
           open: this.openFullAt(g.u)
         }));
         const n = this.state.colCount || 3;
@@ -1066,15 +1228,7 @@ class Component extends DCLogic {
         items.forEach((it, i) => cols[i % n].push(it));
         return cols.map((items, i) => ({ items, i }));
       })(),
-      vLightbox: lbOpen,
-      lbImgRef: el => { if (el && lbItem.u) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== lbItem.u) el.src = lbItem.u; } },
-      lbCaption: lbItem.c || '',
-      lbShow: cx.title ? cx.title + (cx.venue ? ', ' + cx.venue : '') + (cx.y ? ', ' + cx.y : '') : '',
-      lbCount: lbOpen && lbI >= 0 ? (lbI + 1) + ' / ' + lbAll.length : '',
-      lbDebug: '',
-      closeLb: () => this.setState({ lb: '', lbC: '' }),
-      nextLb: () => this.stepLb(1),
-      prevLb: () => this.stepLb(-1)
+      exGalleryCount: lbAll.length
     };
   }
 }
