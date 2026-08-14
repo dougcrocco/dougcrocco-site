@@ -37,6 +37,7 @@
     [data-r~="gut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="fullarrow"] { display:none !important; }
+    [data-r~="fullpad"] { padding-bottom:20px !important; }
     [data-r~="taphalf"] { display:block !important; }
     [data-r~="arrowgut"] { align-items:flex-start !important; min-height:0 !important; padding-top:22px !important; }
     [data-r~="navlinks"] { display: none !important; }
@@ -323,7 +324,7 @@
         </div>
       </div>
       <sc-if value="{{ exFullMode }}" hint-placeholder-val="{{ true }}">
-        <div style="max-width:1760px;padding:0 0 56px">
+        <div data-r="fullpad" style="max-width:1760px;padding:0 0 56px">
           <div style="position:relative">
             <div ref="{{ fullSwipeRef }}" data-r="arrowgut" style="padding:0 46px;display:flex;align-items:flex-start;justify-content:center;min-height:340px">
               <div style="display:inline-flex;flex-direction:column;align-items:center;max-width:100%">
@@ -1351,7 +1352,7 @@ class Component extends DCLogic {
       exInfoHidden: !!st.exInfoHidden,
       exScrollStyle: {
         position: 'absolute', top: 86 - navOff, left: 0, right: 0, bottom: 0,
-        overflowY: 'auto', padding: (st.phone ? '0 18px ' : '0 44px ') + (st.exMode === 'full' ? '20vh' : '70px')
+        overflowY: 'auto', padding: (st.phone ? '0 18px ' : '0 44px ') + (st.exMode === 'full' ? (st.phone ? '8vh' : '20vh') : '70px')
       },
       navStyle: {
         position: 'absolute', top: 0, left: 0, right: 0, height: 86,
