@@ -700,6 +700,8 @@ class Component extends DCLogic {
       if (e.key === 'ArrowLeft') this.step(-1);
       if (e.key === 'Escape') this.setState({ view: 'series' });
     };
+    if (window.__dcKey) window.removeEventListener('keydown', window.__dcKey);
+    window.__dcKey = this._key;
     window.addEventListener('keydown', this._key);
   }
   componentWillUnmount() {
@@ -717,11 +719,13 @@ class Component extends DCLogic {
   attachSwipe(el, onSwipe) {
     if (!el || el._swipe) return;
     el._swipe = true;
-    let x0 = 0, y0 = 0, t0 = 0;
+    let x0 = 0, y0 = 0, t0 = 0, active = false;
     el.addEventListener('touchstart', ev => {
-      const t = ev.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now();
+      const t = ev.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); active = true;
     }, { passive: true });
     el.addEventListener('touchend', ev => {
+      if (!active) return;
+      active = false;
       const t = ev.changedTouches[0];
       const dx = t.clientX - x0, dy = t.clientY - y0;
       if (Date.now() - t0 < 600 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.6) {
@@ -735,11 +739,11 @@ class Component extends DCLogic {
 
 
   openExhibit(title) {
-    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFullU: '', exInfoHidden: false });
+    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false });
   }
 
   setViewMode(mode) {
-    this.setState({ exMode: mode, exFullU: '', exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
+    this.setState({ exMode: mode, exFullU: '', exFullFor: '', exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
   }
 
 
@@ -759,18 +763,23 @@ class Component extends DCLogic {
 
   openFullAt(u) {
     return () => {
-      this.setState({ exMode: 'full', exFullU: u, exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
+      this.setState({ exMode: 'full', exFullU: u, exFullFor: this.state.exhibit, exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
     };
   }
 
   stepFull(n) {
+    // ignore a second call inside the same gesture / tick
+    const now = Date.now();
+    if (this._lastStep && now - this._lastStep < 220) return;
+    this._lastStep = now;
     const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
     const list = e && e.gal ? e.gal : [];
     if (!list.length) return;
     this.setState(st => {
-      const cur = list.findIndex(g => g.u === st.exFullU);
+      const usable = st.exFullFor === st.exhibit ? st.exFullU : '';
+      const cur = usable ? list.findIndex(g => g.u === usable) : 0;
       const next = list[((cur < 0 ? 0 : cur) + n + list.length) % list.length];
-      return { exFullU: next.u };
+      return { exFullU: next.u, exFullFor: st.exhibit };
     });
   }
 
@@ -884,10 +893,10 @@ class Component extends DCLogic {
     const venueCap = [cx.venue, cx.city, cx.y].filter(Boolean).join(', ');
     const vImgs = (cx.venue_img || []).map(u => ({ u, c: venueCap }));
     const lbAll = (cx.gal || []);
-    const byU = lbAll.findIndex(g => g.u === st.exFullU);
-    // on entry, skip any leading images already known to have failed
-    const firstOk = lbAll.findIndex(g => !st.broken[g.u]);
-    const fullI = byU >= 0 ? byU : (firstOk >= 0 ? firstOk : 0);
+    // the pointer only counts if it was set for the show currently on screen
+    const ptr = (st.exFullFor === st.exhibit && st.exFullU) ? st.exFullU : '';
+    const byU = ptr ? lbAll.findIndex(g => g.u === ptr) : -1;
+    const fullI = byU >= 0 ? byU : 0;
     const restItems = lbAll;
 
     return {
@@ -1214,8 +1223,8 @@ class Component extends DCLogic {
       fullMissing: !!st.broken[(lbAll[fullI] || {}).u],
       fullCaption: (lbAll[fullI] || {}).c || '',
       fullCount: lbAll.length ? (fullI + 1) + ' / ' + lbAll.length : '',
-      prevFull: () => this.stepFull(-1),
-      nextFull: () => this.stepFull(1),
+      prevFull: e => { if (e && e.stopPropagation) e.stopPropagation(); this.stepFull(-1); },
+      nextFull: e => { if (e && e.stopPropagation) e.stopPropagation(); this.stepFull(1); },
       exColumns: (() => {
         const items = restItems.map((g, i) => ({
           caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
