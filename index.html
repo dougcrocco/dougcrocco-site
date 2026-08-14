@@ -29,6 +29,8 @@
     [data-r="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
   }
   @media only screen and (max-width: 640px) {
+    [data-r="navlinks"] { display: none !important; }
+    [data-r="navburger"] { display: flex !important; }
     [data-r="exhdr"] { display: flex !important; flex-direction: column !important; }
     [data-r="venuecol"] { justify-content: flex-start !important; }
   }
@@ -502,14 +504,34 @@
   </sc-if>
 
   <div style="{{ navStyle }}">
-    <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em">Doug Crocco</div>
-    <div style="pointer-events:auto;display:flex;gap:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
+    <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap">Doug Crocco</div>
+    <div data-r="navlinks" style="pointer-events:auto;display:flex;gap:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
       <span onClick="{{ toWorks }}" style="cursor:pointer;opacity:{{ oWorks }}">Works</span>
       <span onClick="{{ toExhibits }}" style="cursor:pointer;opacity:{{ oExhibits }}">Exhibits</span>
       <span onClick="{{ toNews }}" style="cursor:pointer;opacity:{{ oNews }}">News</span>
       <span onClick="{{ toInfo }}" style="cursor:pointer;opacity:{{ oInfo }}">Info</span>
     </div>
+    <div data-r="navburger" onClick="{{ toggleMenu }}" style="display:none;pointer-events:auto;cursor:pointer;width:34px;height:34px;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+      <div style="width:22px;height:1px;background:#141414"></div>
+      <div style="width:22px;height:1px;background:#141414"></div>
+      <div style="width:22px;height:1px;background:#141414"></div>
+    </div>
   </div>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div data-live-layer style="position:fixed;inset:0;z-index:30;background:#ffffff;display:flex;flex-direction:column;padding:26px 30px 40px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div onClick="{{ toHomeMenu }}" style="cursor:pointer;font-size:16px;letter-spacing:.02em">Doug Crocco</div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#5c5c5e">×</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:26px;letter-spacing:.06em;text-transform:uppercase">
+        <div onClick="{{ toWorksMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Works</div>
+        <div onClick="{{ toExhibitsMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Exhibits</div>
+        <div onClick="{{ toNewsMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">News</div>
+        <div onClick="{{ toInfoMenu }}" style="cursor:pointer;padding:12px 0">Info</div>
+      </div>
+    </div>
+  </sc-if>
 
 </div>
 
@@ -524,9 +546,15 @@ const artistOf = c => {
   return first;
 };
 const mkRef = (url, onFail) => el => {
-  if (!el || !url || el.getAttribute('src') === url) return;
-  el.style.display = '';
+  if (!el || !url) return;
+  el.onload = () => { el.style.display = ''; };
   el.onerror = () => { el.style.display = 'none'; if (onFail) onFail(url); };
+  if (el.getAttribute('src') === url) {
+    // already pointed here — re-show it if a previous attempt hid it
+    if (el.complete && el.naturalWidth > 0) el.style.display = '';
+    return;
+  }
+  el.style.display = '';
   el.src = url;
 };
 
@@ -827,6 +855,13 @@ class Component extends DCLogic {
       oWorks: (view === 'works' || view === 'series' || view === 'work' || view === 'overview' || view === 'year') ? 1 : 0.5,
       oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.5,
       oInfo: view === 'info' ? 1 : 0.5,
+      menuOpen: !!st.menuOpen,
+      toggleMenu: () => this.setState(p => ({ menuOpen: !p.menuOpen })),
+      toHomeMenu: () => this.setState({ view: 'home', menuOpen: false }),
+      toWorksMenu: () => this.setState({ view: 'works', menuOpen: false }),
+      toExhibitsMenu: () => this.setState({ view: 'exhibits', menuOpen: false }),
+      toNewsMenu: () => this.setState({ view: 'news', menuOpen: false }),
+      toInfoMenu: () => this.setState({ view: 'info', menuOpen: false }),
       toHome: this.go('home'), toWorks: () => this.setState({ view: 'works' }),
       toExhibits: this.go('exhibits'), toInfo: this.go('info'), toContact: this.go('info'),
       backToSeries: this.go('series'),
