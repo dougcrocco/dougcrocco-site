@@ -31,7 +31,7 @@
   }
   @media only screen and (max-width: 640px) {
     [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
-    [data-r="venuecol"] { justify-content: flex-start !important; }
+    [data-r="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
     [data-r="navlinks"] { display: none !important; }
     [data-r="navburger"] { display: flex !important; }
   }
@@ -252,8 +252,8 @@
           </div>
         </sc-if>
         <div ref="{{ pressBlockRef }}" style="max-width:1760px;padding:0 0 30px">
-          <div ref="{{ pressRowRef }}" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8c8c8e;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:30px">Press release</div>
-          <div data-r="herocopy" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,320px);gap:52px;align-items:start">
+          <div ref="{{ pressRowRef }}" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8c8c8e;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:30px;max-width:48%">Press release</div>
+          <div data-r="herocopy" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,440px);gap:52px;align-items:start">
             <div style="display:flex;flex-direction:column;gap:18px;max-width:70ch">
               <sc-for list="{{ exSummaryParas }}" as="p" hint-placeholder-count="2">
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty">{{ p.text }}</div>
@@ -262,7 +262,7 @@
                 <div onClick="{{ toggleExText }}" style="cursor:pointer;align-self:flex-start;margin-top:4px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
               </sc-if>
             </div>
-            <div data-r="venuecol" style="display:flex;justify-content:flex-end;align-items:flex-start">
+            <div data-r="venuecol" style="display:flex;justify-content:flex-end;align-items:flex-start;margin-top:-44px">
               <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
                 <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
                   <div style="{{ v.boxStyle }}">
