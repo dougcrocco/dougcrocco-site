@@ -9,21 +9,11 @@ Static site — no build step. Put these files at the repo root.
 - staring-at-the-sun-review.html — rebuilt LA Times review
 - images/ — images stored locally with the site
 
-## Artwork images — one switch
-Artwork paths are stored repo-relative (artwork/uploads/YYYY/MM/file.jpg) and are
-prefixed at load time by one line at the top of works-data.js:
-
-    window.IMG_BASE = window.IMG_BASE || 'https://allart.la/';
-
-Today they load from allart.la. To host them here instead:
-1. Copy the whole artwork/uploads/ tree from the WordPress host to the repo root,
-   so the path becomes artwork/uploads/2019/05/... — include 2005/09, 2014/10,
-   2018/09 and 2024/05 (those hold the eleven files currently 404ing).
-2. Change that line to:
-
-    window.IMG_BASE = window.IMG_BASE || '';
-
-Nothing else changes.
+## Artwork images
+Everything else loads from https://allart.la/artwork/uploads/...
+Ten entries (Palm Beach Biennial, Pacific Lines) are not on that host yet.
+Copy these three folders from the old WordPress uploads into artwork/uploads/:
+  2005/09   2014/10   2018/09
 
 ## Deploy
 GitHub Pages: Settings → Pages → main / (root).

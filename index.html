@@ -14,34 +14,26 @@
   a:hover { text-decoration:none; color:#000000; }
   x-dc:not(:defined) [data-live-layer] { display:none !important; }
   @media only screen and (max-width: 900px) {
-    [data-r~="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
-  }
-  @media only screen and (max-width: 820px) {
-    [data-r~="excols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 0 18px !important; }
+    [data-r="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
   @media only screen and (max-width: 1024px) {
-    [data-r~="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
   @media only screen and (max-width: 768px) {
-    [data-r~="galcols"], [data-r~="feature"], [data-r~="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
-    [data-r~="feature"] > *:first-child { grid-column: auto !important; }
-    [data-r~="w2"] { grid-template-columns: minmax(0,1fr) !important; }
-    [data-r~="infotint"] { width: 100% !important; }
-    [data-r~="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
+    [data-r="galcols"], [data-r="feature"], [data-r="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r="feature"] > *:first-child { grid-column: auto !important; }
+    [data-r="w2"] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-r="infotint"] { width: 100% !important; }
+    [data-r="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
   }
   @media only screen and (max-width: 900px) {
-    [data-r~="venuebox"] { height: 300px !important; }
+    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) minmax(180px,240px) !important; gap: 30px !important; }
   }
   @media only screen and (max-width: 640px) {
-    [data-r~="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
-    [data-r~="gut"] { padding-left:18px !important; padding-right:18px !important; }
-    [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
-    [data-r~="fullarrow"] { display:none !important; }
-    [data-r~="fullpad"] { padding-bottom:20px !important; }
-    [data-r~="taphalf"] { display:block !important; }
-    [data-r~="arrowgut"] { align-items:flex-start !important; min-height:0 !important; padding-top:22px !important; }
-    [data-r~="navlinks"] { display: none !important; }
-    [data-r~="navburger"] { display: flex !important; }
+    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
+    [data-r="navlinks"] { display: none !important; }
+    [data-r="navburger"] { display: flex !important; }
   }
   ::-webkit-scrollbar { width:0; height:0; }
   * { scrollbar-width:none; -ms-overflow-style:none; }
@@ -57,14 +49,15 @@
       <img ref="{{ slideA }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideAOpacity }};transition:opacity 1.4s ease">
       <img ref="{{ slideB }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideBOpacity }};transition:opacity 1.4s ease">
       <div onClick="{{ openSlideShow }}" style="position:absolute;inset:0;cursor:pointer"></div>
-      <div data-r="gut" style="position:absolute;left:0;right:0;bottom:0;padding:26px 44px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;pointer-events:none">
-        <div onClick="{{ openSlideShow }}" style="{{ slideInkStyle }}">
-          <div style="{{ slideTitleStyle }}">{{ slideTitle }}</div>
-          <div style="{{ slideVenueStyle }}">{{ slideVenue }}</div>
+      <div style="position:absolute;left:0;right:0;top:0;height:104px;pointer-events:none;background:linear-gradient(to bottom, rgba(255,255,255,.7), rgba(255,255,255,0))"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:26px 44px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;pointer-events:none">
+        <div onClick="{{ openSlideShow }}" style="pointer-events:auto;cursor:pointer">
+          <div style="font-size:15px;line-height:1.4;border-bottom:1px solid rgba(20,20,20,.35);display:inline-block;padding-bottom:2px">{{ slideTitle }}</div>
+          <div style="font-size:12px;line-height:1.7;opacity:.6;margin-top:4px">{{ slideVenue }}</div>
         </div>
         <div style="pointer-events:auto;display:flex;align-items:center;gap:14px">
           <div onClick="{{ prevSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">←</div>
-          <div style="font-size:12px;letter-spacing:.16em;opacity:.5">{{ slideCount }}</div>
+          <div style="font-size:11px;letter-spacing:.16em;opacity:.5">{{ slideCount }}</div>
           <div onClick="{{ nextSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">→</div>
         </div>
       </div>
@@ -72,11 +65,11 @@
   </sc-if>
 
   <sc-if value="{{ vWorks }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
         <div style="color:#3c3c3d">Series</div>
-        <div style="color:#9c9ca0">/</div>
-        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#7a7a7e">Overview</div>
+        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#9a9a9c">Overview</div>
       </div>
       <div style="max-width:62ch;padding:0 0 44px">
         <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.7;color:#2a2a2b;text-wrap:pretty">{{ statement }}</div>
@@ -97,14 +90,14 @@
   </sc-if>
 
   <sc-if value="{{ vSeries }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
-        <div style="color:#9c9ca0">/</div>
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
+        <div style="color:#b4b4b6">/</div>
         <div style="color:#3c3c3d">{{ curSeries }}</div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
-          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#4a4a4d">←</div>
-          <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#4a4a4d">→</div>
+          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5c5c5e">←</div>
+          <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5c5c5e">→</div>
         </div>
       </div>
       <sc-if value="{{ hasSeriesNote }}" hint-placeholder-val="{{ false }}">
@@ -127,13 +120,13 @@
   </sc-if>
 
   <sc-if value="{{ vOverview }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
-        <div style="color:#9c9ca0">/</div>
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
+        <div style="color:#b4b4b6">/</div>
         <div style="color:#3c3c3d">Overview</div>
-        <div style="color:#9c9ca0">/</div>
-        <div onClick="{{ toYear }}" style="cursor:pointer;color:#7a7a7e">By year</div>
+        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toYear }}" style="cursor:pointer;color:#9a9a9c">By year</div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:26px;padding:0 0 26px">
         <sc-for list="{{ ovFilters }}" as="f" hint-placeholder-count="5">
@@ -162,25 +155,25 @@
 
   <sc-if value="{{ vYear }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:absolute;inset:86px 0 0;display:flex;flex-direction:column">
-      <div data-r="gut" style="flex:none;display:flex;align-items:baseline;gap:14px;padding:4px 44px 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
-        <div style="color:#9c9ca0">/</div>
-        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#7a7a7e">Overview</div>
-        <div style="color:#9c9ca0">/</div>
+      <div style="flex:none;display:flex;align-items:baseline;gap:14px;padding:4px 44px 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
+        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#9a9a9c">Overview</div>
+        <div style="color:#b4b4b6">/</div>
         <div style="color:#3c3c3d">By year</div>
       </div>
-      <div ref="{{ wallRef }}" style="{{ wallStyle }}">
-        <div style="{{ wallRowStyle }}">
+      <div ref="{{ wallRef }}" style="flex:1;min-height:0;overflow-x:auto;overflow-y:hidden;padding:0 44px 24px">
+        <div style="display:flex;align-items:flex-end;gap:34px;height:100%">
           <sc-for list="{{ yearGroups }}" as="g" hint-placeholder-count="6">
-            <div style="{{ yearColStyle }}">
-              <div style="{{ yearRowStyle }}">
+            <div style="display:flex;flex-direction:column;height:100%;flex:none">
+              <div style="flex:1;min-height:0;display:flex;align-items:flex-end;gap:14px">
                 <sc-for list="{{ g.items }}" as="w" hint-placeholder-count="3">
                   <div onClick="{{ w.open }}" style="{{ w.style }}">
-                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="{{ wallImgStyle }}">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;height:100%;width:auto;max-width:none">
                   </div>
                 </sc-for>
               </div>
-              <div style="{{ yearLabelStyle }}">{{ g.year }}</div>
+              <div style="flex:none;margin-top:20px;padding-top:12px;border-top:1px solid rgba(20,20,20,.25);font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.14em;color:#8c8c8e">{{ g.year }}</div>
             </div>
           </sc-for>
         </div>
@@ -190,17 +183,17 @@
 
   <sc-if value="{{ vWork }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
-      <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#4a4a4d;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414">← {{ wBackLabel }}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5c5c5e;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414">← {{ wBackLabel }}</div>
         <div style="display:flex;align-items:center;gap:26px">
-          <div onClick="{{ toContact }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Enquire</div>
-          <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 0 14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Close</div>
+          <div onClick="{{ toContact }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Enquire</div>
+          <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 0 14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Close</div>
         </div>
       </div>
-      <div data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
+      <div style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
         <div onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
-        <div style="flex:1;min-width:0;height:calc(100dvh - 210px);display:flex;align-items:center;justify-content:center">
-          <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:calc(100dvh - 210px);width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
+        <div style="flex:1;min-width:0;height:calc(100vh - 210px);display:flex;align-items:center;justify-content:center">
+          <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:calc(100vh - 210px);width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
         </div>
         <div onClick="{{ nextWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
       </div>
@@ -211,7 +204,7 @@
   </sc-if>
 
   <sc-if value="{{ vExhibits }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;justify-content:flex-end;gap:40px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
         <div style="display:flex;gap:26px">
           <sc-for list="{{ exhFilters }}" as="f" hint-placeholder-count="4">
@@ -226,11 +219,11 @@
               <img ref="{{ e.imgRef }}" alt="{{ e.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
             </div>
             <div style="display:grid;grid-template-columns:58px 1fr;gap:20px;align-items:baseline">
-              <div style="font-size:12px;letter-spacing:.14em;opacity:.45">{{ e.year }}</div>
+              <div style="font-size:11px;letter-spacing:.14em;opacity:.45">{{ e.year }}</div>
               <div>
                 <div style="font-size:18px;line-height:1.3;text-wrap:pretty">{{ e.title }}</div>
                 <div style="font-size:13px;line-height:1.75;opacity:.55;margin-top:4px">{{ e.venue }}</div>
-                <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.4;margin-top:8px">{{ e.kind }}</div>
+                <div style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.4;margin-top:8px">{{ e.kind }}</div>
               </div>
             </div>
           </div>
@@ -242,77 +235,71 @@
   <sc-if value="{{ vExhibit }}" hint-placeholder-val="{{ true }}">
     <div ref="{{ exScrollRef }}" data-live-layer style="{{ exScrollStyle }}">
       <div style="display:flex;align-items:center;justify-content:flex-end;gap:40px;max-width:1760px;padding:2px 0 26px">
-        <div style="display:flex;align-items:center;gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
+        <div style="display:flex;align-items:center;gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
           <div onClick="{{ prevExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">←</div>
+          <div style="opacity:.35">{{ exPos }}</div>
           <div onClick="{{ nextExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">→</div>
         </div>
       </div>
         <div style="{{ exTitleBlockStyle }}">
           <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(26px,2.4vw,42px);letter-spacing:.04em;text-transform:uppercase;line-height:1.16;font-weight:400;max-width:min(100%,44ch);text-wrap:balance;color:#1a1a1c">{{ exTitle }}</div>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;font-weight:500;letter-spacing:.01em;color:#2e2e30;margin-top:14px">{{ exVenue }}</div>
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#6e6e72;margin-top:5px">{{ exPlaceDate }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#8c8c8e;margin-top:5px">{{ exPlaceDate }}</div>
         </div>
         <sc-if value="{{ exHasHero }}" hint-placeholder-val="{{ false }}">
           <div style="{{ heroFrameStyle }}">
-            <img ref="{{ heroImgRef }}" alt="{{ exTitle }}" style="{{ heroImgStyle }}">
+            <img ref="{{ heroImgRef }}" alt="{{ exTitle }}" style="display:block;width:100%;height:100%;object-fit:cover">
           </div>
         </sc-if>
         <div ref="{{ pressBlockRef }}" style="max-width:1760px;padding:0 0 34px;min-height:0">
-          <div data-r="herocopy" style="{{ exCopyWrapStyle }}">
-            <div ref="{{ pressRowRef }}" style="overflow:hidden;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#6e6e72;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:20px">Press release</div>
-            <div data-r="venuecol" style="{{ exVenueColStyle }}">
-              <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
-                <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
-                  <div data-r="venuebox" style="{{ v.boxStyle }}">
-                    <img ref="{{ v.imgRef }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
-                    <sc-if value="{{ v.hasAlt }}" hint-placeholder-val="{{ false }}">
-                      <img ref="{{ v.altRef }}" alt="" style="{{ v.altStyle }}">
-                    </sc-if>
-                  </div>
-                  <sc-if value="{{ v.hasCaption }}" hint-placeholder-val="{{ false }}">
-                    <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:9px 0 0;text-align:center">{{ v.caption }}</div>
-                  </sc-if>
-                </div>
-              </sc-for>
-            </div>
-            <sc-for list="{{ exCollapsedParas }}" as="p" hint-placeholder-count="2">
-              <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;margin:0 0 16px">{{ p.text }}</div>
-            </sc-for>
-            <div style="clear:both"></div>
-            <sc-if value="{{ exCollapsedFade }}" hint-placeholder-val="{{ false }}">
-              <div style="{{ exFadeStyle }}"></div>
-            </sc-if>
-          </div>
-          <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
-            <div onClick="{{ toggleExText }}" style="display:inline-block;cursor:pointer;margin-top:20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
-          </sc-if>
+          <div data-r="herocopy" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,320px);gap:52px;align-items:start">
+            <div style="display:flex;flex-direction:column;gap:18px;max-width:70ch">
+              <div ref="{{ pressRowRef }}" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8c8c8e;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:8px">Press release</div>
+              <div style="{{ exCopyClampStyle }}">
+                <sc-for list="{{ exCollapsedParas }}" as="p" hint-placeholder-count="2">
+                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;margin:0 0 16px">{{ p.text }}</div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleExText }}" style="cursor:pointer;align-self:flex-start;margin-top:4px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+              </sc-if>
               <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:20px">
+                <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:6px">
                   <sc-if value="{{ exHasPress }}" hint-placeholder-val="{{ false }}">
                     <sc-if value="{{ exPressIsImage }}" hint-placeholder-val="{{ false }}">
-                      <div onClick="{{ openPress }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</div>
+                      <div onClick="{{ openPress }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</div>
                     </sc-if>
                     <sc-if value="{{ exPressIsPage }}" hint-placeholder-val="{{ false }}">
-                      <a href="{{ exPressUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</a>
+                      <a href="{{ exPressUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</a>
                     </sc-if>
                   </sc-if>
                   <sc-if value="{{ exHasPress2 }}" hint-placeholder-val="{{ false }}">
-                    <div onClick="{{ openPress2 }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPress2Label }}</div>
+                    <div onClick="{{ openPress2 }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPress2Label }}</div>
                   </sc-if>
                   <sc-if value="{{ exHasUrl }}" hint-placeholder-val="{{ false }}">
-                    <a href="{{ exUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exUrlLabel }}</a>
+                    <a href="{{ exUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exUrlLabel }}</a>
                   </sc-if>
                   <sc-if value="{{ exHasPdf }}" hint-placeholder-val="{{ false }}">
-                    <a href="{{ exPdf }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Checklist</a>
+                    <a href="{{ exPdf }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Checklist</a>
                   </sc-if>
                 </div>
               </sc-if>
-
+            </div>
+            <div data-r="venuecol" style="display:flex;justify-content:flex-end;align-items:flex-start">
+              <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
+                <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
+                  <div style="{{ v.boxStyle }}">
+                    <img ref="{{ v.imgRef }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
           <div style="border-bottom:1px dotted rgba(20,20,20,.45);margin-top:34px"></div>
         </div>
       <div ref="{{ viewsRowRef }}" style="display:flex;align-items:center;gap:30px;max-width:1760px;padding:0 0 20px">
         <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
-          <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
+          <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
         </sc-if>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <div onClick="{{ setFullMode }}" style="{{ fullBtnStyle }}">
@@ -324,36 +311,32 @@
         </div>
       </div>
       <sc-if value="{{ exFullMode }}" hint-placeholder-val="{{ true }}">
-        <div data-r="fullpad" style="max-width:1760px;padding:0 0 56px">
+        <div style="max-width:1760px;padding:0 0 56px">
           <div style="position:relative">
-            <div ref="{{ fullSwipeRef }}" data-r="arrowgut" style="padding:0 46px;display:flex;align-items:flex-start;justify-content:center;min-height:340px">
-              <div style="display:inline-flex;flex-direction:column;align-items:center;max-width:100%">
-                <div style="position:relative;max-width:100%">
-                  <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:min(calc(100dvh - 250px), 74vh);width:auto;height:auto;object-fit:contain">
-                  <div onClick="{{ prevFull }}" data-r="taphalf" style="display:none;position:absolute;left:0;top:0;bottom:0;width:50%;cursor:pointer"></div>
-                  <div onClick="{{ nextFull }}" data-r="taphalf" style="display:none;position:absolute;right:0;top:0;bottom:0;width:50%;cursor:pointer"></div>
-                </div>
-                <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
-                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
-                </sc-if>
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:min(80ch,100%);padding-top:14px">{{ fullCaption }}</div>
-              </div>
+            <div ref="{{ fullSwipeRef }}" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:calc(100vh - 180px);min-height:420px">
+              <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain">
+              <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#b4b4b6">Image unavailable</div>
+              </sc-if>
             </div>
-            <div onClick="{{ prevFull }}" data-r="fullarrow" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
-            <div onClick="{{ nextFull }}" data-r="fullarrow" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</div>
+            <div onClick="{{ prevFull }}" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❮</div>
+            <div onClick="{{ nextFull }}" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❯</div>
           </div>
-          <div style="text-align:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;color:#9c9ca0;padding-top:8px">{{ fullCount }}</div>
+          <div style="display:flex;justify-content:center;gap:20px;padding:16px 56px 0">
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:80ch">{{ fullCaption }}</div>
+          </div>
+          <div style="text-align:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;color:#b4b4b6;padding-top:8px">{{ fullCount }}</div>
         </div>
       </sc-if>
       <sc-if value="{{ exGridMode }}" hint-placeholder-val="{{ false }}">
-      <div ref="{{ exGridRef }}" data-r="excols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;align-items:start;max-width:1760px">
+      <div ref="{{ exGridRef }}" data-r="galcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;align-items:start;max-width:1760px">
         <sc-for list="{{ exColumns }}" as="col" hint-placeholder-count="3">
           <div style="display:flex;flex-direction:column;gap:22px">
             <sc-for list="{{ col.items }}" as="g" hint-placeholder-count="3">
               <div onClick="{{ g.open }}" style="cursor:pointer">
                 <div style="{{ g.boxStyle }}">
                   <sc-if value="{{ g.missing }}" hint-placeholder-val="{{ false }}">
-                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#b4b4b6">Image unavailable</div>
                   </sc-if>
                   <img ref="{{ g.imgRef }}" alt="{{ g.caption }}" style="display:block;width:100%;height:auto">
                 </div>
@@ -368,7 +351,7 @@
   </sc-if>
 
   <sc-if value="{{ vNews }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
+    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
       <div style="display:flex;align-items:baseline;gap:26px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
         <div style="display:flex;gap:26px">
           <sc-for list="{{ newsFilters }}" as="f" hint-placeholder-count="3">
@@ -393,11 +376,11 @@
       </form>
       <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;padding:16px 0 0">{{ searchStatus }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;padding:16px 0 0">{{ searchStatus }}</div>
           <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
             <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
               <div>
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;margin-bottom:14px">{{ g.label }}</div>
                 <div data-r="galcols" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 18px;align-items:start">
                   <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
                     <div onClick="{{ r.open }}" style="cursor:pointer">
@@ -405,7 +388,7 @@
                         <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
                       </div>
                       <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
-                      <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:2px 0 0">{{ r.meta }}</div>
+                      <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#9a9a9c;padding:2px 0 0">{{ r.meta }}</div>
                     </div>
                   </sc-for>
                 </div>
@@ -420,10 +403,10 @@
   <sc-if value="{{ vInfo }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;overflow-x:hidden;padding:0 0 90px">
 
-      <div data-r="gut" style="position:relative;padding:0 44px">
-        <div data-r="infotint" style="position:absolute;left:0;top:-26px;width:50%;height:calc(100% + 56px);background:oklch(0.962 0.012 62);z-index:0;pointer-events:none"></div>
-        <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-26px;width:50%;height:calc(100% + 56px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
-        <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:6px 0 0;align-items:start">
+      <div style="position:relative;padding:0 44px">
+        <div data-r="infotint" style="position:absolute;left:0;top:-18px;width:50%;height:calc(100% + 48px);background:oklch(0.962 0.012 62);z-index:0;pointer-events:none"></div>
+        <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-18px;width:50%;height:calc(100% + 48px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
+        <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:40px 0 0;align-items:start">
         <div>
           <div style="width:190px;margin:0 0 24px;background:#f2f1ee">
             <img ref="{{ portraitRef }}" alt="Doug Crocco" style="display:block;width:100%;height:auto">
@@ -431,16 +414,16 @@
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:16px;line-height:1.72;letter-spacing:.004em;color:#2a2a2b;max-width:56ch;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks.</div>
         </div>
         <div style="padding-top:3px">
-          <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 22px;margin-top:0;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#4a4a4d;max-width:460px">
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Email</div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 22px;margin-top:0;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#5c5c5e;max-width:460px">
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Email</div>
             <div><a href="mailto:doug@allart.la">doug@allart.la</a></div>
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Studio</div>
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Studio</div>
             <div>Los Angeles, California — visits by appointment</div>
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Born</div>
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Born</div>
             <div>Albuquerque, New Mexico</div>
           </div>
           <div style="margin-top:26px">
-            <a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
+            <a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
           </div>
           <div style="margin-top:34px;max-width:400px">
             <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:14px">Enquire</div>
@@ -448,8 +431,8 @@
               <input type="email" name="email" placeholder="Your email" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none">
               <textarea name="message" rows="4" placeholder="Message" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.55;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none;resize:vertical"></textarea>
               <div style="display:flex;align-items:center;gap:16px">
-                <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:rgba(255,255,255,.9);border:1px solid rgba(20,20,20,.45);padding:10px 22px;cursor:pointer;border-radius:0">Send</button>
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;color:#7a7a7e">Opens in your mail app</div>
+                <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:rgba(255,255,255,.9);border:1px solid rgba(20,20,20,.45);padding:10px 22px;cursor:pointer;border-radius:0">Send</button>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;color:#9a9a9c">Opens in your mail app</div>
               </div>
             </form>
           </div>
@@ -458,17 +441,17 @@
       </div>
 
 
-      <div data-r="gut" style="max-width:1500px;padding:70px 44px 0">
+      <div style="max-width:1500px;padding:70px 44px 0">
         <form onSubmit="{{ onSearchSubmit }}" style="max-width:560px">
           <input ref="{{ searchInputRef }}" type="search" placeholder="Search works, exhibitions, press" onInput="{{ onSearchInput }}" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:20px;letter-spacing:.02em;color:#141414;width:100%;box-sizing:border-box;padding:0 0 11px;border:none;border-bottom:1px solid rgba(20,20,20,.4);background:transparent;border-radius:0;outline:none">
         </form>
         <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
           <div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;padding:16px 0 0">{{ searchStatus }}</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;padding:16px 0 0">{{ searchStatus }}</div>
             <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
               <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
                 <div>
-                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</div>
+                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;margin-bottom:14px">{{ g.label }}</div>
                   <div data-r="galcols" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 20px;align-items:start">
                     <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
                       <div onClick="{{ r.open }}" style="cursor:pointer">
@@ -476,7 +459,7 @@
                           <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
                         </div>
                         <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
-                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:2px 0 0">{{ r.meta }}</div>
+                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#9a9a9c;padding:2px 0 0">{{ r.meta }}</div>
                       </div>
                     </sc-for>
                   </div>
@@ -486,7 +469,7 @@
           </div>
         </sc-if>
       </div>
-      <div data-r="c2 gut" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
+      <div data-r="c2" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
         <div style="display:flex;flex-direction:column;gap:44px">
           <div style="grid-area:title">
             <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Education</div>
@@ -506,23 +489,19 @@
             </div>
           </div>
           <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Curatorial</div>
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Curatorial — Big Pictures Los Angeles, 2015–2020</div>
             <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-              2026 &nbsp;<em>Death is a Door</em>, CC Jasper, New York, NY<br>
-              2026 &nbsp;<em>The Come Up</em>, SADE, Los Angeles, CA<br>
-              2019 &nbsp;<em>Holding Space</em>, Big Pictures Los Angeles<br>
-              2019 &nbsp;<em>Flat Earth Society</em>, Big Pictures Los Angeles<br>
+              2019 &nbsp;<em>Holding Space</em> · <em>Flat Earth Society</em><br>
               2019 &nbsp;<em>I Have Always Imagined That Paradise Will Be a Kind of Library</em>, Blake and Vargas, Berlin<br>
-              2018 &nbsp;<em>Transmutation</em>, Big Pictures Los Angeles<br>
-              2017 &nbsp;<em>Staring at The Sun</em>, Big Pictures Los Angeles<br>
-              2017 &nbsp;<em>Polaroid Black</em>, Big Pictures Los Angeles<br>
-              2016 &nbsp;<em>Slamdance DIG 2</em>, Big Pictures Los Angeles<br>
-              2015 &nbsp;<em>Slamdance DIG</em>, Big Pictures Los Angeles<br>
+              2018 &nbsp;<em>Transmutation</em><br>
+              2017 &nbsp;<em>Staring at The Sun</em> · <em>Polaroid Black</em><br>
+              2016 &nbsp;<em>Slamdance DIG 2</em><br>
+              2015 &nbsp;<em>Slamdance DIG</em><br>
               2012 &nbsp;<em>NeoNatural</em>, Steve Turner Contemporary, Los Angeles, CA
             </div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.75;color:#4a4a4d;margin-top:16px;max-width:52ch;text-wrap:pretty">Big Pictures Los Angeles was a project space in mid-city Los Angeles, founded in 2014 to show underserved mid-career artists, present new forms of digital media, and collaborate with artists in Miami and New York. It was part of a cluster of galleries that opened on Washington Blvd around 2015 — Hilde, Kamra International, Park View, Kristina Kite, Ochi Projects, Shoot the Lobster, Michael Thibault and The Underground Museum. It closed in 2020. Today the program carries on as curatorial projects at spaces around the world.</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.75;color:#5c5c5e;margin-top:16px;max-width:52ch;text-wrap:pretty">Big Pictures Los Angeles was a project space in mid-city Los Angeles, founded in 2014 to show underserved mid-career artists, present new forms of digital media, and collaborate with artists in Miami and New York. It was part of a cluster of galleries that opened on Washington Blvd around 2015 — Hilde, Kamra International, Park View, Kristina Kite, Ochi Projects, Shoot the Lobster, Michael Thibault and The Underground Museum. It closed in 2020.</div>
             <div style="margin-top:14px">
-              <a href="https://www.bigpictures.la" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">bigpictures.la</a>
+              <a href="https://www.bigpictures.la" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">bigpictures.la</a>
             </div>
           </div>
           <div style="grid-area:title">
@@ -545,7 +524,6 @@
         <div>
           <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected group exhibitions</div>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-            2026 &nbsp;<em>The Come Up</em>, SADE, Los Angeles, CA<br>
             2024 &nbsp;<em>Getting The Band Back Together</em>, Claremont Graduate University, CA<br>
             2024 &nbsp;<em>Hollywood Dream Bubble: Ed Ruscha’s Influence</em>, The Hole, Los Angeles, CA<br>
             2021 &nbsp;<em>The Design Shop</em>, Tile Blush, Miami, FL<br>
@@ -584,28 +562,28 @@
 
   <sc-if value="{{ vVenue }}" hint-placeholder-val="{{ false }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:21;background:#ffffff;display:flex;flex-direction:column">
-      <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ venueCaption }}</div>
-        <div onClick="{{ closeVenue }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ venueCaption }}</div>
+        <div onClick="{{ closeVenue }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
       </div>
-      <div onClick="{{ closeVenue }}" data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:26px 44px 44px;cursor:pointer">
-        <img ref="{{ venueImgRef }}" alt="" style="max-width:100%;max-height:calc(100dvh - 150px);width:auto;height:auto;object-fit:contain">
+      <div onClick="{{ closeVenue }}" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:26px 44px 44px;cursor:pointer">
+        <img ref="{{ venueImgRef }}" alt="" style="max-width:100%;max-height:calc(100vh - 150px);width:auto;height:auto;object-fit:contain">
       </div>
     </div>
   </sc-if>
 
   <div style="{{ navStyle }}">
     <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap">Doug Crocco</div>
-    <div data-r="navlinks" style="pointer-events:auto;display:flex;gap:30px;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
+    <div data-r="navlinks" style="pointer-events:auto;display:flex;gap:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
       <span onClick="{{ toWorks }}" style="cursor:pointer;opacity:{{ oWorks }}">Works</span>
       <span onClick="{{ toExhibits }}" style="cursor:pointer;opacity:{{ oExhibits }}">Exhibits</span>
       <span onClick="{{ toNews }}" style="cursor:pointer;opacity:{{ oNews }}">News</span>
       <span onClick="{{ toInfo }}" style="cursor:pointer;opacity:{{ oInfo }}">Info</span>
     </div>
     <div data-r="navburger" onClick="{{ toggleMenu }}" style="display:none;pointer-events:auto;cursor:pointer;width:34px;height:34px;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-      <div style="width:22px;height:1px;background:currentColor"></div>
-      <div style="width:22px;height:1px;background:currentColor"></div>
-      <div style="width:22px;height:1px;background:currentColor"></div>
+      <div style="width:22px;height:1px;background:#141414"></div>
+      <div style="width:22px;height:1px;background:#141414"></div>
+      <div style="width:22px;height:1px;background:#141414"></div>
     </div>
   </div>
 
@@ -613,7 +591,7 @@
     <div data-live-layer style="position:fixed;inset:0;z-index:30;background:#ffffff;display:flex;flex-direction:column;padding:26px 30px 40px">
       <div style="display:flex;align-items:center;justify-content:space-between">
         <div onClick="{{ toHomeMenu }}" style="cursor:pointer;font-size:16px;letter-spacing:.02em">Doug Crocco</div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#4a4a4d">×</div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#5c5c5e">×</div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:26px;letter-spacing:.06em;text-transform:uppercase">
         <div onClick="{{ toWorksMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Works</div>
@@ -648,7 +626,7 @@ const mkRef = (url, onFail) => el => {
 };
 
 class Component extends DCLogic {
-  state = { q: '', phone: false, wide: (typeof window !== 'undefined' ? window.innerWidth > 820 : true), colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
+  state = { q: '', colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', broken: {} };
   markBroken = url => {
     if (!url || this.state.broken[url]) return;
     this.setState(s => { const b = Object.assign({}, s.broken); b[url] = 1; return { broken: b }; });
@@ -684,170 +662,20 @@ class Component extends DCLogic {
 
   colsFor(w) { return w <= 768 ? 1 : (w <= 900 ? 2 : 3); }
 
-  // luminance of the top strip of an image, cached per url. null when the pixels
-  // can't be read (cross-origin without CORS) so the caller can fall back.
-  probeInk(url) {
-    if (!url) return;
-    this._ink = this._ink || {};
-    if (url in this._ink) return;
-    this._ink[url] = null;
-    const im = new Image();
-    im.crossOrigin = 'anonymous';
-    im.onload = () => {
-      try {
-        const w = 40, h = 40, c = document.createElement('canvas');
-        c.width = w; c.height = h;
-        const ctx = c.getContext('2d');
-        // object-fit:cover crops to the centre; sample the top ~22% across the width
-        const sh = Math.max(1, Math.round(im.naturalHeight * 0.22));
-        ctx.drawImage(im, 0, 0, im.naturalWidth, sh, 0, 0, w, h);
-        const px = ctx.getImageData(0, 0, w, h).data;
-        let sum = 0;
-        for (let i = 0; i < px.length; i += 4) sum += 0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2];
-        this._ink[url] = (sum / (px.length / 4)) > 150 ? 'dark' : 'light';
-      } catch (e) {
-        this._ink[url] = 'blocked';
-      }
-      this.forceUpdate();
-    };
-    im.onerror = () => { this._ink[url] = 'blocked'; };
-    im.src = url;
-  }
-
-  yearStyles() {
-    const ph = !!this.state.phone, RAL = 'Raleway,Helvetica,Arial,sans-serif';
-    const lbl = { fontFamily: RAL, fontSize: 12, fontWeight: 500, letterSpacing: '.14em', color: '#6e6e72' };
-    return {
-      wallStyle: ph
-        ? { flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'hidden', padding: '0 18px 40px' }
-        : { flex: 1, minHeight: 0, overflowX: 'auto', overflowY: 'hidden', padding: '0 44px 24px' },
-      wallRowStyle: ph
-        ? { display: 'flex', flexDirection: 'column', gap: 40 }
-        : { display: 'flex', alignItems: 'flex-end', gap: 34, height: '100%' },
-      yearColStyle: ph
-        ? { display: 'flex', flexDirection: 'column-reverse' }
-        : { display: 'flex', flexDirection: 'column', height: '100%', flex: 'none' },
-      yearRowStyle: ph
-        ? { display: 'flex', flexDirection: 'column', gap: 24 }
-        : { flex: 1, minHeight: 0, display: 'flex', alignItems: 'flex-end', gap: 14 },
-      wallImgStyle: ph
-        ? { display: 'block', width: '100%', height: 'auto' }
-        : { display: 'block', height: '100%', width: 'auto', maxWidth: 'none' },
-      yearLabelStyle: ph
-        ? Object.assign({ flex: 'none', margin: '0 0 16px', paddingBottom: 10, borderBottom: '1px solid rgba(20,20,20,.25)' }, lbl)
-        : Object.assign({ flex: 'none', marginTop: 20, paddingTop: 12, borderTop: '1px solid rgba(20,20,20,.25)' }, lbl)
-    };
-  }
-
-  slug(s) {
-    return String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  }
-
-  // state -> hash
-  hashFor(st) {
-    const sg = this.slug.bind(this), f = v => (v && v !== 'All' ? '/' + sg(v) : '');
-    switch (st.view) {
-      case 'works': return '#/works';
-      case 'series': return '#/works/' + sg(st.series);
-      case 'work': return '#/works/' + sg(st.series) + '/' + ((st.sel || 0) + 1);
-      case 'overview': return '#/overview' + f(st.ovFilter);
-      case 'year': return '#/year';
-      case 'exhibits': return '#/exhibits' + f(st.exhFilter);
-      case 'exhibit': return '#/exhibit/' + sg(st.exhibit) + (st.exMode === 'grid' ? '/grid' : '');
-      case 'news': return '#/news' + f(st.newsFilter);
-      case 'info': return '#/info';
-      case 'search': return '#/search' + (st.q ? '/' + encodeURIComponent(st.q) : '');
-      default: return '#/';
-    }
-  }
-
-  // hash -> state
-  stateForHash(h) {
-    const d = window.DC || {};
-    const parts = String(h || '').replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
-    const head = (parts[0] || '').toLowerCase();
-    const pickFilter = (list, seg) => list.find(x => this.slug(x) === this.slug(seg)) || 'All';
-    if (!head) return { view: 'home' };
-    if (head === 'info') return { view: 'info' };
-    if (head === 'year') return { view: 'year' };
-    if (head === 'search') return { view: 'search', q: parts[1] || '' };
-    if (head === 'overview') return { view: 'overview', ovFilter: pickFilter(['All', 'Drawing', 'Print', 'Sculpture', 'Public'], parts[1]) };
-    if (head === 'news') return { view: 'news', newsFilter: pickFilter(['All', 'Press', 'Event'], parts[1]) };
-    if (head === 'exhibits') return { view: 'exhibits', exhFilter: pickFilter(['All', 'Solo', 'Group', 'Curated'], parts[1]) };
-    if (head === 'exhibit') {
-      const e = (d.exhibits || []).find(x => this.slug(x.title) === this.slug(parts[1]));
-      if (!e) return { view: 'exhibits' };
-      return {
-        view: 'exhibit', exhibit: e.title, exMode: (parts[2] || '').toLowerCase() === 'grid' ? 'grid' : 'full',
-        exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exFullU: '', exFullFor: '', exInfoHidden: false
-      };
-    }
-    if (head === 'works') {
-      if (!parts[1]) return { view: 'works' };
-      const s = (d.series || []).find(x => this.slug(x.name) === this.slug(parts[1]));
-      if (!s) return { view: 'works' };
-      if (parts[2]) {
-        const len = (d.works || []).filter(w => w.s === s.name).length || 1;
-        const i = Math.min(Math.max(parseInt(parts[2], 10) || 1, 1), len) - 1;
-        return { view: 'work', series: s.name, workFrom: 'series', sel: i };
-      }
-      return { view: 'series', series: s.name, sel: 0 };
-    }
-    return { view: 'home' };
-  }
-
-  applyHash() {
-    const next = this.stateForHash(window.location.hash);
-    this._fromHash = true;
-    this._lastHash = window.location.hash || '#/';
-    this.setState(Object.assign({ lb: '', lbC: '', venue: '', venueCap: '' }, next), () => { this._fromHash = false; });
-  }
-
-  syncHash() {
-    const h = this.hashFor(this.state);
-    if (this._fromHash) { this._lastHash = h; return; }
-    const cur = window.location.hash || '#/';
-    if (h === cur || h === this._lastHash) return;
-    this._lastHash = h;
-    // replace rather than push for filter-only changes so Back skips them
-    const filterOnly = this._prevView === this.state.view && ['overview', 'news', 'exhibits', 'search'].indexOf(this.state.view) >= 0;
-    if (filterOnly) window.history.replaceState(null, '', h);
-    else window.location.hash = h;
-  }
-
-  componentDidUpdate() {
-    this.syncHash();
-    this._prevView = this.state.view;
-  }
-
   componentDidMount() {
     this._resize = () => {
       const n = this.colsFor(window.innerWidth);
-      const p = window.innerWidth <= 640;
-      const wd = window.innerWidth > 820;
-      if (n !== this.state.colCount || p !== this.state.phone || wd !== this.state.wide) this.setState({ colCount: n, phone: p, wide: wd });
+      if (n !== this.state.colCount) this.setState({ colCount: n });
     };
     this._resize();
     window.addEventListener('resize', this._resize);
-    this._lastHash = window.location.hash || '#/';
     if (window.DC) {
       this.preload();
-      this.applyHash();
     } else {
       this._wait = setInterval(() => {
-        if (window.DC) { clearInterval(this._wait); this.preload(); this.applyHash(); this.forceUpdate(); }
+        if (window.DC) { clearInterval(this._wait); this.preload(); this.forceUpdate(); }
       }, 120);
     }
-    this._hashNav = () => {
-      if ((window.location.hash || '#/') === this._lastHash) return;
-      this.applyHash();
-    };
-    if (window.__dcHash) window.removeEventListener('hashchange', window.__dcHash);
-    window.__dcHash = this._hashNav;
-    window.addEventListener('hashchange', this._hashNav);
-    this._venueFlip = setInterval(() => {
-      if (this.state.view === 'exhibit') this.setState(x => ({ venueFlip: !x.venueFlip }));
-    }, 6000);
     this._tick = setInterval(() => {
       if (this.state.view === 'home') this.setState(s => ({ slide: s.slide + 1 }));
     }, 5200);
@@ -872,16 +700,12 @@ class Component extends DCLogic {
       if (e.key === 'ArrowLeft') this.step(-1);
       if (e.key === 'Escape') this.setState({ view: 'series' });
     };
-    if (window.__dcKey) window.removeEventListener('keydown', window.__dcKey);
-    window.__dcKey = this._key;
     window.addEventListener('keydown', this._key);
   }
   componentWillUnmount() {
-    clearInterval(this._tick);
-    clearInterval(this._venueFlip); clearInterval(this._wait);
+    clearInterval(this._tick); clearInterval(this._wait);
     window.removeEventListener('keydown', this._key);
     window.removeEventListener('resize', this._resize);
-    window.removeEventListener('hashchange', this._hashNav);
   }
 
   list() { return D().works.filter(w => w.s === this.state.series); }
@@ -893,13 +717,11 @@ class Component extends DCLogic {
   attachSwipe(el, onSwipe) {
     if (!el || el._swipe) return;
     el._swipe = true;
-    let x0 = 0, y0 = 0, t0 = 0, active = false;
+    let x0 = 0, y0 = 0, t0 = 0;
     el.addEventListener('touchstart', ev => {
-      const t = ev.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); active = true;
+      const t = ev.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now();
     }, { passive: true });
     el.addEventListener('touchend', ev => {
-      if (!active) return;
-      active = false;
       const t = ev.changedTouches[0];
       const dx = t.clientX - x0, dy = t.clientY - y0;
       if (Date.now() - t0 < 600 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.6) {
@@ -913,62 +735,42 @@ class Component extends DCLogic {
 
 
   openExhibit(title) {
-    this._enteredAt = Date.now();
-    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false });
+    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFullU: '', exInfoHidden: false });
   }
 
   setViewMode(mode) {
-    this._enteredAt = Date.now();
-    this.setState({ exMode: mode, exFullU: '', exFullFor: '' }, () => this.scrollTo(this._viewsRow, 26));
+    this.setState({ exMode: mode, exFullU: '', exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
   }
 
 
-  scrollTo(el, offset) {
-    const box = this._exScroll;
-    if (!box) return;
-    // offsetTop is layout-relative, so it lands identically whichever view just rendered
+  scrollToViews() {
+    const box = this._exScroll, row = this._viewsRow;
+    if (!box || !row) return;
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      const target = el || this._viewsRow;
-      if (!target) return;
-      const to = Math.max(0, target.offsetTop - (offset || 0));
-      const from = box.scrollTop;
-      const dist = to - from;
-      if (Math.abs(dist) < 2) return;
-      const dur = 900;
-      const t0 = performance.now();
-      cancelAnimationFrame(this._glide);
-      const step = now => {
-        const p = Math.min(1, (now - t0) / dur);
-        // slow ease in and out, so the pull reads as deliberate
-        const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-        box.scrollTop = from + dist * e;
-        if (p < 1) this._glide = requestAnimationFrame(step);
-      };
-      this._glide = requestAnimationFrame(step);
+      const top = Math.max(0, box.scrollTop + row.getBoundingClientRect().top - box.getBoundingClientRect().top - 26);
+      if (Math.abs(top - box.scrollTop) > 2) {
+        this._autoScroll = true;
+        clearTimeout(this._autoScrollT);
+        this._autoScrollT = setTimeout(() => { this._autoScroll = false; }, 700);
+        box.scrollTo({ top: top, behavior: 'smooth' });
+      }
     }));
   }
 
   openFullAt(u) {
     return () => {
-      this._enteredAt = Date.now();
-      this.setState({ exMode: 'full', exFullU: u, exFullFor: this.state.exhibit }, () => this.scrollTo(this._viewsRow, 26));
+      this.setState({ exMode: 'full', exFullU: u, exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
     };
   }
 
   stepFull(n) {
-    const now = Date.now();
-    // a tap that opened this view can produce a delayed click on the arrow beneath the finger
-    if (this._enteredAt && now - this._enteredAt < 600) return;
-    if (this._lastStep && now - this._lastStep < 220) return;
-    this._lastStep = now;
     const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
     const list = e && e.gal ? e.gal : [];
     if (!list.length) return;
     this.setState(st => {
-      const usable = st.exFullFor === st.exhibit ? st.exFullU : '';
-      const cur = usable ? list.findIndex(g => g.u === usable) : 0;
+      const cur = list.findIndex(g => g.u === st.exFullU);
       const next = list[((cur < 0 ? 0 : cur) + n + list.length) % list.length];
-      return { exFullU: next.u, exFullFor: st.exhibit };
+      return { exFullU: next.u };
     });
   }
 
@@ -1002,28 +804,6 @@ class Component extends DCLogic {
     const cx = ex[cxI] || {};
     // the nav only hides while you're inside an exhibit
     const navHidden = view === 'exhibit' && !!st.exInfoHidden;
-    // the nav rides up in step with the scroll, capped at its own height
-    const navOff = view === 'exhibit' ? Math.max(0, Math.min(86, st.navOff || 0)) : 0;
-    // nav ink: dark type on white pages, and on light artwork; white on dark artwork
-    const navImg = view === 'home' ? (cur.img || '') : '';
-    if (navImg) this.probeInk(navImg);
-    const probed = this._ink && this._ink[navImg];
-    // shows whose top band is dark enough to need white type — matched on title so
-    // the list survives reordering
-    const WHITE_INK = /cat house|mushroom show|^dba$|polaroid black|tugboat|pensive|kind of library|hollywood dream bubble|works on paper/i;
-    const inkTitle = view === 'home' ? (cur.title || '') : '';
-    // per-image override for slides that share a title (the two Pensive frames)
-    const INK_BY_IMAGE = {
-      'artwork/uploads/2018/01/dmc-install-miami-shadow8.jpg': 'dark',
-      'artwork/uploads/2025/01/splash-3.jpg': 'dark'
-    };
-    const override = view === 'home'
-      ? (INK_BY_IMAGE[String(cur.img || '').replace(/^https?:\/\/[^/]+\//, '')] || null)
-      : null;
-    const navInk = override ? override
-      : !navImg ? 'dark'
-      : (probed === 'dark' || probed === 'light') ? probed
-      : (WHITE_INK.test(inkTitle) ? 'light' : 'dark');
     // search runs across works, exhibitions and press notes
     const searchHits = (() => {
       const q = (st.q || '').trim().toLowerCase();
@@ -1098,21 +878,16 @@ class Component extends DCLogic {
     const summary = cx.sum || trimLead(lead);
     // with a hand-written summary the body keeps every paragraph intact
     const remainder = cx.sum ? p0 : (cut && p0.indexOf(cut) === 0 ? p0.slice(cut.length).trim() : '');
-    const bodyAll = chunk(remainder)
+    const body = chunk(remainder)
       .concat(paras.slice(1))
       .filter(t => t && t.trim().length > 1);
-    const body = bodyAll;
-    // index of the trailing artist roster within summary-paras + body
-    const sumCount = String(cx.sum || cut || '').split(/\n{2,}/).map(t => t.trim()).filter(Boolean).length;
-    const rosterIdx = body.findIndex(t => /^Artists included:/i.test(t.trim()));
-    const rosterAt = rosterIdx < 0 ? -1 : sumCount + rosterIdx;
     const venueCap = [cx.venue, cx.city, cx.y].filter(Boolean).join(', ');
     const vImgs = (cx.venue_img || []).map(u => ({ u, c: venueCap }));
     const lbAll = (cx.gal || []);
-    // the pointer only counts if it was set for the show currently on screen
-    const ptr = (st.exFullFor === st.exhibit && st.exFullU) ? st.exFullU : '';
-    const byU = ptr ? lbAll.findIndex(g => g.u === ptr) : -1;
-    const fullI = byU >= 0 ? byU : 0;
+    const byU = lbAll.findIndex(g => g.u === st.exFullU);
+    // on entry, skip any leading images already known to have failed
+    const firstOk = lbAll.findIndex(g => !st.broken[g.u]);
+    const fullI = byU >= 0 ? byU : (firstOk >= 0 ? firstOk : 0);
     const restItems = lbAll;
 
     return {
@@ -1121,8 +896,7 @@ class Component extends DCLogic {
       vOverview: view === 'overview',
       vYear: view === 'year',
       toYear: () => this.setState({ view: 'year' }),
-      wallRef: el => { if (el && !el._wheel) { el._wheel = true; el.addEventListener('wheel', ev => { if (this.state.phone) return; if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) { el.scrollLeft += ev.deltaY; ev.preventDefault(); } }, { passive: false }); } },
-      ...this.yearStyles(),
+      wallRef: el => { if (el && !el._wheel) { el._wheel = true; el.addEventListener('wheel', ev => { if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) { el.scrollLeft += ev.deltaY; ev.preventDefault(); } }, { passive: false }); } },
       yearGroups: (() => {
         const works = (d.works || []).filter(w => w.y);
         const years = [];
@@ -1135,7 +909,7 @@ class Component extends DCLogic {
             items: items.map((w, i) => ({
               title: w.t || '',
               // scale varies with the work's real size so the run reads like a hang
-              style: st.phone ? { cursor: 'pointer' } : { cursor: 'pointer', flex: 'none', height: 'min(' + (i % 3 === 0 ? 44 : (i % 3 === 1 ? 32 : 38)) + 'vh, ' + (i % 3 === 0 ? 400 : (i % 3 === 1 ? 290 : 340)) + 'px)' },
+              style: { cursor: 'pointer', flex: 'none', height: 'min(' + (i % 3 === 0 ? 44 : (i % 3 === 1 ? 32 : 38)) + 'vh, ' + (i % 3 === 0 ? 400 : (i % 3 === 1 ? 290 : 340)) + 'px)' },
               imgRef: mkRef(w.img, this.markBroken),
               open: () => {
                 const list = (d.works || []).filter(x => x.s === w.s);
@@ -1150,10 +924,9 @@ class Component extends DCLogic {
         label: f,
         pick: () => this.setState({ ovFilter: f }),
         style: {
-          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12,
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 11,
           letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
-          color: f === (st.ovFilter || 'All') ? '#141414' : '#6e6e72',
-          fontWeight: f === (st.ovFilter || 'All') ? 500 : 400,
+          opacity: f === (st.ovFilter || 'All') ? 1 : 0.45,
           borderBottom: '1px solid ' + (f === (st.ovFilter || 'All') ? 'rgba(20,20,20,.85)' : 'transparent')
         }
       })),
@@ -1171,9 +944,9 @@ class Component extends DCLogic {
           imgRef: mkRef(w.img, this.markBroken)
         })), this.state.colCount || 3),
       vExhibit: view === 'exhibit',
-      oWorks: (view === 'works' || view === 'series' || view === 'work' || view === 'overview' || view === 'year') ? 1 : 0.62,
-      oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.62,
-      oInfo: view === 'info' ? 1 : 0.62,
+      oWorks: (view === 'works' || view === 'series' || view === 'work' || view === 'overview' || view === 'year') ? 1 : 0.5,
+      oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.5,
+      oInfo: view === 'info' ? 1 : 0.5,
       hasQuery: !!(st.q || '').trim(),
       vSearch: view === 'search',
       toSearchMenu: () => this.setState({ view: 'search', menuOpen: false }),
@@ -1216,14 +989,6 @@ class Component extends DCLogic {
       slideB: mkRef((slides[even ? prevI : si] || {}).img),
       slideAOpacity: even ? 1 : 0,
       slideBOpacity: even ? 0 : 1,
-      slideInkStyle: navInk === 'light'
-        ? { pointerEvents: 'auto', cursor: 'pointer', color: '#ffffff', textShadow: '0 1px 16px rgba(0,0,0,.5)' }
-        : { pointerEvents: 'auto', cursor: 'pointer', color: '#141414', textShadow: 'none' },
-      slideTitleStyle: {
-        fontSize: 15, lineHeight: 1.4, display: 'inline-block', paddingBottom: 2,
-        borderBottom: '1px solid ' + (navInk === 'light' ? 'rgba(255,255,255,.55)' : 'rgba(20,20,20,.35)')
-      },
-      slideVenueStyle: { fontSize: 12, lineHeight: 1.7, marginTop: 4, opacity: navInk === 'light' ? 0.8 : 0.6 },
       slideTitle: cur.title || '',
       slideVenue: [cur.venue, cur.y].filter(Boolean).join(', '),
       slideCount: slides.length ? (si + 1) + ' / ' + slides.length : '',
@@ -1268,23 +1033,22 @@ class Component extends DCLogic {
         label: f,
         pick: () => this.setState({ exhFilter: f }),
         style: {
-          cursor: 'pointer', fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase',
-          paddingBottom: 4, color: f === exhF ? '#141414' : '#6e6e72', fontWeight: f === exhF ? 500 : 400,
+          cursor: 'pointer', fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase',
+          paddingBottom: 4, opacity: f === exhF ? 1 : 0.45,
           borderBottom: '1px solid ' + (f === exhF ? 'rgba(20,20,20,.85)' : 'transparent')
         }
       })),
       vNews: view === 'news',
-      oNews: view === 'news' ? 1 : 0.62,
+      oNews: view === 'news' ? 1 : 0.5,
       toNews: this.go('news'),
       newsLabel: 'News',
       newsFilters: ['All', 'Press', 'Event'].map(f => ({
         label: f === 'Event' ? 'Events' : f,
         pick: () => this.setState({ newsFilter: f }),
         style: {
-          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12,
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 11,
           letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
-          color: f === nF ? '#141414' : '#6e6e72',
-          fontWeight: f === nF ? 500 : 400,
+          opacity: f === nF ? 1 : 0.45,
           borderBottom: '1px solid ' + (f === nF ? 'rgba(20,20,20,.85)' : 'transparent')
         }
       })),
@@ -1294,8 +1058,8 @@ class Component extends DCLogic {
         imgRef: mkRef(n.img, this.markBroken)
       })),
       portraitRef: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
-      infoBgRef: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2019/02/19-1.jpg'),
-      infoBgRef2: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2014/10/PB3.jpg'),
+      infoBgRef: mkRef('https://allart.la/artwork/uploads/2019/02/19-1.jpg'),
+      infoBgRef2: mkRef('https://allart.la/artwork/uploads/2014/10/PB3.jpg'),
       onContactSubmit: e => {
         e.preventDefault();
         const f = e.target;
@@ -1325,6 +1089,7 @@ class Component extends DCLogic {
       exHeroRef: mkRef(cx.img),
       exHeroStyle: Object.assign({ aspectRatio: '16 / 10' }, PLATE),
       exPlaceDate: [cx.city, cx.y].filter(Boolean).join(' · '),
+      exPos: cxI >= 0 ? (cxI + 1) + ' / ' + ex.length : '',
       prevExhibit: () => this.stepExhibit(-1),
       nextExhibit: () => this.stepExhibit(1),
       exScrollRef: el => {
@@ -1332,119 +1097,107 @@ class Component extends DCLogic {
         if (el && !el._track) {
           el._track = true;
           el.addEventListener('scroll', () => {
+            if (this._autoScroll) return;
             const block = this._pressBlock;
-            if (!block) return;
-            const off = Math.max(0, Math.min(86, el.scrollTop));
-            if (off !== this.state.navOff) this.setState({ navOff: off, navSnap: false });
-            const edge = block.offsetTop + block.offsetHeight;
-            const hidden = this.state.exInfoHidden;
-            const past = hidden ? el.scrollTop > edge - 80 : el.scrollTop >= edge;
-            if (past !== hidden) this.setState({ exInfoHidden: past });
+            // offsetTop is relative to the scroll content, so moving the container can't skew it
+            const past = block ? (block.offsetTop + block.offsetHeight) - el.scrollTop : el.scrollTop;
+            // hysteresis: hide once it clears the top, restore only well after it returns
+            const gone = block
+              ? (this.state.exInfoHidden ? past <= 64 : past <= 4)
+              : el.scrollTop > 8;
+            if (gone !== this.state.exInfoHidden) this.setState({ exInfoHidden: gone, navAnim: false });
           }, { passive: true });
         }
       },
-      showInfo: () => { this.setState({ navSnap: true }); this.scrollTo(this._pressRow, 26); },
-      viewsRowRef: el => { this._viewsRow = el; },
+      showInfo: () => {
+        const box = this._exScroll, row = this._pressRow;
+        if (!box) return;
+        if (row) {
+          const top = Math.max(0, box.scrollTop + row.getBoundingClientRect().top - box.getBoundingClientRect().top - 26);
+          this._autoScroll = true;
+          clearTimeout(this._autoScrollT);
+          this._autoScrollT = setTimeout(() => { this._autoScroll = false; }, 700);
+          this.setState({ exInfoHidden: false, navAnim: true });
+          box.scrollTo({ top: top, behavior: 'smooth' });
+          return;
+        }
+      },
       fullSwipeRef: el => { this._fullFrame = el; this.attachSwipe(el, d => this.stepFull(d)); },
       exGridRef: el => { this._exGrid = el; },
+      exUrl: cx.url || '',
+      exUrlLabel: cx.urlLabel || 'Gallery website',
+      exHasUrl: !!cx.url,
+      exPressUrl: (cx.press || {}).u || '',
+      exPressLabel: (cx.press || {}).label || '',
+      exHasPress: !!(cx.press && cx.press.u),
+      exPressIsImage: !!(cx.press && /\.(jpg|jpeg|png|gif|webp)$/i.test(cx.press.u)),
+      exHasPress2: !!(cx.press2 && cx.press2.u),
+      exPress2Label: (cx.press2 || {}).label || '',
+      openPress2: () => { if (cx.press2 && cx.press2.u) this.setState({ venue: cx.press2.u, venueCap: cx.press2.label || '' }); },
+      exPressIsPage: !!(cx.press && cx.press.u && !/\.(jpg|jpeg|png|gif|webp)$/i.test(cx.press.u)),
+      openPress: () => { if (cx.press && cx.press.u) this.setState({ venue: cx.press.u, venueCap: cx.press.label || '' }); },
+      exPdf: cx.pdf || '',
+      exHasPdf: !!cx.pdf,
+      exSummary: summary,
+      exCollapsedParas: (() => {
+        const sp = String(summary).split(/\n{2,}/).map(t => t.trim()).filter(Boolean);
+        return sp.concat(body).map((t, i) => ({ text: t, i }));
+      })(),
+      exCopyClampStyle: st.exOpen
+        ? { display: 'block' }
+        : { display: 'block', maxHeight: 344, overflow: 'hidden', maskImage: 'linear-gradient(to bottom, #000 82%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, #000 82%, transparent 100%)' },
+      exSummaryParas: String(summary).split(/\n{2,}/).map((t, i) => ({ text: t.trim(), i })).filter(p => p.text),
+      exHasMore: body.length > 0,
+      exExpanded: !!st.exOpen,
+      exMoreLabel: st.exOpen ? 'Less' : 'See more',
+      toggleExText: () => this.setState(x => ({ exOpen: !x.exOpen }), () => {
+        if (this.state.exOpen) return;
+        const sc = this._exScroll, row = this._pressRow;
+        if (!sc || !row) return;
+        requestAnimationFrame(() => {
+          const top = row.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop;
+          this._autoScroll = true;
+          clearTimeout(this._autoScrollT);
+          this._autoScrollT = setTimeout(() => { this._autoScroll = false; }, 700);
+          sc.scrollTo({ top: Math.max(0, top - 26), behavior: 'smooth' });
+        });
+      }),
+      vVenue: view === 'exhibit' && !!st.venue,
+      venueImgRef: el => { if (el && st.venue) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== st.venue) el.src = st.venue; } },
+      venueCaption: st.venueCap || venueCap,
+      closeVenue: () => this.setState({ venue: '', venueCap: '' }),
+      viewsRowRef: el => { this._viewsRow = el; },
       pressRowRef: el => { this._pressRow = el; },
       pressBlockRef: el => { this._pressBlock = el; },
       exInfoHidden: !!st.exInfoHidden,
+      exVenueImgs: vImgs.filter(v => v.u !== cx.hero).map(v => ({
+        imgRef: mkRef(v.u, this.markBroken),
+        open: () => this.setState({ venue: v.u, venueCap: '' }),
+        wrapStyle: { cursor: 'pointer', width: '100%' },
+        boxStyle: { width: '100%', height: st.broken[v.u] ? 0 : 400, overflow: 'hidden', background: '#f6f5f2' }
+      })),
+      heroFrameStyle: {
+        width: '100vw', marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)',
+        marginBottom: 34, overflow: 'hidden',
+        aspectRatio: '2 / 1', height: 'auto', maxHeight: 'min(62vh, 560px)',
+        background: '#f2f1ee'
+      },
+      heroImgRef: mkRef(cx.hero || '', this.markBroken),
+      exHasHero: !!cx.hero,
+      exTitleBlockStyle: { maxWidth: 1760, padding: cx.hero ? '0 0 24px' : '0 0 40px' },
       exScrollStyle: {
-        position: 'absolute', top: 86 - navOff, left: 0, right: 0, bottom: 0,
-        overflowY: 'auto', padding: (st.phone ? '0 18px ' : '0 44px ') + (st.exMode === 'full' ? (st.phone ? '8vh' : '20vh') : '70px')
+        position: 'absolute', top: navHidden ? 0 : 86, left: 0, right: 0, bottom: 0,
+        overflowY: 'auto', padding: (navHidden ? '26px' : '0') + ' 44px 70px',
+        transition: st.navAnim ? 'top .34s cubic-bezier(.33,1,.68,1)' : 'none'
       },
       navStyle: {
         position: 'absolute', top: 0, left: 0, right: 0, height: 86,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: st.phone ? '0 18px' : '0 44px', zIndex: 5, pointerEvents: 'none',
-        color: navInk === 'dark' ? '#141414' : '#ffffff',
-        textShadow: navInk === 'light' ? '0 1px 16px rgba(0,0,0,.5)' : 'none',
-        transform: 'translateY(-' + navOff + 'px)',
-        opacity: 1 - (navOff / 86),
-        transition: st.navSnap ? 'transform .3s cubic-bezier(.33,1,.68,1), opacity .24s ease' : 'none'
+        padding: '0 44px', zIndex: 5, pointerEvents: 'none',
+        transform: navHidden ? 'translateY(-86px)' : 'translateY(0)',
+        opacity: navHidden ? 0 : 1,
+        transition: st.navAnim ? 'transform .34s cubic-bezier(.33,1,.68,1), opacity .28s ease' : 'none'
       },
-      exTitleBlockStyle: { maxWidth: 1760, padding: cx.hero ? '0 0 24px' : '0 0 40px' },
-      exHasHero: !!cx.hero,
-      heroFrameStyle: {
-        width: '100vw', marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)',
-        marginBottom: 34, overflow: 'hidden',
-        height: 'min(56vh, 620px)',
-        background: '#f2f1ee'
-      },
-      heroImgRef: el => {
-        const u = cx.hero || '';
-        if (!el || !u) return;
-        if (el.getAttribute('src') === u) return;
-        el.onerror = () => { el.style.display = 'none'; this.markBroken(u); };
-        el.onload = () => { el.style.display = ''; };
-        el.style.display = '';
-        el.src = u;
-        el.style.animation = 'none';
-      },
-      heroImgStyle: { display: 'block', width: '100%', height: '100%', objectFit: 'cover' },
-      exCollapsedParas: (() => {
-        const sp = String(summary).split(/\n{2,}/).map(t => t.trim()).filter(Boolean);
-        const all = sp.concat(body);
-        const cutAt = rosterAt >= 0 ? rosterAt : (cx.sum ? sp.length : -1);
-        const keep = (!st.exOpen && cutAt >= 0) ? all.slice(0, cutAt) : all;
-        return keep.map((t, i) => ({ text: t, i }));
-      })(),
-      // one continuous text flow wrapping a right-floated venue photograph; "See more"
-      // just lifts the height cap so the copy fills the space under the image
-      exRosterCut: rosterAt >= 0,
-      exVenueColStyle: st.phone
-        ? { float: 'none', width: '100%', margin: '0 0 24px' }
-        : { float: 'right', width: 'clamp(240px, 26vw, 320px)', margin: '6px 0 26px 52px' },
-      exCopyWrapStyle: (st.exOpen || !body.length || rosterAt >= 0 || !!cx.sum)
-        ? { position: 'relative' }
-        : { position: 'relative', maxHeight: (st.phone ? 690 : (st.colCount === 3 ? 434 : 334)), overflow: 'hidden' },
-      exCollapsedFade: !st.exOpen && body.length > 0 && rosterAt < 0 && !cx.sum,
-      exFadeStyle: {
-        position: 'absolute', left: 0, bottom: 0, height: st.phone ? 56 : 120, pointerEvents: 'none',
-        right: st.phone ? 0 : 'calc(clamp(240px, 26vw, 320px) + 52px)',
-        background: 'linear-gradient(to bottom, rgba(255,255,255,0), #ffffff 88%)'
-      },
-      exHasMore: body.length > 0,
-      exExpanded: !!st.exOpen,
-      exMoreLabel: st.exOpen ? 'Less' : (rosterAt >= 0 ? 'Artist list' : 'See more'),
-      toggleExText: () => {
-        // expanding the copy moves the gallery under the pointer; a delayed
-        // click would otherwise land on the arrow now sitting in that spot
-        this._enteredAt = Date.now();
-        this.setState(x => ({ exOpen: !x.exOpen }), () => {
-          if (!this.state.exOpen) this.scrollTo(this._pressRow, 26);
-        });
-      },
-      exHasPress: !!(cx.press && cx.press.u),
-      exPressIsImage: !!(cx.press && /\.(jpg|jpeg|png|gif|webp)$/i.test(cx.press.u)),
-      exPressIsPage: !!(cx.press && cx.press.u && !/\.(jpg|jpeg|png|gif|webp)$/i.test(cx.press.u)),
-      exPressUrl: (cx.press || {}).u || '',
-      exPressLabel: (cx.press || {}).label || '',
-      openPress: () => { if (cx.press && cx.press.u) this.setState({ venue: cx.press.u, venueCap: cx.press.label || '' }); },
-      exHasPress2: !!(cx.press2 && cx.press2.u),
-      exPress2Label: (cx.press2 || {}).label || '',
-      openPress2: () => { if (cx.press2 && cx.press2.u) this.setState({ venue: cx.press2.u, venueCap: cx.press2.label || '' }); },
-      exHasUrl: !!cx.url,
-      exUrl: cx.url || '',
-      exUrlLabel: cx.urlLabel || 'Gallery website',
-      exHasPdf: !!cx.pdf,
-      exPdf: cx.pdf || '',
-      exVenueImgs: (cx.venue_pair && cx.venue_pair.length === 2 ? [{ u: cx.venue_pair[0].u, pair: cx.venue_pair }] : vImgs.filter(v => v.u !== cx.hero)).map(v => ({
-        imgRef: mkRef(v.pair ? v.pair[0].u : v.u, this.markBroken),
-        hasAlt: !!v.pair,
-        altRef: v.pair ? mkRef(v.pair[1].u, this.markBroken) : null,
-        altStyle: v.pair ? { position: 'absolute', inset: 0, display: 'block', width: '100%', height: '100%', objectFit: 'cover', opacity: (st.venueFlip ? 1 : 0), transition: 'opacity 1.1s ease' } : {},
-        hasCaption: !!v.pair,
-        caption: v.pair ? v.pair[st.venueFlip ? 1 : 0].c : '',
-        open: () => this.setState({ venue: v.pair ? v.pair[st.venueFlip ? 1 : 0].u : v.u, venueCap: v.pair ? v.pair[st.venueFlip ? 1 : 0].c : '' }),
-        wrapStyle: { cursor: 'pointer', width: '100%' },
-        boxStyle: { position: 'relative', width: '100%', height: st.broken[v.u] ? 0 : 400, overflow: 'hidden', background: '#f6f5f2' }
-      })),
-      vVenue: view === 'exhibit' && !!st.venue,
-      venueCaption: st.venueCap || venueCap,
-      venueImgRef: el => { if (el && st.venue) { el.style.display = ''; el.onerror = () => { el.style.display = 'none'; }; if (el.src !== st.venue) el.src = st.venue; } },
-      closeVenue: () => this.setState({ venue: '', venueCap: '' }),
       exGridMode: (st.exMode || 'full') === 'grid',
       exFullMode: st.exMode === 'full',
       setGridMode: () => this.setViewMode('grid'),
@@ -1461,8 +1214,8 @@ class Component extends DCLogic {
       fullMissing: !!st.broken[(lbAll[fullI] || {}).u],
       fullCaption: (lbAll[fullI] || {}).c || '',
       fullCount: lbAll.length ? (fullI + 1) + ' / ' + lbAll.length : '',
-      prevFull: e => { if (e && e.stopPropagation) e.stopPropagation(); this.stepFull(-1); },
-      nextFull: e => { if (e && e.stopPropagation) e.stopPropagation(); this.stepFull(1); },
+      prevFull: () => this.stepFull(-1),
+      nextFull: () => this.stepFull(1),
       exColumns: (() => {
         const items = restItems.map((g, i) => ({
           caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
@@ -1470,7 +1223,7 @@ class Component extends DCLogic {
           boxStyle: { position: 'relative', background: '#f6f5f2', minHeight: st.broken[g.u] ? 200 : 0 },
           open: this.openFullAt(g.u)
         }));
-        const n = st.wide ? 3 : 2;
+        const n = this.state.colCount || 3;
         const cols = []; for (let k = 0; k < n; k++) cols.push([]);
         items.forEach((it, i) => cols[i % n].push(it));
         return cols.map((items, i) => ({ items, i }));
