@@ -27,7 +27,8 @@
     [data-r="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
   }
   @media only screen and (max-width: 900px) {
-    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) minmax(180px,240px) !important; gap: 30px !important; }
+    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) minmax(240px,320px) !important; gap: 30px !important; }
+    [data-r="venuebox"] { height: 300px !important; }
   }
   @media only screen and (max-width: 640px) {
     [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
@@ -287,7 +288,7 @@
             <div data-r="venuecol" style="display:flex;justify-content:flex-end;align-items:flex-start">
               <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
                 <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
-                  <div style="{{ v.boxStyle }}">
+                  <div data-r="venuebox" style="{{ v.boxStyle }}">
                     <img ref="{{ v.imgRef }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
                   </div>
                 </div>
