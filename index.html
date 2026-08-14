@@ -16,6 +16,9 @@
   @media only screen and (max-width: 900px) {
     [data-r~="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
+  @media only screen and (max-width: 820px) {
+    [data-r~="excols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 0 18px !important; }
+  }
   @media only screen and (max-width: 1024px) {
     [data-r~="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
@@ -32,7 +35,8 @@
   @media only screen and (max-width: 640px) {
     [data-r~="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
     [data-r~="gut"] { padding-left:18px !important; padding-right:18px !important; }
-    [data-r~="arrowgut"] { padding-left:50px !important; padding-right:50px !important; }
+    [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
+    [data-r~="fullarrow"] { display:none !important; }
     [data-r~="navlinks"] { display: none !important; }
     [data-r~="navburger"] { display: flex !important; }
   }
@@ -325,8 +329,8 @@
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
               </sc-if>
             </div>
-            <div onClick="{{ prevFull }}" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
-            <div onClick="{{ nextFull }}" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</div>
+            <div onClick="{{ prevFull }}" data-r="fullarrow" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
+            <div onClick="{{ nextFull }}" data-r="fullarrow" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</div>
           </div>
           <div style="display:flex;justify-content:center;gap:20px;padding:16px 56px 0">
             <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:80ch">{{ fullCaption }}</div>
@@ -335,7 +339,7 @@
         </div>
       </sc-if>
       <sc-if value="{{ exGridMode }}" hint-placeholder-val="{{ false }}">
-      <div ref="{{ exGridRef }}" data-r="galcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;align-items:start;max-width:1760px">
+      <div ref="{{ exGridRef }}" data-r="excols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;align-items:start;max-width:1760px">
         <sc-for list="{{ exColumns }}" as="col" hint-placeholder-count="3">
           <div style="display:flex;flex-direction:column;gap:22px">
             <sc-for list="{{ col.items }}" as="g" hint-placeholder-count="3">
@@ -637,7 +641,7 @@ const mkRef = (url, onFail) => el => {
 };
 
 class Component extends DCLogic {
-  state = { q: '', phone: false, colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
+  state = { q: '', phone: false, wide: (typeof window !== 'undefined' ? window.innerWidth > 820 : true), colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
   markBroken = url => {
     if (!url || this.state.broken[url]) return;
     this.setState(s => { const b = Object.assign({}, s.broken); b[url] = 1; return { broken: b }; });
@@ -783,7 +787,8 @@ class Component extends DCLogic {
     this._resize = () => {
       const n = this.colsFor(window.innerWidth);
       const p = window.innerWidth <= 640;
-      if (n !== this.state.colCount || p !== this.state.phone) this.setState({ colCount: n, phone: p });
+      const wd = window.innerWidth > 820;
+      if (n !== this.state.colCount || p !== this.state.phone || wd !== this.state.wide) this.setState({ colCount: n, phone: p, wide: wd });
     };
     this._resize();
     window.addEventListener('resize', this._resize);
@@ -1397,7 +1402,7 @@ class Component extends DCLogic {
           boxStyle: { position: 'relative', background: '#f6f5f2', minHeight: st.broken[g.u] ? 200 : 0 },
           open: this.openFullAt(g.u)
         }));
-        const n = this.state.colCount || 3;
+        const n = st.wide ? 3 : 2;
         const cols = []; for (let k = 0; k < n; k++) cols.push([]);
         items.forEach((it, i) => cols[i % n].push(it));
         return cols.map((items, i) => ({ items, i }));
