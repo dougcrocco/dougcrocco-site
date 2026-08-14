@@ -747,7 +747,7 @@ class Component extends DCLogic {
   setViewMode(mode) {
     const e = (window.DC ? window.DC.exhibits : []).find(x => x.title === this.state.exhibit);
     const first = e && e.gal ? e.gal[0] : null;
-    this.setState({ exMode: mode, exFullU: first ? first.u : '', exInfoHidden: true }, () => this.scrollToViews());
+    this.setState({ exMode: mode, exFullU: first ? first.u : '', exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
   }
 
 
@@ -767,7 +767,7 @@ class Component extends DCLogic {
 
   openFullAt(u) {
     return () => {
-      this.setState({ exMode: 'full', exFullU: u, exInfoHidden: true }, () => this.scrollToViews());
+      this.setState({ exMode: 'full', exFullU: u, exInfoHidden: true, navAnim: true }, () => this.scrollToViews());
     };
   }
 
@@ -1111,7 +1111,7 @@ class Component extends DCLogic {
             const gone = block
               ? (this.state.exInfoHidden ? past <= 64 : past <= 4)
               : el.scrollTop > 8;
-            if (gone !== this.state.exInfoHidden) this.setState({ exInfoHidden: gone });
+            if (gone !== this.state.exInfoHidden) this.setState({ exInfoHidden: gone, navAnim: false });
           }, { passive: true });
         }
       },
@@ -1123,7 +1123,7 @@ class Component extends DCLogic {
           this._autoScroll = true;
           clearTimeout(this._autoScrollT);
           this._autoScrollT = setTimeout(() => { this._autoScroll = false; }, 700);
-          this.setState({ exInfoHidden: false });
+          this.setState({ exInfoHidden: false, navAnim: true });
           box.scrollTo({ top: top, behavior: 'smooth' });
           return;
         }
@@ -1188,7 +1188,7 @@ class Component extends DCLogic {
       exScrollStyle: {
         position: 'absolute', top: navHidden ? 0 : 86, left: 0, right: 0, bottom: 0,
         overflowY: 'auto', padding: (navHidden ? '26px' : '0') + ' 44px 70px',
-        transition: 'top .34s cubic-bezier(.33,1,.68,1)'
+        transition: st.navAnim ? 'top .34s cubic-bezier(.33,1,.68,1)' : 'none'
       },
       navStyle: {
         position: 'absolute', top: 0, left: 0, right: 0, height: 86,
@@ -1196,7 +1196,7 @@ class Component extends DCLogic {
         padding: '0 44px', zIndex: 5, pointerEvents: 'none',
         transform: navHidden ? 'translateY(-86px)' : 'translateY(0)',
         opacity: navHidden ? 0 : 1,
-        transition: 'transform .34s cubic-bezier(.33,1,.68,1), opacity .28s ease'
+        transition: st.navAnim ? 'transform .34s cubic-bezier(.33,1,.68,1), opacity .28s ease' : 'none'
       },
       exGridMode: (st.exMode || 'full') === 'grid',
       exFullMode: st.exMode === 'full',
