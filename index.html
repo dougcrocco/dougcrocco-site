@@ -31,7 +31,7 @@
     [data-r~="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
   }
   @media only screen and (max-width: 900px) {
-    [data-r~="venuebox"] { height: 300px !important; }
+    [data-r~="venuebox"] { height: 260px !important; }
   }
   @media only screen and (max-width: 700px) {
     [data-r~="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
@@ -653,7 +653,7 @@ const mkRef = (url, onFail) => el => {
 };
 
 class Component extends DCLogic {
-  state = { q: '', phone: false, wide: (typeof window !== 'undefined' ? window.innerWidth > 820 : true), colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
+  state = { q: '', phone: false, narrow: false, wide: (typeof window !== 'undefined' ? window.innerWidth > 820 : true), colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
   markBroken = url => {
     if (!url || this.state.broken[url]) return;
     this.setState(s => { const b = Object.assign({}, s.broken); b[url] = 1; return { broken: b }; });
@@ -849,6 +849,8 @@ class Component extends DCLogic {
     this._resize = () => {
       const n = this.colsFor(window.innerWidth);
       const p = window.innerWidth <= 700;
+      const nw = window.innerWidth <= 460;
+      if (nw !== this.state.narrow) this.setState({ narrow: nw });
       const wd = window.innerWidth > 820;
       if (n !== this.state.colCount || p !== this.state.phone || wd !== this.state.wide) this.setState({ colCount: n, phone: p, wide: wd });
     };
@@ -1426,14 +1428,14 @@ class Component extends DCLogic {
       // one continuous text flow wrapping a right-floated venue photograph; "See more"
       // just lifts the height cap so the copy fills the space under the image
       exRosterCut: rosterAt >= 0,
-      exVenueColStyle: st.phone
+      exVenueColStyle: st.narrow
         ? { float: 'none', width: '100%', margin: '0 0 24px' }
-        : { float: 'right', width: 'clamp(240px, 26vw, 320px)', margin: '6px 0 26px 52px' },
+        : { float: 'right', width: st.phone ? 'clamp(150px, 38vw, 240px)' : 'clamp(240px, 26vw, 320px)', margin: st.phone ? '5px 0 18px 22px' : '6px 0 26px 52px' },
       exCopyWrapStyle: { position: 'relative' },
       exCollapsedFade: false,
       exFadeStyle: {
         position: 'absolute', left: 0, bottom: 0, height: st.phone ? 56 : 120, pointerEvents: 'none',
-        right: st.phone ? 0 : 'calc(clamp(240px, 26vw, 320px) + 52px)',
+        right: st.narrow ? 0 : (st.phone ? 'calc(clamp(150px, 38vw, 240px) + 22px)' : 'calc(clamp(240px, 26vw, 320px) + 52px)'),
         background: 'linear-gradient(to bottom, rgba(255,255,255,0), #ffffff 88%)'
       },
       exHasMore: body.length > 0,
