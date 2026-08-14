@@ -38,7 +38,7 @@
     [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="fullarrow"] { display:none !important; }
     [data-r~="taphalf"] { display:block !important; }
-    [data-r~="arrowgut"] { align-items:center !important; min-height:calc(100dvh - 320px) !important; }
+    [data-r~="arrowgut"] { align-items:flex-start !important; min-height:0 !important; padding-top:22px !important; }
     [data-r~="navlinks"] { display: none !important; }
     [data-r~="navburger"] { display: flex !important; }
   }
@@ -57,9 +57,9 @@
       <img ref="{{ slideB }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideBOpacity }};transition:opacity 1.4s ease">
       <div onClick="{{ openSlideShow }}" style="position:absolute;inset:0;cursor:pointer"></div>
       <div data-r="gut" style="position:absolute;left:0;right:0;bottom:0;padding:26px 44px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;pointer-events:none">
-        <div onClick="{{ openSlideShow }}" style="pointer-events:auto;cursor:pointer">
-          <div style="font-size:15px;line-height:1.4;border-bottom:1px solid rgba(20,20,20,.35);display:inline-block;padding-bottom:2px">{{ slideTitle }}</div>
-          <div style="font-size:12px;line-height:1.7;opacity:.6;margin-top:4px">{{ slideVenue }}</div>
+        <div onClick="{{ openSlideShow }}" style="{{ slideInkStyle }}">
+          <div style="{{ slideTitleStyle }}">{{ slideTitle }}</div>
+          <div style="{{ slideVenueStyle }}">{{ slideVenue }}</div>
         </div>
         <div style="pointer-events:auto;display:flex;align-items:center;gap:14px">
           <div onClick="{{ prevSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">←</div>
@@ -420,9 +420,9 @@
     <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;overflow-x:hidden;padding:0 0 90px">
 
       <div data-r="gut" style="position:relative;padding:0 44px">
-        <div data-r="infotint" style="position:absolute;left:0;top:-18px;width:50%;height:calc(100% + 48px);background:oklch(0.962 0.012 62);z-index:0;pointer-events:none"></div>
-        <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-18px;width:50%;height:calc(100% + 48px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
-        <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:40px 0 0;align-items:start">
+        <div data-r="infotint" style="position:absolute;left:0;top:-26px;width:50%;height:calc(100% + 56px);background:oklch(0.962 0.012 62);z-index:0;pointer-events:none"></div>
+        <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-26px;width:50%;height:calc(100% + 56px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
+        <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:6px 0 0;align-items:start">
         <div>
           <div style="width:190px;margin:0 0 24px;background:#f2f1ee">
             <img ref="{{ portraitRef }}" alt="Doug Crocco" style="display:block;width:100%;height:auto">
@@ -602,9 +602,9 @@
       <span onClick="{{ toInfo }}" style="cursor:pointer;opacity:{{ oInfo }}">Info</span>
     </div>
     <div data-r="navburger" onClick="{{ toggleMenu }}" style="display:none;pointer-events:auto;cursor:pointer;width:34px;height:34px;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-      <div style="width:22px;height:1px;background:#141414"></div>
-      <div style="width:22px;height:1px;background:#141414"></div>
-      <div style="width:22px;height:1px;background:#141414"></div>
+      <div style="width:22px;height:1px;background:currentColor"></div>
+      <div style="width:22px;height:1px;background:currentColor"></div>
+      <div style="width:22px;height:1px;background:currentColor"></div>
     </div>
   </div>
 
@@ -682,6 +682,36 @@ class Component extends DCLogic {
   }
 
   colsFor(w) { return w <= 768 ? 1 : (w <= 900 ? 2 : 3); }
+
+  // luminance of the top strip of an image, cached per url. null when the pixels
+  // can't be read (cross-origin without CORS) so the caller can fall back.
+  probeInk(url) {
+    if (!url) return;
+    this._ink = this._ink || {};
+    if (url in this._ink) return;
+    this._ink[url] = null;
+    const im = new Image();
+    im.crossOrigin = 'anonymous';
+    im.onload = () => {
+      try {
+        const w = 40, h = 40, c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        const ctx = c.getContext('2d');
+        // object-fit:cover crops to the centre; sample the top ~22% across the width
+        const sh = Math.max(1, Math.round(im.naturalHeight * 0.22));
+        ctx.drawImage(im, 0, 0, im.naturalWidth, sh, 0, 0, w, h);
+        const px = ctx.getImageData(0, 0, w, h).data;
+        let sum = 0;
+        for (let i = 0; i < px.length; i += 4) sum += 0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2];
+        this._ink[url] = (sum / (px.length / 4)) > 150 ? 'dark' : 'light';
+      } catch (e) {
+        this._ink[url] = 'blocked';
+      }
+      this.forceUpdate();
+    };
+    im.onerror = () => { this._ink[url] = 'blocked'; };
+    im.src = url;
+  }
 
   yearStyles() {
     const ph = !!this.state.phone, RAL = 'Raleway,Helvetica,Arial,sans-serif';
@@ -973,6 +1003,26 @@ class Component extends DCLogic {
     const navHidden = view === 'exhibit' && !!st.exInfoHidden;
     // the nav rides up in step with the scroll, capped at its own height
     const navOff = view === 'exhibit' ? Math.max(0, Math.min(86, st.navOff || 0)) : 0;
+    // nav ink: dark type on white pages, and on light artwork; white on dark artwork
+    const navImg = view === 'home' ? (cur.img || '') : '';
+    if (navImg) this.probeInk(navImg);
+    const probed = this._ink && this._ink[navImg];
+    // shows whose top band is dark enough to need white type — matched on title so
+    // the list survives reordering
+    const WHITE_INK = /cat house|mushroom show|^dba$|polaroid black|tugboat|pensive|kind of library|hollywood dream bubble|works on paper/i;
+    const inkTitle = view === 'home' ? (cur.title || '') : '';
+    // per-image override for slides that share a title (the two Pensive frames)
+    const INK_BY_IMAGE = {
+      'artwork/uploads/2018/01/dmc-install-miami-shadow8.jpg': 'dark',
+      'artwork/uploads/2025/01/splash-3.jpg': 'dark'
+    };
+    const override = view === 'home'
+      ? (INK_BY_IMAGE[String(cur.img || '').replace(/^https?:\/\/[^/]+\//, '')] || null)
+      : null;
+    const navInk = override ? override
+      : !navImg ? 'dark'
+      : (probed === 'dark' || probed === 'light') ? probed
+      : (WHITE_INK.test(inkTitle) ? 'light' : 'dark');
     // search runs across works, exhibitions and press notes
     const searchHits = (() => {
       const q = (st.q || '').trim().toLowerCase();
@@ -1165,6 +1215,14 @@ class Component extends DCLogic {
       slideB: mkRef((slides[even ? prevI : si] || {}).img),
       slideAOpacity: even ? 1 : 0,
       slideBOpacity: even ? 0 : 1,
+      slideInkStyle: navInk === 'light'
+        ? { pointerEvents: 'auto', cursor: 'pointer', color: '#ffffff', textShadow: '0 1px 16px rgba(0,0,0,.5)' }
+        : { pointerEvents: 'auto', cursor: 'pointer', color: '#141414', textShadow: 'none' },
+      slideTitleStyle: {
+        fontSize: 15, lineHeight: 1.4, display: 'inline-block', paddingBottom: 2,
+        borderBottom: '1px solid ' + (navInk === 'light' ? 'rgba(255,255,255,.55)' : 'rgba(20,20,20,.35)')
+      },
+      slideVenueStyle: { fontSize: 12, lineHeight: 1.7, marginTop: 4, opacity: navInk === 'light' ? 0.8 : 0.6 },
       slideTitle: cur.title || '',
       slideVenue: [cur.venue, cur.y].filter(Boolean).join(', '),
       slideCount: slides.length ? (si + 1) + ' / ' + slides.length : '',
@@ -1293,12 +1351,14 @@ class Component extends DCLogic {
       exInfoHidden: !!st.exInfoHidden,
       exScrollStyle: {
         position: 'absolute', top: 86 - navOff, left: 0, right: 0, bottom: 0,
-        overflowY: 'auto', padding: (st.phone ? '0 18px ' : '0 44px ') + (st.exMode === 'full' ? '45vh' : '70px')
+        overflowY: 'auto', padding: (st.phone ? '0 18px ' : '0 44px ') + (st.exMode === 'full' ? '20vh' : '70px')
       },
       navStyle: {
         position: 'absolute', top: 0, left: 0, right: 0, height: 86,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: st.phone ? '0 18px' : '0 44px', zIndex: 5, pointerEvents: 'none',
+        color: navInk === 'dark' ? '#141414' : '#ffffff',
+        textShadow: navInk === 'light' ? '0 1px 16px rgba(0,0,0,.5)' : 'none',
         transform: 'translateY(-' + navOff + 'px)',
         opacity: 1 - (navOff / 86),
         transition: st.navSnap ? 'transform .3s cubic-bezier(.33,1,.68,1), opacity .24s ease' : 'none'
@@ -1325,7 +1385,8 @@ class Component extends DCLogic {
       exCollapsedParas: (() => {
         const sp = String(summary).split(/\n{2,}/).map(t => t.trim()).filter(Boolean);
         const all = sp.concat(body);
-        const keep = (!st.exOpen && rosterAt >= 0) ? all.slice(0, rosterAt) : all;
+        const cutAt = rosterAt >= 0 ? rosterAt : (cx.sum ? sp.length : -1);
+        const keep = (!st.exOpen && cutAt >= 0) ? all.slice(0, cutAt) : all;
         return keep.map((t, i) => ({ text: t, i }));
       })(),
       // one continuous text flow wrapping a right-floated venue photograph; "See more"
@@ -1334,10 +1395,10 @@ class Component extends DCLogic {
       exVenueColStyle: st.phone
         ? { float: 'none', width: '100%', margin: '0 0 24px' }
         : { float: 'right', width: 'clamp(240px, 26vw, 320px)', margin: '6px 0 26px 52px' },
-      exCopyWrapStyle: (st.exOpen || !body.length || rosterAt >= 0)
+      exCopyWrapStyle: (st.exOpen || !body.length || rosterAt >= 0 || !!cx.sum)
         ? { position: 'relative' }
         : { position: 'relative', maxHeight: (st.phone ? 690 : (st.colCount === 3 ? 434 : 334)), overflow: 'hidden' },
-      exCollapsedFade: !st.exOpen && body.length > 0 && rosterAt < 0,
+      exCollapsedFade: !st.exOpen && body.length > 0 && rosterAt < 0 && !cx.sum,
       exFadeStyle: {
         position: 'absolute', left: 0, bottom: 0, height: st.phone ? 56 : 120, pointerEvents: 'none',
         right: st.phone ? 0 : 'calc(clamp(240px, 26vw, 320px) + 52px)',
