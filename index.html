@@ -14,29 +14,29 @@
   a:hover { text-decoration:none; color:#000000; }
   x-dc:not(:defined) [data-live-layer] { display:none !important; }
   @media only screen and (max-width: 900px) {
-    [data-r="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r~="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
   @media only screen and (max-width: 1024px) {
-    [data-r="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r~="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
   @media only screen and (max-width: 768px) {
-    [data-r="galcols"], [data-r="feature"], [data-r="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
-    [data-r="feature"] > *:first-child { grid-column: auto !important; }
-    [data-r="w2"] { grid-template-columns: minmax(0,1fr) !important; }
-    [data-r="infotint"] { width: 100% !important; }
-    [data-r="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
+    [data-r~="galcols"], [data-r~="feature"], [data-r~="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r~="feature"] > *:first-child { grid-column: auto !important; }
+    [data-r~="w2"] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-r~="infotint"] { width: 100% !important; }
+    [data-r~="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
   }
   @media only screen and (max-width: 900px) {
-    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) minmax(240px,320px) !important; gap: 30px !important; }
-    [data-r="venuebox"] { height: 300px !important; }
+    [data-r~="herocopy"] { grid-template-columns: minmax(0,1fr) minmax(240px,320px) !important; gap: 30px !important; }
+    [data-r~="venuebox"] { height: 300px !important; }
   }
   @media only screen and (max-width: 640px) {
-    [data-r="herocopy"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
-    [data-r="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
-    [data-r="navlinks"] { display: none !important; }
-    [data-r="navburger"] { display: flex !important; }
+    [data-r~="herocopy"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r~="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
+    [data-r~="gut"] { padding-left:18px !important; padding-right:18px !important; }
+    [data-r~="navlinks"] { display: none !important; }
+    [data-r~="navburger"] { display: flex !important; }
   }
-  @keyframes dcPan { from { transform: scale(1.08) translateX(-2.2%) } to { transform: scale(1.08) translateX(2.2%) } }
   ::-webkit-scrollbar { width:0; height:0; }
   * { scrollbar-width:none; -ms-overflow-style:none; }
 </style>
@@ -51,14 +51,14 @@
       <img ref="{{ slideA }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideAOpacity }};transition:opacity 1.4s ease">
       <img ref="{{ slideB }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideBOpacity }};transition:opacity 1.4s ease">
       <div onClick="{{ openSlideShow }}" style="position:absolute;inset:0;cursor:pointer"></div>
-      <div style="position:absolute;left:0;right:0;bottom:0;padding:26px 44px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;pointer-events:none">
+      <div data-r="gut" style="position:absolute;left:0;right:0;bottom:0;padding:26px 44px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;pointer-events:none">
         <div onClick="{{ openSlideShow }}" style="pointer-events:auto;cursor:pointer">
           <div style="font-size:15px;line-height:1.4;border-bottom:1px solid rgba(20,20,20,.35);display:inline-block;padding-bottom:2px">{{ slideTitle }}</div>
           <div style="font-size:12px;line-height:1.7;opacity:.6;margin-top:4px">{{ slideVenue }}</div>
         </div>
         <div style="pointer-events:auto;display:flex;align-items:center;gap:14px">
           <div onClick="{{ prevSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">←</div>
-          <div style="font-size:11px;letter-spacing:.16em;opacity:.5">{{ slideCount }}</div>
+          <div style="font-size:12px;letter-spacing:.16em;opacity:.5">{{ slideCount }}</div>
           <div onClick="{{ nextSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">→</div>
         </div>
       </div>
@@ -66,11 +66,11 @@
   </sc-if>
 
   <sc-if value="{{ vWorks }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
         <div style="color:#3c3c3d">Series</div>
-        <div style="color:#b4b4b6">/</div>
-        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#9a9a9c">Overview</div>
+        <div style="color:#9c9ca0">/</div>
+        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#7a7a7e">Overview</div>
       </div>
       <div style="max-width:62ch;padding:0 0 44px">
         <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.7;color:#2a2a2b;text-wrap:pretty">{{ statement }}</div>
@@ -91,14 +91,14 @@
   </sc-if>
 
   <sc-if value="{{ vSeries }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
-        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
+        <div style="color:#9c9ca0">/</div>
         <div style="color:#3c3c3d">{{ curSeries }}</div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
-          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5c5c5e">←</div>
-          <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5c5c5e">→</div>
+          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#4a4a4d">←</div>
+          <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#4a4a4d">→</div>
         </div>
       </div>
       <sc-if value="{{ hasSeriesNote }}" hint-placeholder-val="{{ false }}">
@@ -121,13 +121,13 @@
   </sc-if>
 
   <sc-if value="{{ vOverview }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
-        <div style="color:#b4b4b6">/</div>
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
+        <div style="color:#9c9ca0">/</div>
         <div style="color:#3c3c3d">Overview</div>
-        <div style="color:#b4b4b6">/</div>
-        <div onClick="{{ toYear }}" style="cursor:pointer;color:#9a9a9c">By year</div>
+        <div style="color:#9c9ca0">/</div>
+        <div onClick="{{ toYear }}" style="cursor:pointer;color:#7a7a7e">By year</div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:26px;padding:0 0 26px">
         <sc-for list="{{ ovFilters }}" as="f" hint-placeholder-count="5">
@@ -156,25 +156,25 @@
 
   <sc-if value="{{ vYear }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:absolute;inset:86px 0 0;display:flex;flex-direction:column">
-      <div style="flex:none;display:flex;align-items:baseline;gap:14px;padding:4px 44px 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#9a9a9c">Series</div>
-        <div style="color:#b4b4b6">/</div>
-        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#9a9a9c">Overview</div>
-        <div style="color:#b4b4b6">/</div>
+      <div data-r="gut" style="flex:none;display:flex;align-items:baseline;gap:14px;padding:4px 44px 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
+        <div style="color:#9c9ca0">/</div>
+        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#7a7a7e">Overview</div>
+        <div style="color:#9c9ca0">/</div>
         <div style="color:#3c3c3d">By year</div>
       </div>
-      <div ref="{{ wallRef }}" style="flex:1;min-height:0;overflow-x:auto;overflow-y:hidden;padding:0 44px 24px">
-        <div style="display:flex;align-items:flex-end;gap:34px;height:100%">
+      <div ref="{{ wallRef }}" style="{{ wallStyle }}">
+        <div style="{{ wallRowStyle }}">
           <sc-for list="{{ yearGroups }}" as="g" hint-placeholder-count="6">
-            <div style="display:flex;flex-direction:column;height:100%;flex:none">
-              <div style="flex:1;min-height:0;display:flex;align-items:flex-end;gap:14px">
+            <div style="{{ yearColStyle }}">
+              <div style="{{ yearRowStyle }}">
                 <sc-for list="{{ g.items }}" as="w" hint-placeholder-count="3">
                   <div onClick="{{ w.open }}" style="{{ w.style }}">
-                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;height:100%;width:auto;max-width:none">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="{{ wallImgStyle }}">
                   </div>
                 </sc-for>
               </div>
-              <div style="flex:none;margin-top:20px;padding-top:12px;border-top:1px solid rgba(20,20,20,.25);font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.14em;color:#8c8c8e">{{ g.year }}</div>
+              <div style="{{ yearLabelStyle }}">{{ g.year }}</div>
             </div>
           </sc-for>
         </div>
@@ -184,17 +184,17 @@
 
   <sc-if value="{{ vWork }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5c5c5e;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414">← {{ wBackLabel }}</div>
+      <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#4a4a4d;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414">← {{ wBackLabel }}</div>
         <div style="display:flex;align-items:center;gap:26px">
-          <div onClick="{{ toContact }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Enquire</div>
-          <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 0 14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Close</div>
+          <div onClick="{{ toContact }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Enquire</div>
+          <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 0 14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Close</div>
         </div>
       </div>
-      <div style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
+      <div data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
         <div onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
-        <div style="flex:1;min-width:0;height:calc(100vh - 210px);display:flex;align-items:center;justify-content:center">
-          <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:calc(100vh - 210px);width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
+        <div style="flex:1;min-width:0;height:calc(100dvh - 210px);display:flex;align-items:center;justify-content:center">
+          <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:calc(100dvh - 210px);width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
         </div>
         <div onClick="{{ nextWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
       </div>
@@ -205,7 +205,7 @@
   </sc-if>
 
   <sc-if value="{{ vExhibits }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
+    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
       <div style="display:flex;align-items:baseline;justify-content:flex-end;gap:40px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
         <div style="display:flex;gap:26px">
           <sc-for list="{{ exhFilters }}" as="f" hint-placeholder-count="4">
@@ -220,11 +220,11 @@
               <img ref="{{ e.imgRef }}" alt="{{ e.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
             </div>
             <div style="display:grid;grid-template-columns:58px 1fr;gap:20px;align-items:baseline">
-              <div style="font-size:11px;letter-spacing:.14em;opacity:.45">{{ e.year }}</div>
+              <div style="font-size:12px;letter-spacing:.14em;opacity:.45">{{ e.year }}</div>
               <div>
                 <div style="font-size:18px;line-height:1.3;text-wrap:pretty">{{ e.title }}</div>
                 <div style="font-size:13px;line-height:1.75;opacity:.55;margin-top:4px">{{ e.venue }}</div>
-                <div style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.4;margin-top:8px">{{ e.kind }}</div>
+                <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.4;margin-top:8px">{{ e.kind }}</div>
               </div>
             </div>
           </div>
@@ -236,7 +236,7 @@
   <sc-if value="{{ vExhibit }}" hint-placeholder-val="{{ true }}">
     <div ref="{{ exScrollRef }}" data-live-layer style="{{ exScrollStyle }}">
       <div style="display:flex;align-items:center;justify-content:flex-end;gap:40px;max-width:1760px;padding:2px 0 26px">
-        <div style="display:flex;align-items:center;gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
+        <div style="display:flex;align-items:center;gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
           <div onClick="{{ prevExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">←</div>
           <div onClick="{{ nextExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">→</div>
         </div>
@@ -244,7 +244,7 @@
         <div style="{{ exTitleBlockStyle }}">
           <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(26px,2.4vw,42px);letter-spacing:.04em;text-transform:uppercase;line-height:1.16;font-weight:400;max-width:min(100%,44ch);text-wrap:balance;color:#1a1a1c">{{ exTitle }}</div>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;font-weight:500;letter-spacing:.01em;color:#2e2e30;margin-top:14px">{{ exVenue }}</div>
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#8c8c8e;margin-top:5px">{{ exPlaceDate }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#6e6e72;margin-top:5px">{{ exPlaceDate }}</div>
         </div>
         <sc-if value="{{ exHasHero }}" hint-placeholder-val="{{ false }}">
           <div style="{{ heroFrameStyle }}">
@@ -254,33 +254,33 @@
         <div ref="{{ pressBlockRef }}" style="max-width:1760px;padding:0 0 34px;min-height:0">
           <div data-r="herocopy" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,320px);gap:52px;align-items:start">
             <div style="display:flex;flex-direction:column;gap:18px;max-width:70ch">
-              <div ref="{{ pressRowRef }}" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8c8c8e;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:8px">Press release</div>
+              <div ref="{{ pressRowRef }}" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#6e6e72;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:8px">Press release</div>
               <div style="{{ exCopyClampStyle }}">
                 <sc-for list="{{ exCollapsedParas }}" as="p" hint-placeholder-count="2">
                   <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;margin:0 0 16px">{{ p.text }}</div>
                 </sc-for>
               </div>
               <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
-                <div onClick="{{ toggleExText }}" style="cursor:pointer;align-self:flex-start;margin-top:4px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+                <div onClick="{{ toggleExText }}" style="cursor:pointer;align-self:flex-start;margin-top:4px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
               </sc-if>
               <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:6px">
                   <sc-if value="{{ exHasPress }}" hint-placeholder-val="{{ false }}">
                     <sc-if value="{{ exPressIsImage }}" hint-placeholder-val="{{ false }}">
-                      <div onClick="{{ openPress }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</div>
+                      <div onClick="{{ openPress }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</div>
                     </sc-if>
                     <sc-if value="{{ exPressIsPage }}" hint-placeholder-val="{{ false }}">
-                      <a href="{{ exPressUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</a>
+                      <a href="{{ exPressUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</a>
                     </sc-if>
                   </sc-if>
                   <sc-if value="{{ exHasPress2 }}" hint-placeholder-val="{{ false }}">
-                    <div onClick="{{ openPress2 }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPress2Label }}</div>
+                    <div onClick="{{ openPress2 }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPress2Label }}</div>
                   </sc-if>
                   <sc-if value="{{ exHasUrl }}" hint-placeholder-val="{{ false }}">
-                    <a href="{{ exUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exUrlLabel }}</a>
+                    <a href="{{ exUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exUrlLabel }}</a>
                   </sc-if>
                   <sc-if value="{{ exHasPdf }}" hint-placeholder-val="{{ false }}">
-                    <a href="{{ exPdf }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Checklist</a>
+                    <a href="{{ exPdf }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Checklist</a>
                   </sc-if>
                 </div>
               </sc-if>
@@ -295,7 +295,7 @@
                     </sc-if>
                   </div>
                   <sc-if value="{{ v.hasCaption }}" hint-placeholder-val="{{ false }}">
-                    <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#9a9a9c;padding:9px 0 0;text-align:center">{{ v.caption }}</div>
+                    <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:9px 0 0;text-align:center">{{ v.caption }}</div>
                   </sc-if>
                 </div>
               </sc-for>
@@ -305,7 +305,7 @@
         </div>
       <div ref="{{ viewsRowRef }}" style="display:flex;align-items:center;gap:30px;max-width:1760px;padding:0 0 20px">
         <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
-          <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#5c5c5e;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
+          <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
         </sc-if>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <div onClick="{{ setFullMode }}" style="{{ fullBtnStyle }}">
@@ -319,19 +319,19 @@
       <sc-if value="{{ exFullMode }}" hint-placeholder-val="{{ true }}">
         <div style="max-width:1760px;padding:0 0 56px">
           <div style="position:relative">
-            <div ref="{{ fullSwipeRef }}" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:min(calc(100vh - 300px), 72vh);min-height:300px">
+            <div ref="{{ fullSwipeRef }}" data-r="gut" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:min(calc(100dvh - 300px), 72vh);min-height:300px">
               <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain">
               <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#b4b4b6">Image unavailable</div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
               </sc-if>
             </div>
-            <div onClick="{{ prevFull }}" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❮</div>
-            <div onClick="{{ nextFull }}" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#8c8c8e">❯</div>
+            <div onClick="{{ prevFull }}" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
+            <div onClick="{{ nextFull }}" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</div>
           </div>
           <div style="display:flex;justify-content:center;gap:20px;padding:16px 56px 0">
             <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:80ch">{{ fullCaption }}</div>
           </div>
-          <div style="text-align:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;color:#b4b4b6;padding-top:8px">{{ fullCount }}</div>
+          <div style="text-align:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;color:#9c9ca0;padding-top:8px">{{ fullCount }}</div>
         </div>
       </sc-if>
       <sc-if value="{{ exGridMode }}" hint-placeholder-val="{{ false }}">
@@ -342,7 +342,7 @@
               <div onClick="{{ g.open }}" style="cursor:pointer">
                 <div style="{{ g.boxStyle }}">
                   <sc-if value="{{ g.missing }}" hint-placeholder-val="{{ false }}">
-                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#b4b4b6">Image unavailable</div>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
                   </sc-if>
                   <img ref="{{ g.imgRef }}" alt="{{ g.caption }}" style="display:block;width:100%;height:auto">
                 </div>
@@ -357,7 +357,7 @@
   </sc-if>
 
   <sc-if value="{{ vNews }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
+    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
       <div style="display:flex;align-items:baseline;gap:26px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
         <div style="display:flex;gap:26px">
           <sc-for list="{{ newsFilters }}" as="f" hint-placeholder-count="3">
@@ -382,11 +382,11 @@
       </form>
       <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;padding:16px 0 0">{{ searchStatus }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;padding:16px 0 0">{{ searchStatus }}</div>
           <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
             <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
               <div>
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;margin-bottom:14px">{{ g.label }}</div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</div>
                 <div data-r="galcols" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 18px;align-items:start">
                   <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
                     <div onClick="{{ r.open }}" style="cursor:pointer">
@@ -394,7 +394,7 @@
                         <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
                       </div>
                       <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
-                      <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#9a9a9c;padding:2px 0 0">{{ r.meta }}</div>
+                      <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:2px 0 0">{{ r.meta }}</div>
                     </div>
                   </sc-for>
                 </div>
@@ -409,7 +409,7 @@
   <sc-if value="{{ vInfo }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;overflow-x:hidden;padding:0 0 90px">
 
-      <div style="position:relative;padding:0 44px">
+      <div data-r="gut" style="position:relative;padding:0 44px">
         <div data-r="infotint" style="position:absolute;left:0;top:-18px;width:50%;height:calc(100% + 48px);background:oklch(0.962 0.012 62);z-index:0;pointer-events:none"></div>
         <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-18px;width:50%;height:calc(100% + 48px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
         <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:40px 0 0;align-items:start">
@@ -420,16 +420,16 @@
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:16px;line-height:1.72;letter-spacing:.004em;color:#2a2a2b;max-width:56ch;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks.</div>
         </div>
         <div style="padding-top:3px">
-          <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 22px;margin-top:0;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#5c5c5e;max-width:460px">
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Email</div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 22px;margin-top:0;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#4a4a4d;max-width:460px">
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Email</div>
             <div><a href="mailto:doug@allart.la">doug@allart.la</a></div>
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Studio</div>
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Studio</div>
             <div>Los Angeles, California — visits by appointment</div>
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#9a9a9c;padding-top:3px">Born</div>
+            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Born</div>
             <div>Albuquerque, New Mexico</div>
           </div>
           <div style="margin-top:26px">
-            <a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
+            <a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
           </div>
           <div style="margin-top:34px;max-width:400px">
             <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:14px">Enquire</div>
@@ -437,8 +437,8 @@
               <input type="email" name="email" placeholder="Your email" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none">
               <textarea name="message" rows="4" placeholder="Message" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.55;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none;resize:vertical"></textarea>
               <div style="display:flex;align-items:center;gap:16px">
-                <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:rgba(255,255,255,.9);border:1px solid rgba(20,20,20,.45);padding:10px 22px;cursor:pointer;border-radius:0">Send</button>
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;color:#9a9a9c">Opens in your mail app</div>
+                <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:rgba(255,255,255,.9);border:1px solid rgba(20,20,20,.45);padding:10px 22px;cursor:pointer;border-radius:0">Send</button>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;color:#7a7a7e">Opens in your mail app</div>
               </div>
             </form>
           </div>
@@ -447,17 +447,17 @@
       </div>
 
 
-      <div style="max-width:1500px;padding:70px 44px 0">
+      <div data-r="gut" style="max-width:1500px;padding:70px 44px 0">
         <form onSubmit="{{ onSearchSubmit }}" style="max-width:560px">
           <input ref="{{ searchInputRef }}" type="search" placeholder="Search works, exhibitions, press" onInput="{{ onSearchInput }}" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:20px;letter-spacing:.02em;color:#141414;width:100%;box-sizing:border-box;padding:0 0 11px;border:none;border-bottom:1px solid rgba(20,20,20,.4);background:transparent;border-radius:0;outline:none">
         </form>
         <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
           <div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;padding:16px 0 0">{{ searchStatus }}</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;padding:16px 0 0">{{ searchStatus }}</div>
             <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
               <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
                 <div>
-                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#9a9a9c;margin-bottom:14px">{{ g.label }}</div>
+                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</div>
                   <div data-r="galcols" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 20px;align-items:start">
                     <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
                       <div onClick="{{ r.open }}" style="cursor:pointer">
@@ -465,7 +465,7 @@
                           <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
                         </div>
                         <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
-                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#9a9a9c;padding:2px 0 0">{{ r.meta }}</div>
+                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:2px 0 0">{{ r.meta }}</div>
                       </div>
                     </sc-for>
                   </div>
@@ -475,7 +475,7 @@
           </div>
         </sc-if>
       </div>
-      <div data-r="c2" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
+      <div data-r="c2 gut" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
         <div style="display:flex;flex-direction:column;gap:44px">
           <div style="grid-area:title">
             <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Education</div>
@@ -495,19 +495,23 @@
             </div>
           </div>
           <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Curatorial — Big Pictures Los Angeles, 2015–2020</div>
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Curatorial</div>
             <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-              2019 &nbsp;<em>Holding Space</em> · <em>Flat Earth Society</em><br>
+              2026 &nbsp;<em>Death is a Door</em>, CC Jasper, New York, NY<br>
+              2026 &nbsp;<em>The Come Up</em>, SADE, Los Angeles, CA<br>
+              2019 &nbsp;<em>Holding Space</em>, Big Pictures Los Angeles<br>
+              2019 &nbsp;<em>Flat Earth Society</em>, Big Pictures Los Angeles<br>
               2019 &nbsp;<em>I Have Always Imagined That Paradise Will Be a Kind of Library</em>, Blake and Vargas, Berlin<br>
-              2018 &nbsp;<em>Transmutation</em><br>
-              2017 &nbsp;<em>Staring at The Sun</em> · <em>Polaroid Black</em><br>
-              2016 &nbsp;<em>Slamdance DIG 2</em><br>
-              2015 &nbsp;<em>Slamdance DIG</em><br>
+              2018 &nbsp;<em>Transmutation</em>, Big Pictures Los Angeles<br>
+              2017 &nbsp;<em>Staring at The Sun</em>, Big Pictures Los Angeles<br>
+              2017 &nbsp;<em>Polaroid Black</em>, Big Pictures Los Angeles<br>
+              2016 &nbsp;<em>Slamdance DIG 2</em>, Big Pictures Los Angeles<br>
+              2015 &nbsp;<em>Slamdance DIG</em>, Big Pictures Los Angeles<br>
               2012 &nbsp;<em>NeoNatural</em>, Steve Turner Contemporary, Los Angeles, CA
             </div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.75;color:#5c5c5e;margin-top:16px;max-width:52ch;text-wrap:pretty">Big Pictures Los Angeles was a project space in mid-city Los Angeles, founded in 2014 to show underserved mid-career artists, present new forms of digital media, and collaborate with artists in Miami and New York. It was part of a cluster of galleries that opened on Washington Blvd around 2015 — Hilde, Kamra International, Park View, Kristina Kite, Ochi Projects, Shoot the Lobster, Michael Thibault and The Underground Museum. It closed in 2020.</div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.75;color:#4a4a4d;margin-top:16px;max-width:52ch;text-wrap:pretty">Big Pictures Los Angeles was a project space in mid-city Los Angeles, founded in 2014 to show underserved mid-career artists, present new forms of digital media, and collaborate with artists in Miami and New York. It was part of a cluster of galleries that opened on Washington Blvd around 2015 — Hilde, Kamra International, Park View, Kristina Kite, Ochi Projects, Shoot the Lobster, Michael Thibault and The Underground Museum. It closed in 2020. Today the program carries on as curatorial projects at spaces around the world.</div>
             <div style="margin-top:14px">
-              <a href="https://www.bigpictures.la" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">bigpictures.la</a>
+              <a href="https://www.bigpictures.la" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">bigpictures.la</a>
             </div>
           </div>
           <div style="grid-area:title">
@@ -530,6 +534,7 @@
         <div>
           <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected group exhibitions</div>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
+            2026 &nbsp;<em>The Come Up</em>, SADE, Los Angeles, CA<br>
             2024 &nbsp;<em>Getting The Band Back Together</em>, Claremont Graduate University, CA<br>
             2024 &nbsp;<em>Hollywood Dream Bubble: Ed Ruscha’s Influence</em>, The Hole, Los Angeles, CA<br>
             2021 &nbsp;<em>The Design Shop</em>, Tile Blush, Miami, FL<br>
@@ -568,19 +573,19 @@
 
   <sc-if value="{{ vVenue }}" hint-placeholder-val="{{ false }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:21;background:#ffffff;display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ venueCaption }}</div>
-        <div onClick="{{ closeVenue }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
+      <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ venueCaption }}</div>
+        <div onClick="{{ closeVenue }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
       </div>
-      <div onClick="{{ closeVenue }}" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:26px 44px 44px;cursor:pointer">
-        <img ref="{{ venueImgRef }}" alt="" style="max-width:100%;max-height:calc(100vh - 150px);width:auto;height:auto;object-fit:contain">
+      <div onClick="{{ closeVenue }}" data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:26px 44px 44px;cursor:pointer">
+        <img ref="{{ venueImgRef }}" alt="" style="max-width:100%;max-height:calc(100dvh - 150px);width:auto;height:auto;object-fit:contain">
       </div>
     </div>
   </sc-if>
 
   <div style="{{ navStyle }}">
     <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap">Doug Crocco</div>
-    <div data-r="navlinks" style="pointer-events:auto;display:flex;gap:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase">
+    <div data-r="navlinks" style="pointer-events:auto;display:flex;gap:30px;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
       <span onClick="{{ toWorks }}" style="cursor:pointer;opacity:{{ oWorks }}">Works</span>
       <span onClick="{{ toExhibits }}" style="cursor:pointer;opacity:{{ oExhibits }}">Exhibits</span>
       <span onClick="{{ toNews }}" style="cursor:pointer;opacity:{{ oNews }}">News</span>
@@ -597,7 +602,7 @@
     <div data-live-layer style="position:fixed;inset:0;z-index:30;background:#ffffff;display:flex;flex-direction:column;padding:26px 30px 40px">
       <div style="display:flex;align-items:center;justify-content:space-between">
         <div onClick="{{ toHomeMenu }}" style="cursor:pointer;font-size:16px;letter-spacing:.02em">Doug Crocco</div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#5c5c5e">×</div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#4a4a4d">×</div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:26px;letter-spacing:.06em;text-transform:uppercase">
         <div onClick="{{ toWorksMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Works</div>
@@ -632,7 +637,7 @@ const mkRef = (url, onFail) => el => {
 };
 
 class Component extends DCLogic {
-  state = { q: '', colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
+  state = { q: '', phone: false, colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
   markBroken = url => {
     if (!url || this.state.broken[url]) return;
     this.setState(s => { const b = Object.assign({}, s.broken); b[url] = 1; return { broken: b }; });
@@ -668,20 +673,136 @@ class Component extends DCLogic {
 
   colsFor(w) { return w <= 768 ? 1 : (w <= 900 ? 2 : 3); }
 
+  yearStyles() {
+    const ph = !!this.state.phone, RAL = 'Raleway,Helvetica,Arial,sans-serif';
+    const lbl = { fontFamily: RAL, fontSize: 12, fontWeight: 500, letterSpacing: '.14em', color: '#6e6e72' };
+    return {
+      wallStyle: ph
+        ? { flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'hidden', padding: '0 18px 40px' }
+        : { flex: 1, minHeight: 0, overflowX: 'auto', overflowY: 'hidden', padding: '0 44px 24px' },
+      wallRowStyle: ph
+        ? { display: 'flex', flexDirection: 'column', gap: 40 }
+        : { display: 'flex', alignItems: 'flex-end', gap: 34, height: '100%' },
+      yearColStyle: ph
+        ? { display: 'flex', flexDirection: 'column-reverse' }
+        : { display: 'flex', flexDirection: 'column', height: '100%', flex: 'none' },
+      yearRowStyle: ph
+        ? { display: 'flex', flexDirection: 'column', gap: 24 }
+        : { flex: 1, minHeight: 0, display: 'flex', alignItems: 'flex-end', gap: 14 },
+      wallImgStyle: ph
+        ? { display: 'block', width: '100%', height: 'auto' }
+        : { display: 'block', height: '100%', width: 'auto', maxWidth: 'none' },
+      yearLabelStyle: ph
+        ? Object.assign({ flex: 'none', margin: '0 0 16px', paddingBottom: 10, borderBottom: '1px solid rgba(20,20,20,.25)' }, lbl)
+        : Object.assign({ flex: 'none', marginTop: 20, paddingTop: 12, borderTop: '1px solid rgba(20,20,20,.25)' }, lbl)
+    };
+  }
+
+  slug(s) {
+    return String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  // state -> hash
+  hashFor(st) {
+    const sg = this.slug.bind(this), f = v => (v && v !== 'All' ? '/' + sg(v) : '');
+    switch (st.view) {
+      case 'works': return '#/works';
+      case 'series': return '#/works/' + sg(st.series);
+      case 'work': return '#/works/' + sg(st.series) + '/' + ((st.sel || 0) + 1);
+      case 'overview': return '#/overview' + f(st.ovFilter);
+      case 'year': return '#/year';
+      case 'exhibits': return '#/exhibits' + f(st.exhFilter);
+      case 'exhibit': return '#/exhibit/' + sg(st.exhibit) + (st.exMode === 'grid' ? '/grid' : '');
+      case 'news': return '#/news' + f(st.newsFilter);
+      case 'info': return '#/info';
+      case 'search': return '#/search' + (st.q ? '/' + encodeURIComponent(st.q) : '');
+      default: return '#/';
+    }
+  }
+
+  // hash -> state
+  stateForHash(h) {
+    const d = window.DC || {};
+    const parts = String(h || '').replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
+    const head = (parts[0] || '').toLowerCase();
+    const pickFilter = (list, seg) => list.find(x => this.slug(x) === this.slug(seg)) || 'All';
+    if (!head) return { view: 'home' };
+    if (head === 'info') return { view: 'info' };
+    if (head === 'year') return { view: 'year' };
+    if (head === 'search') return { view: 'search', q: parts[1] || '' };
+    if (head === 'overview') return { view: 'overview', ovFilter: pickFilter(['All', 'Drawing', 'Print', 'Sculpture', 'Public'], parts[1]) };
+    if (head === 'news') return { view: 'news', newsFilter: pickFilter(['All', 'Press', 'Event'], parts[1]) };
+    if (head === 'exhibits') return { view: 'exhibits', exhFilter: pickFilter(['All', 'Solo', 'Group', 'Curated'], parts[1]) };
+    if (head === 'exhibit') {
+      const e = (d.exhibits || []).find(x => this.slug(x.title) === this.slug(parts[1]));
+      if (!e) return { view: 'exhibits' };
+      return {
+        view: 'exhibit', exhibit: e.title, exMode: (parts[2] || '').toLowerCase() === 'grid' ? 'grid' : 'full',
+        exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exFullU: '', exFullFor: '', exInfoHidden: false
+      };
+    }
+    if (head === 'works') {
+      if (!parts[1]) return { view: 'works' };
+      const s = (d.series || []).find(x => this.slug(x.name) === this.slug(parts[1]));
+      if (!s) return { view: 'works' };
+      if (parts[2]) {
+        const len = (d.works || []).filter(w => w.s === s.name).length || 1;
+        const i = Math.min(Math.max(parseInt(parts[2], 10) || 1, 1), len) - 1;
+        return { view: 'work', series: s.name, workFrom: 'series', sel: i };
+      }
+      return { view: 'series', series: s.name, sel: 0 };
+    }
+    return { view: 'home' };
+  }
+
+  applyHash() {
+    const next = this.stateForHash(window.location.hash);
+    this._fromHash = true;
+    this._lastHash = window.location.hash || '#/';
+    this.setState(Object.assign({ lb: '', lbC: '', venue: '', venueCap: '' }, next), () => { this._fromHash = false; });
+  }
+
+  syncHash() {
+    const h = this.hashFor(this.state);
+    if (this._fromHash) { this._lastHash = h; return; }
+    const cur = window.location.hash || '#/';
+    if (h === cur || h === this._lastHash) return;
+    this._lastHash = h;
+    // replace rather than push for filter-only changes so Back skips them
+    const filterOnly = this._prevView === this.state.view && ['overview', 'news', 'exhibits', 'search'].indexOf(this.state.view) >= 0;
+    if (filterOnly) window.history.replaceState(null, '', h);
+    else window.location.hash = h;
+  }
+
+  componentDidUpdate() {
+    this.syncHash();
+    this._prevView = this.state.view;
+  }
+
   componentDidMount() {
     this._resize = () => {
       const n = this.colsFor(window.innerWidth);
-      if (n !== this.state.colCount) this.setState({ colCount: n });
+      const p = window.innerWidth <= 640;
+      if (n !== this.state.colCount || p !== this.state.phone) this.setState({ colCount: n, phone: p });
     };
     this._resize();
     window.addEventListener('resize', this._resize);
+    this._lastHash = window.location.hash || '#/';
     if (window.DC) {
       this.preload();
+      this.applyHash();
     } else {
       this._wait = setInterval(() => {
-        if (window.DC) { clearInterval(this._wait); this.preload(); this.forceUpdate(); }
+        if (window.DC) { clearInterval(this._wait); this.preload(); this.applyHash(); this.forceUpdate(); }
       }, 120);
     }
+    this._hashNav = () => {
+      if ((window.location.hash || '#/') === this._lastHash) return;
+      this.applyHash();
+    };
+    if (window.__dcHash) window.removeEventListener('hashchange', window.__dcHash);
+    window.__dcHash = this._hashNav;
+    window.addEventListener('hashchange', this._hashNav);
     this._venueFlip = setInterval(() => {
       if (this.state.view === 'exhibit') this.setState(x => ({ venueFlip: !x.venueFlip }));
     }, 6000);
@@ -718,6 +839,7 @@ class Component extends DCLogic {
     clearInterval(this._venueFlip); clearInterval(this._wait);
     window.removeEventListener('keydown', this._key);
     window.removeEventListener('resize', this._resize);
+    window.removeEventListener('hashchange', this._hashNav);
   }
 
   list() { return D().works.filter(w => w.s === this.state.series); }
@@ -932,7 +1054,8 @@ class Component extends DCLogic {
       vOverview: view === 'overview',
       vYear: view === 'year',
       toYear: () => this.setState({ view: 'year' }),
-      wallRef: el => { if (el && !el._wheel) { el._wheel = true; el.addEventListener('wheel', ev => { if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) { el.scrollLeft += ev.deltaY; ev.preventDefault(); } }, { passive: false }); } },
+      wallRef: el => { if (el && !el._wheel) { el._wheel = true; el.addEventListener('wheel', ev => { if (this.state.phone) return; if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) { el.scrollLeft += ev.deltaY; ev.preventDefault(); } }, { passive: false }); } },
+      ...this.yearStyles(),
       yearGroups: (() => {
         const works = (d.works || []).filter(w => w.y);
         const years = [];
@@ -945,7 +1068,7 @@ class Component extends DCLogic {
             items: items.map((w, i) => ({
               title: w.t || '',
               // scale varies with the work's real size so the run reads like a hang
-              style: { cursor: 'pointer', flex: 'none', height: 'min(' + (i % 3 === 0 ? 44 : (i % 3 === 1 ? 32 : 38)) + 'vh, ' + (i % 3 === 0 ? 400 : (i % 3 === 1 ? 290 : 340)) + 'px)' },
+              style: st.phone ? { cursor: 'pointer' } : { cursor: 'pointer', flex: 'none', height: 'min(' + (i % 3 === 0 ? 44 : (i % 3 === 1 ? 32 : 38)) + 'vh, ' + (i % 3 === 0 ? 400 : (i % 3 === 1 ? 290 : 340)) + 'px)' },
               imgRef: mkRef(w.img, this.markBroken),
               open: () => {
                 const list = (d.works || []).filter(x => x.s === w.s);
@@ -960,9 +1083,10 @@ class Component extends DCLogic {
         label: f,
         pick: () => this.setState({ ovFilter: f }),
         style: {
-          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 11,
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12,
           letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
-          opacity: f === (st.ovFilter || 'All') ? 1 : 0.45,
+          color: f === (st.ovFilter || 'All') ? '#141414' : '#6e6e72',
+          fontWeight: f === (st.ovFilter || 'All') ? 500 : 400,
           borderBottom: '1px solid ' + (f === (st.ovFilter || 'All') ? 'rgba(20,20,20,.85)' : 'transparent')
         }
       })),
@@ -980,9 +1104,9 @@ class Component extends DCLogic {
           imgRef: mkRef(w.img, this.markBroken)
         })), this.state.colCount || 3),
       vExhibit: view === 'exhibit',
-      oWorks: (view === 'works' || view === 'series' || view === 'work' || view === 'overview' || view === 'year') ? 1 : 0.5,
-      oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.5,
-      oInfo: view === 'info' ? 1 : 0.5,
+      oWorks: (view === 'works' || view === 'series' || view === 'work' || view === 'overview' || view === 'year') ? 1 : 0.62,
+      oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.62,
+      oInfo: view === 'info' ? 1 : 0.62,
       hasQuery: !!(st.q || '').trim(),
       vSearch: view === 'search',
       toSearchMenu: () => this.setState({ view: 'search', menuOpen: false }),
@@ -1069,22 +1193,23 @@ class Component extends DCLogic {
         label: f,
         pick: () => this.setState({ exhFilter: f }),
         style: {
-          cursor: 'pointer', fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase',
-          paddingBottom: 4, opacity: f === exhF ? 1 : 0.45,
+          cursor: 'pointer', fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase',
+          paddingBottom: 4, color: f === exhF ? '#141414' : '#6e6e72', fontWeight: f === exhF ? 500 : 400,
           borderBottom: '1px solid ' + (f === exhF ? 'rgba(20,20,20,.85)' : 'transparent')
         }
       })),
       vNews: view === 'news',
-      oNews: view === 'news' ? 1 : 0.5,
+      oNews: view === 'news' ? 1 : 0.62,
       toNews: this.go('news'),
       newsLabel: 'News',
       newsFilters: ['All', 'Press', 'Event'].map(f => ({
         label: f === 'Event' ? 'Events' : f,
         pick: () => this.setState({ newsFilter: f }),
         style: {
-          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 11,
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12,
           letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
-          opacity: f === nF ? 1 : 0.45,
+          color: f === nF ? '#141414' : '#6e6e72',
+          fontWeight: f === nF ? 500 : 400,
           borderBottom: '1px solid ' + (f === nF ? 'rgba(20,20,20,.85)' : 'transparent')
         }
       })),
@@ -1152,12 +1277,12 @@ class Component extends DCLogic {
       exInfoHidden: !!st.exInfoHidden,
       exScrollStyle: {
         position: 'absolute', top: 86 - navOff, left: 0, right: 0, bottom: 0,
-        overflowY: 'auto', padding: (st.exMode === 'full' ? '0 44px 45vh' : '0 44px 70px')
+        overflowY: 'auto', padding: (st.phone ? '0 18px ' : '0 44px ') + (st.exMode === 'full' ? '45vh' : '70px')
       },
       navStyle: {
         position: 'absolute', top: 0, left: 0, right: 0, height: 86,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 44px', zIndex: 5, pointerEvents: 'none',
+        padding: st.phone ? '0 18px' : '0 44px', zIndex: 5, pointerEvents: 'none',
         transform: 'translateY(-' + navOff + 'px)',
         opacity: 1 - (navOff / 86),
         transition: st.navSnap ? 'transform .3s cubic-bezier(.33,1,.68,1), opacity .24s ease' : 'none'
@@ -1178,18 +1303,9 @@ class Component extends DCLogic {
         el.onload = () => { el.style.display = ''; };
         el.style.display = '';
         el.src = u;
-        if (cx.pan) {
-          // clear and re-apply so a finished animation plays again on the next show
-          el.style.animation = 'none';
-          requestAnimationFrame(() => { el.style.animation = 'dcPan 22s ease-out forwards'; });
-        } else {
-          el.style.animation = 'none';
-        }
+        el.style.animation = 'none';
       },
-      heroImgStyle: Object.assign(
-        { display: 'block', width: '100%', height: '100%', objectFit: 'cover' },
-        cx.pan ? { animation: 'dcPan 22s ease-out forwards', willChange: 'transform' } : {}
-      ),
+      heroImgStyle: { display: 'block', width: '100%', height: '100%', objectFit: 'cover' },
       exCollapsedParas: (() => {
         const sp = String(summary).split(/\n{2,}/).map(t => t.trim()).filter(Boolean);
         return sp.concat(body).map((t, i) => ({ text: t, i }));
@@ -1200,9 +1316,14 @@ class Component extends DCLogic {
       exHasMore: body.length > 0,
       exExpanded: !!st.exOpen,
       exMoreLabel: st.exOpen ? 'Less' : 'See more',
-      toggleExText: () => this.setState(x => ({ exOpen: !x.exOpen }), () => {
-        if (!this.state.exOpen) this.scrollTo(this._pressRow, 26);
-      }),
+      toggleExText: () => {
+        // expanding the copy moves the gallery under the pointer; a delayed
+        // click would otherwise land on the arrow now sitting in that spot
+        this._enteredAt = Date.now();
+        this.setState(x => ({ exOpen: !x.exOpen }), () => {
+          if (!this.state.exOpen) this.scrollTo(this._pressRow, 26);
+        });
+      },
       exHasPress: !!(cx.press && cx.press.u),
       exPressIsImage: !!(cx.press && /\.(jpg|jpeg|png|gif|webp)$/i.test(cx.press.u)),
       exPressIsPage: !!(cx.press && cx.press.u && !/\.(jpg|jpeg|png|gif|webp)$/i.test(cx.press.u)),
