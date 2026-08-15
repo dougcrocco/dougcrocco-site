@@ -17,6 +17,9 @@
   @media only screen and (max-width: 900px) {
     [data-r~="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
   }
+  @media only screen and (min-width: 821px) {
+    [data-r~="fullnum"] { display:none !important; }
+  }
   @media only screen and (max-width: 820px) {
     [data-r~="excols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 0 18px !important; }
   }
@@ -38,7 +41,7 @@
     [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="fullarrow"] { display:none !important; }
     [data-r~="fullpad"] { min-height:calc(100dvh - 40px) !important; }
-    [data-r~="fullcap"] { padding-top:34px !important; }
+    [data-r~="fullcap"] { padding-top:34px !important; height:auto !important; }
     [data-r~="fullnum"] { margin-top:30px !important; }
     [data-r~="fullpad"] { padding-bottom:20px !important; }
     [data-r~="arrowgut"] { height:calc(100dvh - 190px) !important; }
@@ -330,13 +333,13 @@
       <sc-if value="{{ exFullMode }}" hint-placeholder-val="{{ true }}">
         <div data-r="fullpad" style="max-width:1760px;padding:0 0 56px">
           <div style="position:relative">
-            <div ref="{{ fullSwipeRef }}" data-r="arrowgut" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:min(calc(100dvh - 120px), 86vh)">
+            <div ref="{{ fullSwipeRef }}" onClick="{{ backdropToGrid }}" data-r="arrowgut" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:min(calc(100dvh - 120px), 86vh)">
               <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:100%;height:100%">
                 <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;flex:0 1 auto;min-height:0">
                 <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
                   <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
                 </sc-if>
-                <div data-r="fullcap" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:min(80ch,100%);padding-top:24px">{{ fullCaption }}</div>
+                <div data-r="fullcap" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b6b6d;text-align:center;max-width:min(80ch,100%);padding-top:24px;height:39px;flex:none">{{ fullCaption }}</div>
               </div>
             </div>
             <div onClick="{{ prevFull }}" data-r="fullarrow" style="position:absolute;left:0;top:calc(min(calc(100dvh - 120px), 86vh) / 2);transform:translateY(-50%);z-index:2;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
@@ -1375,6 +1378,7 @@ class Component extends DCLogic {
         }
       },
       // land the "Press release" label at the very top of the view
+      backdropToGrid: ev => { if (ev.target === ev.currentTarget) this.setViewMode('grid'); },
       showInfo: () => { this.setState({ navSnap: true }); this.scrollTo(this._pressRow, 22); },
       viewsRowRef: el => { this._viewsRow = el; },
       fullSwipeRef: el => { this._fullFrame = el; this.attachSwipe(el, d => this.stepFull(d)); },
