@@ -486,7 +486,7 @@
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#6e6e72;margin-top:5px">{{ exPlaceDate }}</div>
         </div>
         <sc-if value="{{ exHasHero }}" hint-placeholder-val="{{ false }}">
-          <div style="{{ heroFrameStyle }}">
+          <div onTouchStart="{{ heroTouchStart }}" onTouchEnd="{{ heroTouchEnd }}" style="{{ heroFrameStyle }}">
             <img ref="{{ heroImgRef }}" alt="{{ exTitle }}" style="{{ heroImgStyle }}">
           </div>
         </sc-if>
@@ -1697,7 +1697,23 @@ class Component extends DCLogic {
         width: '100vw', marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)',
         marginBottom: 34, overflow: 'hidden',
         height: 'min(56vh, 620px)',
-        background: '#f2f1ee'
+        background: '#f2f1ee',
+        touchAction: st.phone ? 'pan-y' : 'auto'
+      },
+      // phone only: a horizontal swipe across the banner steps to the next / previous show
+      heroTouchStart: e => {
+        if (!st.phone) return;
+        const t = e.touches && e.touches[0];
+        this._sw = t ? { x: t.clientX, y: t.clientY } : null;
+      },
+      heroTouchEnd: e => {
+        if (!st.phone || !this._sw) return;
+        const t = e.changedTouches && e.changedTouches[0];
+        const s = this._sw; this._sw = null;
+        if (!t) return;
+        const dx = t.clientX - s.x, dy = t.clientY - s.y;
+        if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+        this.stepExhibit(dx < 0 ? 1 : -1);
       },
       heroImgRef: el => {
         const u = cx.hero || '';
