@@ -262,8 +262,8 @@
         </sc-if>
         <div ref="{{ pressBlockRef }}" style="max-width:1760px;padding:0 0 34px;min-height:0">
           <div data-r="herocopy" style="{{ exCopyWrapStyle }}">
-            <div ref="{{ pressRowRef }}" style="overflow:hidden;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#6e6e72;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:20px">Press release</div>
-            <div data-r="venuecol" style="{{ exVenueColStyle }}">
+            <div ref="{{ pressRowRef }}" onClick="{{ showInfo }}" style="order:0;cursor:pointer;overflow:hidden;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#6e6e72;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:20px">Press release</div>
+            <div data-r="venuecol" style="{{ exVenueColStyle }}" data-order="2">
               <sc-for list="{{ exVenueImgs }}" as="v" hint-placeholder-count="1">
                 <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
                   <div data-r="venuebox" style="{{ v.boxStyle }}">
@@ -279,7 +279,7 @@
               </sc-for>
             </div>
             <sc-for list="{{ exCollapsedParas }}" as="p" hint-placeholder-count="2">
-              <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;margin:0 0 16px">{{ p.text }}</div>
+              <div style="order:1;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;margin:0 0 16px">{{ p.text }}</div>
             </sc-for>
             <div style="clear:both"></div>
             <sc-if value="{{ exCollapsedFade }}" hint-placeholder-val="{{ false }}">
@@ -953,11 +953,13 @@ class Component extends DCLogic {
   scrollTo(el, offset) {
     const box = this._exScroll;
     if (!box) return;
-    // offsetTop is layout-relative, so it lands identically whichever view just rendered
+    // measure against the scroller: offsetTop is relative to the nearest positioned
+    // ancestor, which reads 0 for anything inside a position:relative wrapper
     requestAnimationFrame(() => requestAnimationFrame(() => {
       const target = el || this._viewsRow;
       if (!target) return;
-      const to = Math.max(0, target.offsetTop - (offset || 0));
+      const delta = target.getBoundingClientRect().top - box.getBoundingClientRect().top;
+      const to = Math.max(0, box.scrollTop + delta - (offset || 0));
       const from = box.scrollTop;
       const dist = to - from;
       if (Math.abs(dist) < 2) return;
@@ -968,7 +970,10 @@ class Component extends DCLogic {
         const p = Math.min(1, (now - t0) / dur);
         // slow ease in and out, so the pull reads as deliberate
         const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-        box.scrollTop = from + dist * e;
+        // re-measure the destination every frame: images finishing above the target
+        // move it during the glide, which used to leave the landing short
+        const live = Math.max(0, box.scrollTop + (target.getBoundingClientRect().top - box.getBoundingClientRect().top) - (offset || 0));
+        box.scrollTop = p < 1 ? (from + (live - from) * e) : live;
         if (p < 1) this._glide = requestAnimationFrame(step);
       };
       this._glide = requestAnimationFrame(step);
@@ -1370,7 +1375,8 @@ class Component extends DCLogic {
           }, { passive: true });
         }
       },
-      showInfo: () => { this.setState({ navSnap: true }); this.scrollTo(this._pressRow, 26); },
+      // land the "Press release" label at the very top of the view
+      showInfo: () => { this.setState({ navSnap: true }); this.scrollTo(this._pressRow, 22); },
       viewsRowRef: el => { this._viewsRow = el; },
       fullSwipeRef: el => { this._fullFrame = el; this.attachSwipe(el, d => this.stepFull(d)); },
       exGridRef: el => { this._exGrid = el; },
@@ -1429,9 +1435,11 @@ class Component extends DCLogic {
       // just lifts the height cap so the copy fills the space under the image
       exRosterCut: rosterAt >= 0,
       exVenueColStyle: st.narrow
-        ? { float: 'none', width: '100%', margin: '0 0 24px' }
+        ? { float: 'none', width: '100%', margin: '24px 0 0', order: 2 }
         : { float: 'right', width: st.phone ? 'clamp(150px, 38vw, 240px)' : 'clamp(240px, 26vw, 320px)', margin: st.phone ? '5px 0 18px 22px' : '6px 0 26px 52px' },
-      exCopyWrapStyle: { position: 'relative' },
+      exCopyWrapStyle: st.narrow
+        ? { position: 'relative', display: 'flex', flexDirection: 'column' }
+        : { position: 'relative' },
       exCollapsedFade: false,
       exFadeStyle: {
         position: 'absolute', left: 0, bottom: 0, height: st.phone ? 56 : 120, pointerEvents: 'none',
