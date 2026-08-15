@@ -305,7 +305,12 @@
           <div style="display:flex;flex-direction:column;gap:30px">
             <sc-for list="{{ col.items }}" as="s" hint-placeholder-count="3">
               <div onClick="{{ s.open }}" style="cursor:pointer">
-                <img ref="{{ s.imgRef }}" alt="{{ s.name }}" style="display:block;width:100%;height:auto">
+                <sc-if value="{{ s.isStill }}" hint-placeholder-val="{{ true }}">
+                  <img ref="{{ s.imgRef }}" alt="{{ s.name }}" style="display:block;width:100%;height:auto">
+                </sc-if>
+                <sc-if value="{{ s.isPoster }}" hint-placeholder-val="{{ false }}">
+                  <video ref="{{ s.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:min(62vh,620px);object-fit:cover;object-position:left bottom;background:#000000"></video>
+                </sc-if>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.4;color:#2a2a2b;margin-top:9px">{{ s.name }}</div>
               </div>
             </sc-for>
@@ -389,8 +394,8 @@
                   <sc-if value="{{ w.isStill }}" hint-placeholder-val="{{ true }}">
                     <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
                   </sc-if>
-                  <sc-if value="{{ w.isVideo }}" hint-placeholder-val="{{ false }}">
-                    <video ref="{{ w.videoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:min(70vh,720px);object-fit:cover;background:#000000"></video>
+                  <sc-if value="{{ w.isPoster }}" hint-placeholder-val="{{ false }}">
+                    <video ref="{{ w.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:min(62vh,620px);object-fit:cover;object-position:left bottom;background:#000000"></video>
                   </sc-if>
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:#1f1f21;padding-top:11px"><em>{{ w.title }}</em></div>
@@ -1396,7 +1401,9 @@ class Component extends DCLogic {
         .map((w, i) => ({
           title: w.t || 'Untitled',
           meta: [w.y, w.m, w.d].filter(Boolean).join(', '),
-          isVideo: !!w.video,
+          // media view shows every work as a still, video included — same
+          // fixed poster treatment the series grid uses
+          isPoster: !!w.video,
           isStill: !w.video,
           href: '#/works/' + this.slug(w.s) + '/' + (((d.works || []).filter(x => x.s === w.s).findIndex(x => x.img === w.img)) + 1),
           label: [w.t || 'Untitled', w.y, w.m, w.d].filter(Boolean).join(', '),
@@ -1511,6 +1518,17 @@ class Component extends DCLogic {
       seriesColumns: (() => {
         const items = d.series.map(x => ({
           name: x.name,
+          isPoster: (d.works || []).some(w => w.s === x.name && w.video),
+          isStill: !(d.works || []).some(w => w.s === x.name && w.video),
+          videoRef: el => {
+            const vid = ((d.works || []).find(w => w.s === x.name && w.video) || {}).video;
+            if (!el || el._wired || !vid) return;
+            el._wired = true;
+            el.muted = true; el.defaultMuted = true; el.loop = true;
+            fetch(vid).then(r => r.blob()).then(b => {
+              el.src = URL.createObjectURL(b); el.load(); el.play().catch(() => {});
+            }).catch(() => { el.src = vid; el.play().catch(() => {}); });
+          },
           open: () => this.setState({ view: 'series', series: x.name, sel: 0 }),
           imgRef: mkRef(x.cover, this.markBroken)
         }));
