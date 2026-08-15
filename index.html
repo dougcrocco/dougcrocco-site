@@ -429,14 +429,14 @@
           <div style="width:22px;height:1px;background:#ffffff"></div>
         </div>
       </div>
-      <div style="flex:none;height:26px"></div>
+      <div style="flex:none;height:14px"></div>
       <div ref="{{ wallRef }}" style="{{ wallStyle }}">
         <div style="{{ wallRowStyle }}">
           <sc-for list="{{ yearGroups }}" as="g" hint-placeholder-count="6">
             <div style="{{ yearColStyle }}">
               <div style="{{ yearRowStyle }}">
                 <sc-for list="{{ g.items }}" as="w" hint-placeholder-count="3">
-                  <div onClick="{{ w.open }}" style="{{ w.style }}">
+                  <div onClick="{{ w.open }}" data-wall-label="{{ w.label }}" style="{{ w.style }}">
                     <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="{{ wallImgStyle }}">
                   </div>
                 </sc-for>
@@ -445,6 +445,9 @@
             </div>
           </sc-for>
         </div>
+      </div>
+      <div data-r="gut" style="flex:none;padding:0 44px 46px;min-height:44px;display:flex;justify-content:center;text-align:center">
+        <div ref="{{ wallCapRef }}" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#2a2a2b;opacity:0;transition:opacity .35s ease"></div>
       </div>
     </div>
   </sc-if>
@@ -889,7 +892,7 @@ class Component extends DCLogic {
     return {
       wallStyle: ph
         ? { flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'hidden', padding: '0 18px 40px' }
-        : { flex: 1, minHeight: 0, maxHeight: this.state.phone ? 'calc(100dvh - 150px)' : 'none', overflowX: 'auto', overflowY: 'hidden', padding: this.state.phone ? '0 18px 24px' : '0 44px 24px', WebkitOverflowScrolling: 'touch' },
+        : { flex: 1, minHeight: 0, maxHeight: this.state.phone ? 'calc(100dvh - 150px)' : 'none', overflowX: 'auto', overflowY: 'hidden', padding: this.state.phone ? '0 18px 34px' : '0 44px 44px', WebkitOverflowScrolling: 'touch' },
       wallRowStyle: ph
         ? { display: 'flex', flexDirection: 'column', gap: 40 }
         : { display: 'flex', alignItems: 'flex-end', gap: this.state.phone ? 22 : 34, height: '100%' },
@@ -1326,7 +1329,40 @@ class Component extends DCLogic {
       vOverview: view === 'overview',
       vYear: view === 'year',
       toYear: () => this.setState({ view: 'year' }),
-      wallRef: el => { if (el && !el._wheel) { el._wheel = true; el.addEventListener('wheel', ev => { if (this.state.phone) return; if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) { el.scrollLeft += ev.deltaY; ev.preventDefault(); } }, { passive: false }); } },
+      wallCapRef: el => { this._wallCap = el || this._wallCap; },
+      wallRef: el => {
+        if (!el) return;
+        if (!el._wheel) {
+          el._wheel = true;
+          el.addEventListener('wheel', ev => { if (this.state.phone) return; if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) { el.scrollLeft += ev.deltaY; ev.preventDefault(); } }, { passive: false });
+        }
+        if (!el._centre) {
+          el._centre = true;
+          // the work nearest the middle of the wall names itself above the run
+          const mark = () => {
+            const cap = this._wallCap;
+            if (!cap) return;
+            const box = el.getBoundingClientRect();
+            const mid = box.left + box.width / 2;
+            let best = null, bestD = Infinity;
+            el.querySelectorAll('[data-wall-label]').forEach(n => {
+              const r = n.getBoundingClientRect();
+              const d = Math.abs(r.left + r.width / 2 - mid);
+              if (d < bestD) { bestD = d; best = n; }
+            });
+            const txt = best ? best.getAttribute('data-wall-label') : '';
+            if (txt && cap.textContent !== txt) cap.textContent = txt;
+            cap.style.opacity = txt ? 1 : 0;
+          };
+          el._mark = mark;
+          el.addEventListener('scroll', () => {
+            if (el._raf) return;
+            el._raf = requestAnimationFrame(() => { el._raf = null; mark(); });
+          }, { passive: true });
+          setTimeout(mark, 60);
+          setTimeout(mark, 400);
+        }
+      },
       ...this.yearStyles(),
       yearGroups: (() => {
         const works = (d.works || []).filter(w => w.y);
@@ -1339,6 +1375,7 @@ class Component extends DCLogic {
             year: String(y),
             items: items.map((w, i) => ({
               title: w.t || '',
+              label: [w.t || 'Untitled', w.y, w.m, w.d].filter(Boolean).join(', '),
               // scale varies with the work's real size so the run reads like a hang
               style: { cursor: 'pointer', flex: 'none', height: st.phone
                 ? 'min(' + (i % 3 === 0 ? 38 : (i % 3 === 1 ? 27 : 33)) + 'dvh, ' + (i % 3 === 0 ? 300 : (i % 3 === 1 ? 215 : 255)) + 'px)'
