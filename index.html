@@ -34,7 +34,6 @@
     [data-r~="venuebox"] { height: 260px !important; }
   }
   @media only screen and (max-width: 700px) {
-    [data-r~="venuecol"] { justify-content: flex-start !important; margin-top: 0 !important; }
     [data-r~="gut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
     [data-r~="fullarrow"] { display:none !important; }
@@ -285,14 +284,14 @@
             <sc-if value="{{ exCollapsedFade }}" hint-placeholder-val="{{ false }}">
               <div style="{{ exFadeStyle }}"></div>
             </sc-if>
-          </div>
-          <div style="display:flex;align-items:flex-end;gap:30px;margin-top:20px;max-width:1760px">
-            <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ toggleExText }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
-            </sc-if>
-            <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
-            </sc-if>
+            <div style="display:flex;align-items:flex-end;gap:30px;margin-top:8px;max-width:1760px;order:2">
+              <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleExText }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+              </sc-if>
+              <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
+              </sc-if>
+            </div>
           </div>
               <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:20px">
@@ -653,7 +652,7 @@ const mkRef = (url, onFail) => el => {
 };
 
 class Component extends DCLogic {
-  state = { q: '', phone: false, narrow: false, wide: (typeof window !== 'undefined' ? window.innerWidth > 820 : true), colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
+  state = { q: '', phone: (typeof window !== 'undefined' && window.innerWidth <= 700), narrow: (typeof window !== 'undefined' && window.innerWidth <= 460), wide: (typeof window !== 'undefined' ? window.innerWidth > 820 : true), colCount: 3, view: 'home', series: null, sel: 0, slide: 0, exhFilter: 'All', exhibit: null, exOpen: false, lb: '', lbC: '', venue: '', newsFilter: 'All', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, navOff: 0, navSnap: false, broken: {} };
   markBroken = url => {
     if (!url || this.state.broken[url]) return;
     this.setState(s => { const b = Object.assign({}, s.broken); b[url] = 1; return { broken: b }; });
@@ -1435,7 +1434,7 @@ class Component extends DCLogic {
       // just lifts the height cap so the copy fills the space under the image
       exRosterCut: rosterAt >= 0,
       exVenueColStyle: st.narrow
-        ? { float: 'none', width: '100%', margin: '24px 0 0', order: 2 }
+        ? { float: 'none', width: '100%', margin: '40px 0 0', order: 3 }
         : { float: 'right', width: st.phone ? 'clamp(150px, 38vw, 240px)' : 'clamp(240px, 26vw, 320px)', margin: st.phone ? '5px 0 18px 22px' : '6px 0 26px 52px' },
       exCopyWrapStyle: st.narrow
         ? { position: 'relative', display: 'flex', flexDirection: 'column' }
