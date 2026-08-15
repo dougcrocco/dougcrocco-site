@@ -44,7 +44,8 @@
     [data-r~="workcap"] { padding:0 18px 24px !important; }
   }
   @media only screen and (max-width: 768px) {
-    [data-r~="galcols"], [data-r~="feature"], [data-r~="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r~="feature"], [data-r~="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
+    [data-r~="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 0 14px !important; }
     [data-r~="feature"] > *:first-child { grid-column: auto !important; }
     [data-r~="infophoto"] { opacity: .22 !important; }
     /* stacked: portrait and the contact details side by side, bio and form beneath */
