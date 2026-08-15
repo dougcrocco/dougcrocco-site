@@ -309,7 +309,7 @@
                   <img ref="{{ s.imgRef }}" alt="{{ s.name }}" style="display:block;width:100%;height:auto">
                 </sc-if>
                 <sc-if value="{{ s.isPoster }}" hint-placeholder-val="{{ false }}">
-                  <video ref="{{ s.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:min(62vh,620px);object-fit:cover;object-position:left bottom;background:#000000"></video>
+                  <video ref="{{ s.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
                 </sc-if>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.4;color:#2a2a2b;margin-top:9px">{{ s.name }}</div>
               </div>
@@ -354,7 +354,12 @@
             <sc-for list="{{ col.items }}" as="w" hint-placeholder-count="4">
               <a href="{{ w.href }}" aria-label="{{ w.label }}" onClick="{{ w.open }}" style="display:block;cursor:pointer;color:inherit;text-decoration:none">
                 <div style="background:{{ sBed }};box-shadow:{{ sShadow }}">
-                  <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+                  <sc-if value="{{ w.isStill }}" hint-placeholder-val="{{ true }}">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+                  </sc-if>
+                  <sc-if value="{{ w.isPoster }}" hint-placeholder-val="{{ false }}">
+                    <video ref="{{ w.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
+                  </sc-if>
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:{{ sInk }};padding-top:11px"><em>{{ w.title }}</em></div>
                 <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:{{ sInk3 }};padding-top:3px">{{ w.meta }}</div>
@@ -395,7 +400,7 @@
                     <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
                   </sc-if>
                   <sc-if value="{{ w.isPoster }}" hint-placeholder-val="{{ false }}">
-                    <video ref="{{ w.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:min(62vh,620px);object-fit:cover;object-position:left bottom;background:#000000"></video>
+                    <video ref="{{ w.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
                   </sc-if>
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:#1f1f21;padding-top:11px"><em>{{ w.title }}</em></div>
@@ -458,7 +463,7 @@
             <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
           </sc-if>
           <sc-if value="{{ wIsVideo }}" hint-placeholder-val="{{ false }}">
-            <video ref="{{ wVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;background:#000000"></video>
+            <video ref="{{ wVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="max-width:100%;max-height:100%;height:100%;width:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.06)"></video>
           </sc-if>
         </div>
         <button type="button" aria-label="Next work" style-focus="outline:1px dotted currentColor;outline-offset:3px" data-r="workarrow" onClick="{{ nextWork }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</button>
@@ -1537,6 +1542,16 @@ class Component extends DCLogic {
       seriesWorkColumns: (() => {
         const items = seriesWorks.map((it, i) => ({
           title: it.t || 'Untitled',
+          isPoster: !!it.video,
+          isStill: !it.video,
+          videoRef: el => {
+            if (!el || el._wired || !it.video) return;
+            el._wired = true;
+            el.muted = true; el.defaultMuted = true; el.loop = true;
+            fetch(it.video).then(r => r.blob()).then(b => {
+              el.src = URL.createObjectURL(b); el.load(); el.play().catch(() => {});
+            }).catch(() => { el.src = it.video; el.play().catch(() => {}); });
+          },
           // the label a collector needs: year, medium, dimensions
           meta: [it.y, it.m, it.d].filter(Boolean).join(', '),
           href: '#/works/' + this.slug(st.series) + '/' + (i + 1),
