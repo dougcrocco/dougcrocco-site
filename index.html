@@ -37,6 +37,11 @@
     [data-r~="fullnum"] { margin-top:14px !important; gap:30px !important; }
     [data-r~="fullnum"] > div { font-size:15px !important; }
     [data-r~="arrowgut"] { height: min(calc(100dvh - 180px), 80vh) !important; }
+    [data-r~="workarrow"] { display:none !important; }
+    [data-r~="worknum"] { display:flex !important; margin-top:14px !important; gap:30px !important; }
+    [data-r~="worknum"] > div { font-size:15px !important; }
+    [data-r~="workrow"] { gap:0 !important; padding-left:18px !important; padding-right:18px !important; }
+    [data-r~="workcap"] { padding:0 18px 24px !important; }
   }
   @media only screen and (max-width: 768px) {
     [data-r~="galcols"], [data-r~="feature"], [data-r~="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
@@ -410,14 +415,14 @@
   <sc-if value="{{ vWork }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
       <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#4a4a4d;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414"><span style="display:inline-block;transform:scaleX(-1);margin-right:8px">→</span>{{ wBackLabel }}</div>
+        <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#4a4a4d;display:flex;align-items:center;min-height:44px">{{ wSeries }}</div>
         <div style="display:flex;align-items:center;gap:26px">
           <div onClick="{{ toContact }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Enquire</div>
           <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 0 14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Close</div>
         </div>
       </div>
-      <div data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
-        <div onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55"><span style="display:block;transform:scaleX(-1)">→</span></div>
+      <div data-r="gut workrow" onTouchStart="{{ workTouchStart }}" onTouchEnd="{{ workTouchEnd }}" style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px;touch-action:pan-y">
+        <div data-r="workarrow" onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</div>
         <div style="flex:1;min-width:0;align-self:stretch;min-height:0;display:flex;align-items:center;justify-content:center">
           <sc-if value="{{ wIsStill }}" hint-placeholder-val="{{ true }}">
             <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
@@ -426,10 +431,15 @@
             <video ref="{{ wVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;background:#000000"></video>
           </sc-if>
         </div>
-        <div onClick="{{ nextWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
+        <div data-r="workarrow" onClick="{{ nextWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❯</div>
       </div>
-      <div style="flex:none;padding:0 118px 30px;display:flex;justify-content:center">
+      <div data-r="workcap" style="flex:none;padding:0 118px 30px;display:flex;flex-direction:column;align-items:center">
         <div style="font-size:13px;line-height:1.7;opacity:.7;max-width:760px;text-align:center;text-wrap:pretty">{{ wCaption }}</div>
+        <div data-r="worknum" style="display:none;align-items:center;justify-content:center;gap:22px;margin-top:26px">
+          <div onClick="{{ prevWork }}" data-r="taphalf" style="cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;color:#9c9ca0">❮</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;color:#9c9ca0">{{ wSlash }}</div>
+          <div onClick="{{ nextWork }}" data-r="taphalf" style="cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;color:#9c9ca0">❯</div>
+        </div>
       </div>
     </div>
   </sc-if>
@@ -1491,6 +1501,22 @@ class Component extends DCLogic {
       wMedium: w.m || '', wDims: w.d || '', wSeries: st.series || 'Works',
       wCaption: [w.t, w.y, w.m, w.d].filter(Boolean).join(', '),
       wPos: seriesWorks.length ? (st.sel + 1) + ' of ' + seriesWorks.length : '',
+      wSlash: seriesWorks.length ? (st.sel + 1) + ' / ' + seriesWorks.length : '',
+      // phone only: swipe across the artwork steps through the series
+      workTouchStart: e => {
+        if (!st.phone) return;
+        const t = e.touches && e.touches[0];
+        this._wsw = t ? { x: t.clientX, y: t.clientY } : null;
+      },
+      workTouchEnd: e => {
+        if (!st.phone || !this._wsw) return;
+        const t = e.changedTouches && e.changedTouches[0];
+        const s0 = this._wsw; this._wsw = null;
+        if (!t) return;
+        const dx = t.clientX - s0.x, dy = t.clientY - s0.y;
+        if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+        this.step(dx < 0 ? 1 : -1);
+      },
 
       exhFilters: ['All', 'Solo', 'Group', 'Curated'].map(f => ({
         label: f,
