@@ -14,78 +14,260 @@
   a:hover { text-decoration:none; color:#000000; }
   x-dc:not(:defined) [data-live-layer] { display:none !important; }
   [data-r~="taphalf"], [data-r~="fullarrow"] { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; }
+  /* ---- breakpoint ladder: 1024 / 900 / 820 / 700 / 460 ----
+     The single-image frame steps down in even 20px increments so artwork scales
+     smoothly across the breaks instead of jumping. Frame height is the one number
+     that governs image size; the side arrows read from the same expression. */
+  @media only screen and (max-width: 1024px) {
+    [data-r~="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r~="arrowgut"] { height: min(calc(100dvh - 140px), 84vh) !important; }
+  }
   @media only screen and (max-width: 900px) {
     [data-r~="galcols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r~="venuebox"] { height: 260px !important; }
+    [data-r~="arrowgut"] { height: min(calc(100dvh - 160px), 82vh) !important; }
   }
+  /* at 820 the side arrows give way to the row beneath the caption */
   @media only screen and (min-width: 821px) {
     [data-r~="fullnum"] { display:none !important; }
   }
   @media only screen and (max-width: 820px) {
     [data-r~="excols"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 0 18px !important; }
     [data-r~="fullarrow"] { display:none !important; }
-    [data-r~="fullnum"] { margin-top:14px !important; gap:30px !important; font-size:13px !important; }
+    [data-r~="fullnum"] { margin-top:14px !important; gap:30px !important; }
     [data-r~="fullnum"] > div { font-size:15px !important; }
-  }
-  @media only screen and (max-width: 1024px) {
-    [data-r~="feature"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    [data-r~="arrowgut"] { height: min(calc(100dvh - 180px), 80vh) !important; }
   }
   @media only screen and (max-width: 768px) {
     [data-r~="galcols"], [data-r~="feature"], [data-r~="c2"] { grid-template-columns: minmax(0,1fr) !important; gap: 26px !important; }
     [data-r~="feature"] > *:first-child { grid-column: auto !important; }
     [data-r~="w2"] { grid-template-columns: minmax(0,1fr) !important; }
-    [data-r~="infotint"] { width: 100% !important; }
-    [data-r~="infophoto"] { position: static !important; width: 100% !important; height: auto !important; opacity: 1 !important; margin-top: 26px; }
-  }
-  @media only screen and (max-width: 900px) {
-    [data-r~="venuebox"] { height: 260px !important; }
+    [data-r~="infophoto"] { opacity: .22 !important; }
+    /* stacked: portrait and the contact details side by side, bio and form beneath */
+    [data-r~="infogrid"] { grid-template-columns: 210px minmax(0,1fr) !important; grid-template-areas: 'p side' 'bio bio' !important; gap: 0 26px !important; }
+    [data-r~="infoside"] { max-width: none !important; }
+    [data-r~="infoportrait"] { width: 210px !important; }
+    [data-r~="infobio"] { margin-top: 30px !important; }
   }
   @media only screen and (max-width: 700px) {
-    [data-r~="gut"] { padding-left:18px !important; padding-right:18px !important; }
-    [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
-    [data-r~="fullpad"] { min-height:calc(100dvh - 40px) !important; }
-    [data-r~="fullcap"] { padding-top:34px !important; height:auto !important; }
-    [data-r~="fullnum"] { margin-top:30px !important; }
-    [data-r~="fullpad"] { padding-bottom:20px !important; }
-    [data-r~="arrowgut"] { height:calc(100dvh - 190px) !important; }
+    [data-r~="navrow"] { grid-template-columns: minmax(0,1fr) !important; gap: 4px !important; }
+    [data-r~="homenav"] { font-size: 26px !important; }
+    [data-r~="heromenu"] { width: 100% !important; margin-left: 0 !important; padding-top: 90px !important; }
+    [data-r~="gut"], [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
+    /* the bleed must always equal the current gutter */
+    [data-r~="exbleed"] { margin-left: -18px !important; margin-right: -18px !important; }
+    [data-r~="exbar"] { margin-left: -18px !important; margin-right: -18px !important; padding-left: 18px !important; padding-right: 18px !important; height: 54px !important; }
+    [data-r~="arrowgut"] { height: min(calc(100dvh - 200px), 78vh) !important; }
+    [data-r~="fullpad"] { min-height:calc(100dvh - 40px) !important; padding-bottom:20px !important; }
+    [data-r~="fullcap"] { padding-top:30px !important; height:auto !important; }
+    [data-r~="fullnum"] { margin-top:22px !important; }
     [data-r~="navlinks"] { display: none !important; }
     [data-r~="navburger"] { display: flex !important; }
+  }
+  @media only screen and (max-width: 460px) {
+    [data-r~="venuebox"] { height: 220px !important; }
+    [data-r~="arrowgut"] { height: min(calc(100dvh - 220px), 76vh) !important; }
+  }
+  /* below ~560 the side column can no longer hold the details: stack it */
+  @media only screen and (max-width: 560px) {
+    [data-r~="infogrid"] { grid-template-columns: minmax(0,1fr) !important; grid-template-areas: 'p' 'side' 'bio' !important; gap: 26px 0 !important; }
+  }
+  /* search results hold three columns at every width */
+  @media only screen and (max-width: 560px) {
+    [data-r~="searchcols"] { gap: 18px 10px !important; }
   }
   ::-webkit-scrollbar { width:0; height:0; }
   * { scrollbar-width:none; -ms-overflow-style:none; }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Raleway:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="./works-data.js"></script>
 </helmet>
 
 <div style="position:fixed;inset:0;background:#ffffff;color:#141414;font-family:Helvetica,'Helvetica Neue',Arial,sans-serif;overflow:hidden">
 
   <sc-if value="{{ vHome }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:0;overflow:hidden">
-      <img ref="{{ slideA }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideAOpacity }};transition:opacity 1.4s ease">
-      <img ref="{{ slideB }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ slideBOpacity }};transition:opacity 1.4s ease">
-      <div onClick="{{ openSlideShow }}" style="position:absolute;inset:0;cursor:pointer"></div>
-      <div data-r="gut" style="position:absolute;left:0;right:0;bottom:0;padding:26px 44px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;pointer-events:none">
-        <div onClick="{{ openSlideShow }}" style="{{ slideInkStyle }}">
-          <div style="{{ slideTitleStyle }}">{{ slideTitle }}</div>
-          <div style="{{ slideVenueStyle }}">{{ slideVenue }}</div>
+    <div ref="{{ homeScrollRef }}" data-live-layer style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden">
+      <div data-r="vhero" style="position:relative;min-height:100dvh;padding:0 44px 40px;box-sizing:border-box;background:#000000;color:#ffffff;overflow:hidden">
+        <video ref="{{ heroVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;z-index:0"></video>
+        <div data-r="heromenu" style="position:relative;z-index:1;padding-top:100px;width:min(46%,560px);margin-left:auto">
+          <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+            <div data-r="homenav" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Doug Crocco</div>
+          </div>
+          <div style="display:flex;flex-direction:column;padding-top:0">
+            <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+              <div onClick="{{ toExhibits }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
+            </div>
+            <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+              <div onClick="{{ toWorks }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
+            </div>
+            <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+              <div onClick="{{ toNews }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
+            </div>
+            <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+              <div onClick="{{ toInfo }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
+            </div>
+            <div data-r="navrow" style="padding:14px 0;">
+              <div onClick="{{ toSearch }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
+            </div>
+          </div>
+          <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#ffffff;padding:40px 0 0">{{ heroCaption }}</div>
+          <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:5px 0 0">{{ heroMeta }}</div>
         </div>
-        <div style="pointer-events:auto;display:flex;align-items:center;gap:14px">
-          <div onClick="{{ prevSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">←</div>
-          <div style="font-size:12px;letter-spacing:.16em;opacity:.5">{{ slideCount }}</div>
-          <div onClick="{{ nextSlide }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.55">→</div>
+      </div>
+
+      <div ref="{{ infoAnchorRef }}" data-r="gut" style="position:relative;padding:26px 44px 34px">
+        <img data-r="infophoto" ref="{{ infoBgRefHome }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
+        <div data-r="infogrid" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(220px,360px) minmax(0,1fr);grid-template-areas:'p side' 'bio bio';gap:0 56px;max-width:1500px;align-items:stretch">
+          <div data-r="infoportrait" style="grid-area:p;width:100%;max-width:360px">
+          <div style="background:#f2f1ee">
+            <img ref="{{ portraitRef2 }}" alt="Doug Crocco" style="display:block;width:100%;height:auto">
+          </div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#5c5c5e;padding-top:10px">Los Angeles</div>
         </div>
+          <div data-r="infoside" style="grid-area:side;align-self:stretch;width:100%;max-width:420px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:left;gap:30px;padding:20px 0">
+          <div data-r="infometa" style="display:flex;flex-direction:column;gap:15px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#3c3c3d">
+            <div>
+              <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:3px">Email</div>
+              <div><a href="mailto:doug@allart.la">doug@allart.la</a></div>
+            </div>
+            <div>
+              <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:3px">Studio</div>
+              <div>Visits by appointment</div>
+            </div>
+            <div>
+              <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:3px">CV</div>
+              <div><a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="border-bottom:1px solid rgba(20,20,20,.45)">Download PDF</a></div>
+            </div>
+          </div>
+          <div data-r="infoform" style="width:100%;max-width:400px">
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:18px">Enquire</div>
+            <form onSubmit="{{ onContactSubmit }}" style="display:flex;flex-direction:column;gap:22px">
+              <input type="email" name="email" placeholder="Your email" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;color:#3c3c3d;width:100%;box-sizing:border-box;padding:0 0 9px;border:none;border-bottom:1px solid rgba(20,20,20,.32);background:transparent;border-radius:0;outline:none">
+              <textarea name="message" rows="3" placeholder="Message" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:#3c3c3d;width:100%;box-sizing:border-box;padding:0 0 9px;border:none;border-bottom:1px solid rgba(20,20,20,.32);background:transparent;border-radius:0;outline:none;resize:vertical"></textarea>
+              <div style="display:flex;align-items:baseline;gap:20px">
+                <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:none;border:none;border-bottom:1px solid rgba(20,20,20,.45);padding:0 0 3px;cursor:pointer;border-radius:0">Send</button>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;color:#6e6e72">Opens in your mail app</div>
+              </div>
+            </form>
+          </div>
+          </div>
+          <div data-r="infobio" style="grid-area:bio;margin-top:44px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.72;letter-spacing:.004em;color:#1f1f21;max-width:none;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks.</div>
+        </div>
+      </div>
+
+
+      <div data-r="c2 gut" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
+        <div style="display:flex;flex-direction:column;gap:44px">
+          <div>
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Education</div>
+            <div style="display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 16px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.62;color:#414142">
+              <div style="color:#8c8c8e">2004</div><div style="text-wrap:pretty">Master of Fine Arts, Claremont Graduate University, Claremont, CA</div>
+              <div style="color:#8c8c8e">2001</div><div style="text-wrap:pretty">Graduate Studies, University of Miami, Coral Gables, FL</div>
+              <div style="color:#8c8c8e">2000</div><div style="text-wrap:pretty">Bachelor of Fine Arts, Florida State University, Tallahassee, FL</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Solo &amp; two person</div>
+            <div style="display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 16px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.62;color:#414142">
+              <div style="color:#8c8c8e">2011</div><div style="text-wrap:pretty">Doug Crocco &amp; Aramis Gutierrez, Legalarts, Miami, FL</div>
+              <div style="color:#8c8c8e">2010</div><div style="text-wrap:pretty"><em>Entropy</em>, Art and Culture Center of Hollywood, FL</div>
+              <div style="color:#8c8c8e">2006</div><div style="text-wrap:pretty"><em>Drawing and Sculpture</em>, The Happy Lion, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2003</div><div style="text-wrap:pretty">MFA Thesis, East Gallery, Claremont Graduate University, CA</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Curatorial</div>
+            <div style="display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 16px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.62;color:#414142">
+              <div style="color:#8c8c8e">2026</div><div style="text-wrap:pretty"><em>Death is a Door</em>, CC Jasper, New York, NY</div>
+              <div style="color:#8c8c8e">2026</div><div style="text-wrap:pretty"><em>The Come Up</em>, SADE, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2019</div><div style="text-wrap:pretty"><em>Holding Space</em>, Big Pictures Los Angeles</div>
+              <div style="color:#8c8c8e">2019</div><div style="text-wrap:pretty"><em>Flat Earth Society</em>, Big Pictures Los Angeles</div>
+              <div style="color:#8c8c8e">2019</div><div style="text-wrap:pretty"><em>I Have Always Imagined That Paradise Will Be a Kind of Library</em>, Blake and Vargas, Berlin</div>
+              <div style="color:#8c8c8e">2018</div><div style="text-wrap:pretty"><em>Transmutation</em>, Big Pictures Los Angeles</div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><em>Staring at The Sun</em>, Big Pictures Los Angeles</div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><em>Polaroid Black</em>, Big Pictures Los Angeles</div>
+              <div style="color:#8c8c8e">2016</div><div style="text-wrap:pretty"><em>Slamdance DIG 2</em>, Big Pictures Los Angeles</div>
+              <div style="color:#8c8c8e">2015</div><div style="text-wrap:pretty"><em>Slamdance DIG</em>, Big Pictures Los Angeles</div>
+              <div style="color:#8c8c8e">2012</div><div style="text-wrap:pretty"><em>NeoNatural</em>, Steve Turner Contemporary, Los Angeles, CA</div>
+            </div>
+            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.75;color:#4a4a4d;margin-top:16px;max-width:52ch;text-wrap:pretty">Big Pictures Los Angeles was a project space in mid-city Los Angeles, founded in 2014 to show underserved mid-career artists, present new forms of digital media, and collaborate with artists in Miami and New York. It was part of a cluster of galleries that opened on Washington Blvd around 2015 — Hilde, Kamra International, Park View, Kristina Kite, Ochi Projects, Shoot the Lobster, Michael Thibault and The Underground Museum. It closed in 2020. Today the program carries on as curatorial projects at spaces around the world.</div>
+            <div style="margin-top:14px">
+              <a href="https://www.bigpictures.la" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">bigpictures.la</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:44px">
+          <div>
+          <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected group exhibitions</div>
+          <div style="display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 16px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.62;color:#414142">
+              <div style="color:#8c8c8e">2026</div><div style="text-wrap:pretty"><em>The Come Up</em>, SADE, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2024</div><div style="text-wrap:pretty"><em>Getting The Band Back Together</em>, Claremont Graduate University, CA</div>
+              <div style="color:#8c8c8e">2024</div><div style="text-wrap:pretty"><em>Hollywood Dream Bubble: Ed Ruscha’s Influence</em>, The Hole, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2021</div><div style="text-wrap:pretty"><em>The Design Shop</em>, Tile Blush, Miami, FL</div>
+              <div style="color:#8c8c8e">2019</div><div style="text-wrap:pretty"><em>Holding Space</em>, Big Pictures Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2019</div><div style="text-wrap:pretty"><em>I Wake Up and Write Down My Dreams</em>, No Gallery, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2019</div><div style="text-wrap:pretty"><em>Dreamhouse vs. Punk House</em>, Serious Topics, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2019</div><div style="text-wrap:pretty"><em>House Museum</em>, O-K-O-K, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2018</div><div style="text-wrap:pretty"><em>The Mushroom Show</em>, Craryville, NY</div>
+              <div style="color:#8c8c8e">2018</div><div style="text-wrap:pretty"><em>The Art Den</em>, Odd Ark, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><em>Pensive</em>, Tile Blush, Miami, FL</div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><em>The Cactus Show</em>, Craryville, NY</div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><em>Polaroid Black</em>, Big Pictures Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><em>DBA</em>, Big Pictures Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2015</div><div style="text-wrap:pretty"><em>Works of Paper II</em>, ACME, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2015</div><div style="text-wrap:pretty"><em>Sharp Contrast</em>, Palomar College, San Marcos, CA</div>
+              <div style="color:#8c8c8e">2013</div><div style="text-wrap:pretty"><em>Random Ceremonies</em>, The Sacred Door, Venice, CA</div>
+              <div style="color:#8c8c8e">2012</div><div style="text-wrap:pretty"><em>Things Fall Together</em>, Claremont Graduate University, CA</div>
+              <div style="color:#8c8c8e">2008</div><div style="text-wrap:pretty"><em>The Palm Beach Biennial</em>, Gavlak Gallery, Palm Beach, FL</div>
+              <div style="color:#8c8c8e">2007</div><div style="text-wrap:pretty"><em>Tugboat</em>, ACME at Domestic, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2007</div><div style="text-wrap:pretty"><em>Big Secret Cache</em>, Angstrom Gallery, Los Angeles, CA</div>
+              <div style="color:#8c8c8e">2005</div><div style="text-wrap:pretty"><em>L.A. Times</em>, Bernard Toale Gallery, Boston, MA</div>
+              <div style="color:#8c8c8e">2005</div><div style="text-wrap:pretty"><em>Pacific Lines</em>, Yancey Richardson Gallery, New York, NY</div>
+              <div style="color:#8c8c8e">2004</div><div style="text-wrap:pretty"><em>Supersonic</em>, Art Center College of Design, Pasadena, CA</div>
+              <div style="color:#8c8c8e">2003</div><div style="text-wrap:pretty"><em>Drawings from LA</em>, Uplands Gallery, Melbourne, Australia</div>
+              <div style="color:#8c8c8e">2002</div><div style="text-wrap:pretty"><em>Graduate School Show</em>, Lowe Art Museum, Miami, FL</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Awards &amp; residencies</div>
+            <div style="display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 16px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.62;color:#414142">
+              <div style="color:#8c8c8e">2012</div><div style="text-wrap:pretty">The Adolf &amp; Esther Gottlieb Foundation, Grant Recipient</div>
+              <div style="color:#8c8c8e">2009</div><div style="text-wrap:pretty">The Armory Art Center, Palm Beach, FL, Artist in Residence</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected press</div>
+            <div style="display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 16px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.62;color:#414142">
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><a href="./Staring at the Sun review.dc.html" style="border-bottom:1px solid rgba(20,20,20,.28)">David Pagel, “Where dread and beauty collide,” <em>Los Angeles Times</em>, September 11</a></div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty">Catherine Wagley, “5 Shows to See,” <em>L.A. Weekly</em>, April 26</div>
+              <div style="color:#8c8c8e">2008</div><div style="text-wrap:pretty">Christine Davis, “Art Connections,” <em>Palm Beach Post</em>, August 3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin:60px 0 0;background:#f2f1ee;height:340px;overflow:hidden">
+        <img ref="{{ infoBgRef3 }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
       </div>
     </div>
   </sc-if>
 
   <sc-if value="{{ vWorks }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
-      <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div style="color:#3c3c3d">Series</div>
-        <div style="color:#9c9ca0">/</div>
-        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#7a7a7e">Overview</div>
+    <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+        <div style="display:flex;gap:22px">
+          <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
+            <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
+          </sc-for>
+        </div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+        </div>
       </div>
-      <div style="max-width:62ch;padding:0 0 44px">
+      <div style="max-width:62ch;padding:36px 0 44px">
         <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.7;color:#2a2a2b;text-wrap:pretty">{{ statement }}</div>
       </div>
       <div data-r="w2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1500px;padding:6px 0 0">
@@ -104,28 +286,44 @@
   </sc-if>
 
   <sc-if value="{{ vSeries }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
-      <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
-        <div style="color:#9c9ca0">/</div>
-        <div style="color:#3c3c3d">{{ curSeries }}</div>
+    <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px;background:{{ sBg }}">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+        <div style="display:flex;gap:22px">
+          <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
+            <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
+          </sc-for>
+        </div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:14px;padding:26px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:{{ sInk }}">
+        <div onClick="{{ toWorks }}" style="cursor:pointer;color:{{ sInk3 }}">Series</div>
+        <div style="color:{{ sRule }}">/</div>
+        <div style="color:{{ sInk }}">{{ curSeries }}</div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
-          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#4a4a4d">←</div>
-          <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#4a4a4d">→</div>
+          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ sInk2 }}">←</div>
+          <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ sInk2 }}">→</div>
         </div>
       </div>
       <sc-if value="{{ hasSeriesNote }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:60ch;padding:0 0 38px">
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;color:#3c3c3d;text-wrap:pretty">{{ seriesNote }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;color:{{ sInk2 }};text-wrap:pretty">{{ seriesNote }}</div>
         </div>
       </sc-if>
       <div data-r="w2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1500px;padding:6px 0 0">
         <sc-for list="{{ seriesWorkColumns }}" as="col" hint-placeholder-count="2">
           <div style="display:flex;flex-direction:column;gap:30px">
             <sc-for list="{{ col.items }}" as="w" hint-placeholder-count="4">
-              <div onClick="{{ w.open }}" style="cursor:pointer">
-                <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto;box-shadow:0 10px 26px rgba(20,20,20,.07), 0 1px 4px rgba(20,20,20,.04)">
-              </div>
+              <a href="{{ w.href }}" aria-label="{{ w.label }}" onClick="{{ w.open }}" style="display:block;cursor:pointer;color:inherit;text-decoration:none">
+                <div style="background:{{ sBed }};box-shadow:{{ sShadow }}">
+                  <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+                </div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:{{ sInk }};padding-top:11px"><em>{{ w.title }}</em></div>
+                <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:{{ sInk3 }};padding-top:3px">{{ w.meta }}</div>
+              </a>
             </sc-for>
           </div>
         </sc-for>
@@ -134,15 +332,20 @@
   </sc-if>
 
   <sc-if value="{{ vOverview }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
-      <div style="display:flex;align-items:baseline;gap:14px;padding:4px 0 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
-        <div style="color:#9c9ca0">/</div>
-        <div style="color:#3c3c3d">Overview</div>
-        <div style="color:#9c9ca0">/</div>
-        <div onClick="{{ toYear }}" style="cursor:pointer;color:#7a7a7e">By year</div>
+    <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+        <div style="display:flex;gap:22px">
+          <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
+            <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
+          </sc-for>
+        </div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+        </div>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:26px;padding:0 0 26px">
+      <div style="display:flex;flex-wrap:wrap;gap:26px;padding:30px 0 26px">
         <sc-for list="{{ ovFilters }}" as="f" hint-placeholder-count="5">
           <div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
         </sc-for>
@@ -151,15 +354,18 @@
         <sc-for list="{{ ovColumns }}" as="col" hint-placeholder-count="3">
           <div style="display:flex;flex-direction:column;gap:30px">
             <sc-for list="{{ col.items }}" as="w" hint-placeholder-count="4">
-              <div onClick="{{ w.open }}" style="position:relative;cursor:pointer;overflow:hidden;background:#f6f5f2">
-                <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
-                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.75);opacity:0;transition:opacity .3s ease" style-hover="opacity:1">
-                  <div style="text-align:center;padding:0 18px">
-                    <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:19px;letter-spacing:.1em;text-transform:uppercase;color:#fff;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.85);display:inline-block">{{ w.title }}</div>
-                    <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-top:9px">{{ w.meta }}</div>
-                  </div>
+              <a href="{{ w.href }}" aria-label="{{ w.label }}" onClick="{{ w.open }}" style="display:block;cursor:pointer;color:inherit;text-decoration:none">
+                <div style="background:#f6f5f2">
+                  <sc-if value="{{ w.isStill }}" hint-placeholder-val="{{ true }}">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+                  </sc-if>
+                  <sc-if value="{{ w.isVideo }}" hint-placeholder-val="{{ false }}">
+                    <video ref="{{ w.videoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:min(70vh,720px);object-fit:cover;background:#000000"></video>
+                  </sc-if>
                 </div>
-              </div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:#1f1f21;padding-top:11px"><em>{{ w.title }}</em></div>
+                <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6e6e72;padding-top:3px">{{ w.meta }}</div>
+              </a>
             </sc-for>
           </div>
         </sc-for>
@@ -168,14 +374,20 @@
   </sc-if>
 
   <sc-if value="{{ vYear }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;display:flex;flex-direction:column">
-      <div data-r="gut" style="flex:none;display:flex;align-items:baseline;gap:14px;padding:4px 44px 20px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:#3c3c3d">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:#7a7a7e">Series</div>
-        <div style="color:#9c9ca0">/</div>
-        <div onClick="{{ toOverview }}" style="cursor:pointer;color:#7a7a7e">Overview</div>
-        <div style="color:#9c9ca0">/</div>
-        <div style="color:#3c3c3d">By year</div>
+    <div data-live-layer style="position:absolute;inset:0;display:flex;flex-direction:column">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0;background:#000000;flex:none">
+        <div style="display:flex;gap:22px">
+          <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
+            <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
+          </sc-for>
+        </div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+        </div>
       </div>
+      <div style="flex:none;height:26px"></div>
       <div ref="{{ wallRef }}" style="{{ wallStyle }}">
         <div style="{{ wallRowStyle }}">
           <sc-for list="{{ yearGroups }}" as="g" hint-placeholder-count="6">
@@ -206,8 +418,13 @@
       </div>
       <div data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
         <div onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
-        <div style="flex:1;min-width:0;height:calc(100dvh - 210px);display:flex;align-items:center;justify-content:center">
-          <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:calc(100dvh - 210px);width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
+        <div style="flex:1;min-width:0;align-self:stretch;min-height:0;display:flex;align-items:center;justify-content:center">
+          <sc-if value="{{ wIsStill }}" hint-placeholder-val="{{ true }}">
+            <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
+          </sc-if>
+          <sc-if value="{{ wIsVideo }}" hint-placeholder-val="{{ false }}">
+            <video ref="{{ wVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;background:#000000"></video>
+          </sc-if>
         </div>
         <div onClick="{{ nextWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">→</div>
       </div>
@@ -218,40 +435,49 @@
   </sc-if>
 
   <sc-if value="{{ vExhibits }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 60px">
-      <div style="display:flex;align-items:baseline;justify-content:flex-end;gap:40px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
-        <div style="display:flex;gap:26px">
+    <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px;background:#000000">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+        <div data-r="exfilters" style="display:flex;gap:22px">
           <sc-for list="{{ exhFilters }}" as="f" hint-placeholder-count="4">
-            <div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
+            <button type="button" onClick="{{ f.pick }}" style="{{ f.styleLight }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ f.label }}</button>
           </sc-for>
         </div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+        </div>
       </div>
-      <div data-r="c2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:56px 44px;padding:40px 0 0;max-width:1560px">
+      <div style="position:relative;margin:0 -44px">
+      <div data-r="exbleed" style="display:flex;flex-wrap:wrap;gap:2px;padding:0;margin:0">
         <sc-for list="{{ exhibits }}" as="e" hint-placeholder-count="4">
-          <div onClick="{{ e.open }}" style="display:flex;flex-direction:column;gap:16px;cursor:pointer">
-            <div style="{{ e.plateStyle }}">
+          <a data-r="extile" href="{{ e.href }}" aria-label="{{ e.label }}" onClick="{{ e.open }}" style="{{ e.wrapStyle }}">
+            <div data-r="explate" style="{{ e.plateStyle }}">
               <img ref="{{ e.imgRef }}" alt="{{ e.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-            </div>
-            <div style="display:grid;grid-template-columns:58px 1fr;gap:20px;align-items:baseline">
-              <div style="font-size:12px;letter-spacing:.14em;opacity:.45">{{ e.year }}</div>
-              <div>
-                <div style="font-size:18px;line-height:1.3;text-wrap:pretty">{{ e.title }}</div>
-                <div style="font-size:13px;line-height:1.75;opacity:.55;margin-top:4px">{{ e.venue }}</div>
-                <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.4;margin-top:8px">{{ e.kind }}</div>
+              <div style="{{ e.capStyle }}">
+                <div style="{{ e.titleStyle }}">{{ e.title }}</div>
+                <div style="{{ e.metaStyle }}">{{ e.overlayMeta }}</div>
               </div>
             </div>
-          </div>
+          </a>
         </sc-for>
+      </div>
       </div>
     </div>
   </sc-if>
 
   <sc-if value="{{ vExhibit }}" hint-placeholder-val="{{ true }}">
     <div ref="{{ exScrollRef }}" data-live-layer style="{{ exScrollStyle }}">
-      <div style="display:flex;align-items:center;justify-content:flex-end;gap:40px;max-width:1760px;padding:2px 0 26px">
-        <div style="display:flex;align-items:center;gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
-          <div onClick="{{ prevExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">←</div>
-          <div onClick="{{ nextExhibit }}" style="cursor:pointer;opacity:.55;font-size:15px;line-height:1">→</div>
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px 26px;background:#000000">
+        <div style="display:flex;align-items:center;gap:26px">
+          <button type="button" onClick="{{ toExhibits }}" style="{{ exBackStyle }}" style-hover="color:#ffffff">All exhibits</button>
+          <div onClick="{{ prevExhibit }}" style="cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center">←</div>
+          <div onClick="{{ nextExhibit }}" style="cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center">→</div>
+        </div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
         </div>
       </div>
         <div style="{{ exTitleBlockStyle }}">
@@ -377,18 +603,26 @@
   </sc-if>
 
   <sc-if value="{{ vNews }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 44px 70px">
-      <div style="display:flex;align-items:baseline;gap:26px;padding:4px 0 22px;border-bottom:1px solid rgba(20,20,20,.14)">
-        <div style="display:flex;gap:26px">
+    <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 70px">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+        <div style="display:flex;gap:22px">
           <sc-for list="{{ newsFilters }}" as="f" hint-placeholder-count="3">
-            <div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
+            <button type="button" onClick="{{ f.pick }}" style="{{ f.styleLight }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ f.label }}</button>
           </sc-for>
         </div>
+        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+          <div style="width:22px;height:1px;background:#ffffff"></div>
+        </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:70px 60px;align-items:start;justify-items:center;max-width:1180px;margin:0 auto;padding:48px 0 0">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(352px,100%),1fr));gap:70px 60px;align-items:start;justify-items:center;max-width:1300px;margin:0 auto;padding:48px 0 0">
         <sc-for list="{{ newsList }}" as="n" hint-placeholder-count="6">
-          <a href="{{ n.url }}" target="_blank" rel="noopener" style="display:block;width:100%;max-width:520px;text-decoration:none;color:inherit">
-            <img ref="{{ n.imgRef }}" alt="{{ n.title }}" style="display:block;width:100%;height:auto">
+          <a href="{{ n.url }}" target="_blank" rel="noopener" title="{{ n.meta }}" aria-label="{{ n.meta }}" style="display:block;width:100%;max-width:572px;text-decoration:none;color:inherit">
+            <figure style="margin:0">
+              <img ref="{{ n.imgRef }}" alt="{{ n.alt }}" style="display:block;width:100%;height:auto">
+              <figcaption style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0">{{ n.meta }}</figcaption>
+            </figure>
           </a>
         </sc-for>
       </div>
@@ -396,18 +630,23 @@
   </sc-if>
 
   <sc-if value="{{ vSearch }}" hint-placeholder-val="{{ false }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;padding:0 26px 80px">
+    <div data-live-layer data-r="gut" onClick="{{ searchBackdrop }}" style="position:fixed;inset:0;z-index:24;overflow-y:auto;padding:86px 44px 80px;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">
+      <div style="position:sticky;top:0;z-index:3;display:flex;justify-content:flex-end;padding:0 0 6px">
+        <div onClick="{{ closeSearch }}" style="cursor:pointer;display:flex;align-items:center;color:#4a4a4d">
+          <span style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px">×</span>
+        </div>
+      </div>
       <form onSubmit="{{ onSearchSubmit }}" style="max-width:560px;padding:6px 0 0">
         <input ref="{{ searchPageRef }}" type="search" placeholder="Search works, exhibitions, press" onInput="{{ onSearchInput }}" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:20px;letter-spacing:.02em;color:#141414;width:100%;box-sizing:border-box;padding:0 0 11px;border:none;border-bottom:1px solid rgba(20,20,20,.4);background:transparent;border-radius:0;outline:none">
       </form>
       <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
         <div>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;padding:16px 0 0">{{ searchStatus }}</div>
-          <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
+          <div onClick="{{ searchBackdrop }}" style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
             <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
-              <div>
+              <div onClick="{{ searchBackdrop }}">
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</div>
-                <div data-r="galcols" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 18px;align-items:start">
+                <div data-r="searchcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 24px;align-items:start;max-width:1180px">
                   <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
                     <div onClick="{{ r.open }}" style="cursor:pointer">
                       <div style="background:#f6f5f2">
@@ -426,170 +665,6 @@
     </div>
   </sc-if>
 
-  <sc-if value="{{ vInfo }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer style="position:absolute;inset:86px 0 0;overflow-y:auto;overflow-x:hidden;padding:0 0 90px">
-
-      <div data-r="gut" style="position:relative;padding:0 44px">
-        <div data-r="infotint" style="position:absolute;left:0;top:-26px;width:50%;height:calc(100% + 56px);background:oklch(0.962 0.012 62);z-index:0;pointer-events:none"></div>
-        <img data-r="infophoto" ref="{{ infoBgRef }}" alt="" style="position:absolute;right:0;top:-26px;width:50%;height:calc(100% + 56px);object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
-        <div data-r="c2" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:80px;max-width:1500px;padding:6px 0 0;align-items:start">
-        <div>
-          <div style="width:190px;margin:0 0 24px;background:#f2f1ee">
-            <img ref="{{ portraitRef }}" alt="Doug Crocco" style="display:block;width:100%;height:auto">
-          </div>
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:16px;line-height:1.72;letter-spacing:.004em;color:#2a2a2b;max-width:56ch;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks.</div>
-        </div>
-        <div style="padding-top:3px">
-          <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 22px;margin-top:0;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#4a4a4d;max-width:460px">
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Email</div>
-            <div><a href="mailto:doug@allart.la">doug@allart.la</a></div>
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Studio</div>
-            <div>Los Angeles, California — visits by appointment</div>
-            <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#7a7a7e;padding-top:3px">Born</div>
-            <div>Albuquerque, New Mexico</div>
-          </div>
-          <div style="margin-top:26px">
-            <a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
-          </div>
-          <div style="margin-top:34px;max-width:400px">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:14px">Enquire</div>
-            <form onSubmit="{{ onContactSubmit }}" style="display:flex;flex-direction:column;gap:10px">
-              <input type="email" name="email" placeholder="Your email" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none">
-              <textarea name="message" rows="4" placeholder="Message" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.55;color:#3c3c3d;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(20,20,20,.25);background:rgba(255,255,255,.9);border-radius:0;outline:none;resize:vertical"></textarea>
-              <div style="display:flex;align-items:center;gap:16px">
-                <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:rgba(255,255,255,.9);border:1px solid rgba(20,20,20,.45);padding:10px 22px;cursor:pointer;border-radius:0">Send</button>
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;color:#7a7a7e">Opens in your mail app</div>
-              </div>
-            </form>
-          </div>
-        </div>
-        </div>
-      </div>
-
-
-      <div data-r="gut" style="max-width:1500px;padding:70px 44px 0">
-        <form onSubmit="{{ onSearchSubmit }}" style="max-width:560px">
-          <input ref="{{ searchInputRef }}" type="search" placeholder="Search works, exhibitions, press" onInput="{{ onSearchInput }}" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:20px;letter-spacing:.02em;color:#141414;width:100%;box-sizing:border-box;padding:0 0 11px;border:none;border-bottom:1px solid rgba(20,20,20,.4);background:transparent;border-radius:0;outline:none">
-        </form>
-        <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
-          <div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;padding:16px 0 0">{{ searchStatus }}</div>
-            <div style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
-              <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
-                <div>
-                  <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</div>
-                  <div data-r="galcols" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 20px;align-items:start">
-                    <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
-                      <div onClick="{{ r.open }}" style="cursor:pointer">
-                        <div style="background:#f6f5f2">
-                          <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
-                        </div>
-                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
-                        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:2px 0 0">{{ r.meta }}</div>
-                      </div>
-                    </sc-for>
-                  </div>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-        </sc-if>
-      </div>
-      <div data-r="c2 gut" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:80px;max-width:1500px;padding:86px 44px 0">
-        <div style="display:flex;flex-direction:column;gap:44px">
-          <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Education</div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-              2004 &nbsp;Master of Fine Arts, Claremont Graduate University, Claremont, CA<br>
-              2001 &nbsp;Graduate Studies, University of Miami, Coral Gables, FL<br>
-              2000 &nbsp;Bachelor of Fine Arts, Florida State University, Tallahassee, FL
-            </div>
-          </div>
-          <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Solo &amp; two person</div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-              2011 &nbsp;Doug Crocco &amp; Aramis Gutierrez, Legalarts, Miami, FL<br>
-              2010 &nbsp;<em>Entropy</em>, Art and Culture Center of Hollywood, FL<br>
-              2006 &nbsp;<em>Drawing and Sculpture</em>, The Happy Lion, Los Angeles, CA<br>
-              2003 &nbsp;MFA Thesis, East Gallery, Claremont Graduate University, CA
-            </div>
-          </div>
-          <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Curatorial</div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-              2026 &nbsp;<em>Death is a Door</em>, CC Jasper, New York, NY<br>
-              2026 &nbsp;<em>The Come Up</em>, SADE, Los Angeles, CA<br>
-              2019 &nbsp;<em>Holding Space</em>, Big Pictures Los Angeles<br>
-              2019 &nbsp;<em>Flat Earth Society</em>, Big Pictures Los Angeles<br>
-              2019 &nbsp;<em>I Have Always Imagined That Paradise Will Be a Kind of Library</em>, Blake and Vargas, Berlin<br>
-              2018 &nbsp;<em>Transmutation</em>, Big Pictures Los Angeles<br>
-              2017 &nbsp;<em>Staring at The Sun</em>, Big Pictures Los Angeles<br>
-              2017 &nbsp;<em>Polaroid Black</em>, Big Pictures Los Angeles<br>
-              2016 &nbsp;<em>Slamdance DIG 2</em>, Big Pictures Los Angeles<br>
-              2015 &nbsp;<em>Slamdance DIG</em>, Big Pictures Los Angeles<br>
-              2012 &nbsp;<em>NeoNatural</em>, Steve Turner Contemporary, Los Angeles, CA
-            </div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.75;color:#4a4a4d;margin-top:16px;max-width:52ch;text-wrap:pretty">Big Pictures Los Angeles was a project space in mid-city Los Angeles, founded in 2014 to show underserved mid-career artists, present new forms of digital media, and collaborate with artists in Miami and New York. It was part of a cluster of galleries that opened on Washington Blvd around 2015 — Hilde, Kamra International, Park View, Kristina Kite, Ochi Projects, Shoot the Lobster, Michael Thibault and The Underground Museum. It closed in 2020. Today the program carries on as curatorial projects at spaces around the world.</div>
-            <div style="margin-top:14px">
-              <a href="https://www.bigpictures.la" target="_blank" rel="noopener" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">bigpictures.la</a>
-            </div>
-          </div>
-          <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Awards &amp; residencies</div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-              2012 &nbsp;The Adolf &amp; Esther Gottlieb Foundation, Grant Recipient<br>
-              2009 &nbsp;The Armory Art Center, Palm Beach, FL, Artist in Residence
-            </div>
-          </div>
-          <div style="grid-area:title">
-            <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected press</div>
-            <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-              2017 &nbsp;David Pagel, “Where dread and beauty collide,” <em>Los Angeles Times</em>, September 11<br>
-              2017 &nbsp;Catherine Wagley, “5 Shows to See,” <em>L.A. Weekly</em>, April 26<br>
-              2008 &nbsp;Christine Davis, “Art Connections,” <em>Palm Beach Post</em>, August 3
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected group exhibitions</div>
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:2.05;color:#414142">
-            2026 &nbsp;<em>The Come Up</em>, SADE, Los Angeles, CA<br>
-            2024 &nbsp;<em>Getting The Band Back Together</em>, Claremont Graduate University, CA<br>
-            2024 &nbsp;<em>Hollywood Dream Bubble: Ed Ruscha’s Influence</em>, The Hole, Los Angeles, CA<br>
-            2021 &nbsp;<em>The Design Shop</em>, Tile Blush, Miami, FL<br>
-            2019 &nbsp;<em>Holding Space</em>, Big Pictures Los Angeles, CA<br>
-            2019 &nbsp;<em>I Wake Up and Write Down My Dreams</em>, No Gallery, Los Angeles, CA<br>
-            2019 &nbsp;<em>Dreamhouse vs. Punk House</em>, Serious Topics, Los Angeles, CA<br>
-            2019 &nbsp;<em>House Museum</em>, O-K-O-K, Los Angeles, CA<br>
-            2018 &nbsp;<em>The Mushroom Show</em>, Craryville, NY<br>
-            2018 &nbsp;<em>The Art Den</em>, Odd Ark, Los Angeles, CA<br>
-            2017 &nbsp;<em>Pensive</em>, Tile Blush, Miami, FL<br>
-            2017 &nbsp;<em>The Cactus Show</em>, Craryville, NY<br>
-            2017 &nbsp;<em>Polaroid Black</em>, Big Pictures Los Angeles, CA<br>
-            2017 &nbsp;<em>DBA</em>, Big Pictures Los Angeles, CA<br>
-            2015 &nbsp;<em>Works of Paper II</em>, ACME, Los Angeles, CA<br>
-            2015 &nbsp;<em>Sharp Contrast</em>, Palomar College, San Marcos, CA<br>
-            2013 &nbsp;<em>Random Ceremonies</em>, The Sacred Door, Venice, CA<br>
-            2012 &nbsp;<em>Things Fall Together</em>, Claremont Graduate University, CA<br>
-            2008 &nbsp;<em>The Palm Beach Biennial</em>, Gavlak Gallery, Palm Beach, FL<br>
-            2007 &nbsp;<em>Tugboat</em>, ACME at Domestic, Los Angeles, CA<br>
-            2007 &nbsp;<em>Big Secret Cache</em>, Angstrom Gallery, Los Angeles, CA<br>
-            2005 &nbsp;<em>L.A. Times</em>, Bernard Toale Gallery, Boston, MA<br>
-            2005 &nbsp;<em>Pacific Lines</em>, Yancey Richardson Gallery, New York, NY<br>
-            2004 &nbsp;<em>Supersonic</em>, Art Center College of Design, Pasadena, CA<br>
-            2003 &nbsp;<em>Drawings from LA</em>, Uplands Gallery, Melbourne, Australia<br>
-            2002 &nbsp;<em>Graduate School Show</em>, Lowe Art Museum, Miami, FL
-          </div>
-        </div>
-      </div>
-
-      <div style="margin:60px 0 -90px;background:#f2f1ee;height:340px;overflow:hidden">
-        <img ref="{{ infoBgRef2 }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
-      </div>
-
-    </div>
-  </sc-if>
 
   <sc-if value="{{ vVenue }}" hint-placeholder-val="{{ false }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:21;background:#ffffff;display:flex;flex-direction:column">
@@ -605,7 +680,12 @@
 
   <div style="{{ navStyle }}">
     <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap">Doug Crocco</div>
-    <div data-r="navlinks" style="pointer-events:auto;display:flex;gap:30px;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
+    <div data-r="navlinks" style="pointer-events:auto;display:flex;align-items:center;gap:30px;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
+      <sc-if value="{{ showSearch }}" hint-placeholder-val="{{ false }}">
+        <span data-r="searchglass" onClick="{{ toSearch }}" title="Search" aria-label="Search" style="cursor:pointer;display:flex;align-items:center;opacity:.62">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="5.7" cy="5.7" r="4.8"></circle><path d="M9.2 9.2L13.2 13.2"></path></svg>
+        </span>
+      </sc-if>
       <span onClick="{{ toWorks }}" style="cursor:pointer;opacity:{{ oWorks }}">Works</span>
       <span onClick="{{ toExhibits }}" style="cursor:pointer;opacity:{{ oExhibits }}">Exhibits</span>
       <span onClick="{{ toNews }}" style="cursor:pointer;opacity:{{ oNews }}">News</span>
@@ -619,17 +699,27 @@
   </div>
 
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-    <div data-live-layer style="position:fixed;inset:0;z-index:30;background:#ffffff;display:flex;flex-direction:column;padding:26px 30px 40px">
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <div onClick="{{ toHomeMenu }}" style="cursor:pointer;font-size:16px;letter-spacing:.02em">Doug Crocco</div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#4a4a4d">×</div>
-      </div>
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:26px;letter-spacing:.06em;text-transform:uppercase">
-        <div onClick="{{ toWorksMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Works</div>
-        <div onClick="{{ toExhibitsMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Exhibits</div>
-        <div onClick="{{ toNewsMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">News</div>
-        <div onClick="{{ toInfoMenu }}" style="cursor:pointer;padding:12px 0;border-bottom:1px dotted rgba(20,20,20,.25)">Info</div>
-        <div onClick="{{ toSearchMenu }}" style="cursor:pointer;padding:12px 0">Search</div>
+    <div data-live-layer style="position:fixed;inset:0;z-index:30;background:#000000;color:#ffffff;padding:0 44px 40px;box-sizing:border-box;overflow-y:auto">
+      <div onClick="{{ toggleMenu }}" style="position:absolute;top:26px;right:44px;z-index:2;cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:rgba(255,255,255,.7)">×</div>
+      <div data-r="heromenu" style="padding-top:100px;width:min(46%,560px);margin-left:auto">
+        <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+          <div onClick="{{ toHomeMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Doug Crocco</div>
+        </div>
+        <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+          <div onClick="{{ toExhibitsMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
+        </div>
+        <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+          <div onClick="{{ toWorksMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
+        </div>
+        <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+          <div onClick="{{ toNewsMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
+        </div>
+        <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
+          <div onClick="{{ toInfoMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
+        </div>
+        <div data-r="navrow" style="padding:14px 0">
+          <div onClick="{{ toSearchMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
+        </div>
       </div>
     </div>
   </sc-if>
@@ -637,9 +727,11 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;darkGround&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;black&quot;,&quot;granite&quot;,&quot;gradient&quot;],&quot;default&quot;:&quot;black&quot;,&quot;tsType&quot;:&quot;'black' | 'granite' | 'gradient'&quot;,&quot;section&quot;:&quot;Series&quot;}}">
 const D = () => window.DC || { works: [], series: [], exhibits: [] };
-const PLATE = { position: 'relative', overflow: 'hidden', backgroundColor: '#f1f0ed', boxShadow: 'inset 0 0 0 1px rgba(20,20,20,.13)' };
+const PLATE = { position: 'relative', overflow: 'hidden', backgroundColor: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(20,20,20,.13)' };
+// shows whose tile image is light enough to want black type — by title, or "ink":"dark" in the data
+const DARK_TILE_TITLES = [];
 const artistOf = c => {
   if (!c) return '';
   const first = c.split(',')[0].trim();
@@ -784,7 +876,6 @@ class Component extends DCLogic {
       case 'exhibits': return '#/exhibits' + f(st.exhFilter);
       case 'exhibit': return '#/exhibit/' + sg(st.exhibit) + (st.exMode === 'grid' ? '/grid' : '');
       case 'news': return '#/news' + f(st.newsFilter);
-      case 'info': return '#/info';
       case 'search': return '#/search' + (st.q ? '/' + encodeURIComponent(st.q) : '');
       default: return '#/';
     }
@@ -797,10 +888,10 @@ class Component extends DCLogic {
     const head = (parts[0] || '').toLowerCase();
     const pickFilter = (list, seg) => list.find(x => this.slug(x) === this.slug(seg)) || 'All';
     if (!head) return { view: 'home' };
-    if (head === 'info') return { view: 'info' };
+    if (head === 'info') { setTimeout(() => this.scrollToInfo(14), 80); return { view: 'home' }; }
     if (head === 'year') return { view: 'year' };
     if (head === 'search') return { view: 'search', q: parts[1] || '' };
-    if (head === 'overview') return { view: 'overview', ovFilter: pickFilter(['All', 'Drawing', 'Print', 'Sculpture', 'Public'], parts[1]) };
+    if (head === 'overview') return { view: 'overview', ovFilter: pickFilter(['All', 'Drawing', 'Print', 'Sculpture', 'Public', 'Video'], parts[1]) };
     if (head === 'news') return { view: 'news', newsFilter: pickFilter(['All', 'Press', 'Event'], parts[1]) };
     if (head === 'exhibits') return { view: 'exhibits', exhFilter: pickFilter(['All', 'Solo', 'Group', 'Curated'], parts[1]) };
     if (head === 'exhibit') {
@@ -846,6 +937,8 @@ class Component extends DCLogic {
 
   componentDidUpdate() {
     this.syncHash();
+    // the home layer remounts at the top, and no scroll event follows
+    if (this._prevView !== this.state.view && this.state.homePast) this.setState({ homePast: false });
     this._prevView = this.state.view;
   }
 
@@ -883,6 +976,10 @@ class Component extends DCLogic {
       if (this.state.view === 'home') this.setState(s => ({ slide: s.slide + 1 }));
     }, 5200);
     this._key = e => {
+      if (this.state.searchOpen || this.state.view === 'search') {
+        if (e.key === 'Escape') this.setState(s => ({ searchOpen: false, view: s.view === 'search' ? 'home' : s.view }));
+        return;
+      }
       if (this.state.venue) {
         if (e.key === 'Escape') this.setState({ venue: '' });
         return;
@@ -920,7 +1017,28 @@ class Component extends DCLogic {
     const len = this.list().length || 1;
     this.setState(s => ({ sel: (s.sel + n + len) % len }));
   }
+  // light-ground work needs the detail page's lift on the series grid too
+  shadowSeries(name) { return ['New Forms'].indexOf(name) !== -1; }
+  ground() { return this.props.darkGround || 'black'; }
+  groundBg() {
+    const g = this.ground();
+    if (g === 'granite') return '#2b2b2d';
+    if (g === 'gradient') return 'linear-gradient(#000000 0%, #1c1c1e 46%, #3a3a3d 100%)';
+    return '#000000';
+  }
+  // series shown on black — light-ground work that disappears on white
+  darkSeries(name) { return [].indexOf(name) !== -1; }
   go(view) { return () => this.setState({ view }); }
+  // Info is a section of home, not a page of its own
+  scrollToInfo(tries) {
+    const sc = this._homeScroll, el = this._infoAnchor;
+    if (!sc || !el) { if ((tries || 0) > 0) setTimeout(() => this.scrollToInfo(tries - 1), 70); return; }
+    sc.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+  }
+  goInfo(extra) {
+    this.setState(Object.assign({ view: 'home', menuOpen: false, searchOpen: false }, extra || {}));
+    setTimeout(() => this.scrollToInfo(14), 60);
+  }
   attachSwipe(el, onSwipe) {
     if (!el || el._swipe) return;
     el._swipe = true;
@@ -945,7 +1063,7 @@ class Component extends DCLogic {
 
   openExhibit(title) {
     this._enteredAt = Date.now();
-    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false });
+    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exFullU: '', exFullFor: '', exInfoHidden: false, searchOpen: false });
   }
 
   setViewMode(mode) {
@@ -1056,6 +1174,9 @@ class Component extends DCLogic {
     const override = view === 'home'
       ? (INK_BY_IMAGE[String(cur.img || '').replace(/^https?:\/\/[^/]+\//, '')] || null)
       : null;
+    // past the hero the NAV sits on white content; the hero caption stays on the photograph,
+    // so it keeps the image-derived ink
+    const navOnWhite = view === 'home' && !!st.homePast;
     const navInk = override ? override
       : !navImg ? 'dark'
       : (probed === 'dark' || probed === 'light') ? probed
@@ -1081,7 +1202,7 @@ class Component extends DCLogic {
         imgRef: mkRef(w.img, this.markBroken),
         open: () => {
           const list = (d.works || []).filter(x => x.s === w.s);
-          this.setState({ view: 'work', series: w.s, from: 'search', sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
+          this.setState({ view: 'work', series: w.s, from: 'search', searchOpen: false, sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
         }
       })) });
       if (notes.length) groups.push({ label: 'Press', items: notes.map(n => ({
@@ -1182,7 +1303,23 @@ class Component extends DCLogic {
         });
       })(),
       toOverview: () => this.setState({ view: 'overview' }),
-      ovFilters: ['All', 'Drawing', 'Print', 'Sculpture', 'Public'].map(f => ({
+      // the three browse modes ride in the black bar, same treatment as the exhibits filters
+      worksModes: [
+        { label: 'Series', v: 'works', on: view === 'works' || view === 'series' },
+        { label: 'Media', v: 'overview', on: view === 'overview' },
+        { label: 'Year', v: 'year', on: view === 'year' }
+      ].map(m => ({
+        label: m.label,
+        pick: () => this.setState({ view: m.v }),
+        style: {
+          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
+          color: m.on ? '#ffffff' : 'rgba(255,255,255,.62)',
+          fontWeight: m.on ? 600 : 400,
+          background: 'none', border: 'none', padding: 0, borderRadius: 0
+        }
+      })),
+      ovFilters: ['All', 'Drawing', 'Print', 'Sculpture', 'Public', 'Video'].map(f => ({
         label: f,
         pick: () => this.setState({ ovFilter: f }),
         style: {
@@ -1198,9 +1335,20 @@ class Component extends DCLogic {
         .slice()
         .sort((a, b) => (b.y || 0) - (a.y || 0))
         .map((w, i) => ({
-          title: w.t || '',
-          meta: [(w.k || [])[0] ? (w.k || [])[0].toUpperCase() : '', w.y].filter(Boolean).join(' - '),
-          open: () => {
+          title: w.t || 'Untitled',
+          meta: [w.y, w.m, w.d].filter(Boolean).join(', '),
+          isVideo: !!w.video,
+          isStill: !w.video,
+          href: '#/works/' + this.slug(w.s) + '/' + (((d.works || []).filter(x => x.s === w.s).findIndex(x => x.img === w.img)) + 1),
+          label: [w.t || 'Untitled', w.y, w.m, w.d].filter(Boolean).join(', '),
+          videoRef: el => {
+            if (!el || el._wired || !w.video) return;
+            el._wired = true;
+            el.muted = true; el.defaultMuted = true; el.loop = true;
+            el.src = w.video; el.load(); el.play().catch(() => {});
+          },
+          open: ev => {
+            if (ev && (ev.metaKey || ev.ctrlKey || ev.shiftKey)) return;
             const list = (d.works || []).filter(x => x.s === w.s);
             this.setState({ view: 'work', series: w.s, workFrom: 'overview', sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
           },
@@ -1211,8 +1359,18 @@ class Component extends DCLogic {
       oExhibits: (view === 'exhibits' || view === 'exhibit') ? 1 : 0.62,
       oInfo: view === 'info' ? 1 : 0.62,
       hasQuery: !!(st.q || '').trim(),
-      vSearch: view === 'search',
-      toSearchMenu: () => this.setState({ view: 'search', menuOpen: false }),
+      // an overlay, so the page you searched from stays visible behind it
+      vSearch: view === 'search' || !!st.searchOpen,
+      toSearch: () => this.setState({ searchOpen: true }),
+      searchBackdrop: ev => {
+        if (ev.target !== ev.currentTarget) return;
+        this.setState(s => ({ searchOpen: false, view: s.view === 'search' ? 'home' : s.view }));
+      },
+      closeSearch: () => this.setState(s => ({ searchOpen: false, view: s.view === 'search' ? 'home' : s.view })),
+
+      // the info page only, and always visible there
+      showSearch: view === 'info',
+      toSearchMenu: () => this.setState({ searchOpen: true, menuOpen: false }),
       searchPageRef: el => {
         if (!el || el._init) return;
         el._init = true;
@@ -1238,9 +1396,10 @@ class Component extends DCLogic {
       toWorksMenu: () => this.setState({ view: 'works', menuOpen: false }),
       toExhibitsMenu: () => this.setState({ view: 'exhibits', menuOpen: false }),
       toNewsMenu: () => this.setState({ view: 'news', menuOpen: false }),
-      toInfoMenu: () => this.setState({ view: 'info', menuOpen: false }),
+      toInfoMenu: () => this.goInfo(),
       toHome: this.go('home'), toWorks: () => this.setState({ view: 'works' }),
-      toExhibits: this.go('exhibits'), toInfo: this.go('info'), toContact: this.go('info'),
+      toExhibits: this.go('exhibits'), toInfo: () => this.goInfo(), toContact: () => this.goInfo(),
+      infoAnchorRef: el => { this._infoAnchor = el; },
       backToSeries: () => this.setState({ view: st.workFrom || 'series' }),
       wBackLabel: st.workFrom === 'overview' ? 'Overview' : (st.workFrom === 'year' ? 'By year' : (st.series || 'Works')),
       nextSlide: () => { this.warmNear(si + 2); this.setState(s => ({ slide: s.slide + 1 })); },
@@ -1260,6 +1419,20 @@ class Component extends DCLogic {
         borderBottom: '1px solid ' + (navInk === 'light' ? 'rgba(255,255,255,.55)' : 'rgba(20,20,20,.35)')
       },
       slideVenueStyle: { fontSize: 12, lineHeight: 1.7, marginTop: 4, opacity: navInk === 'light' ? 0.8 : 0.6 },
+      // src/autoplay/loop live on the tag so playback never depends on JS running first
+      heroVideoRef: el => {
+        if (!el || el._wired) return;
+        el._wired = true;
+        // muted and loop have to be set as properties — as attributes React drops them,
+        // and autoplay is blocked on anything not actually muted
+        el.muted = true;
+        el.defaultMuted = true;
+        el.loop = true;
+        // GitHub Pages serves byte ranges, so the video streams straight from src
+        el.src = './hero.mp4'; el.load(); el.play().catch(() => {});
+      },
+      heroCaption: 'The Question Remains — 2026',
+      heroMeta: 'Video, 5 minute loop, silent',
       slideTitle: cur.title || '',
       slideVenue: [cur.venue, cur.y].filter(Boolean).join(', '),
       slideCount: slides.length ? (si + 1) + ' / ' + slides.length : '',
@@ -1276,12 +1449,23 @@ class Component extends DCLogic {
       })(),
       seriesWorkColumns: (() => {
         const items = seriesWorks.map((it, i) => ({
-          title: it.t,
-          open: () => this.setState({ view: 'work', workFrom: 'series', sel: i }),
+          title: it.t || 'Untitled',
+          // the label a collector needs: year, medium, dimensions
+          meta: [it.y, it.m, it.d].filter(Boolean).join(', '),
+          href: '#/works/' + this.slug(st.series) + '/' + (i + 1),
+          label: [it.t || 'Untitled', it.y, it.m, it.d].filter(Boolean).join(', '),
+          open: ev => { if (ev && (ev.metaKey || ev.ctrlKey || ev.shiftKey)) return; this.setState({ view: 'work', workFrom: 'series', sel: i }); },
           imgRef: mkRef(it.img, this.markBroken)
         }));
         return this.splitCols(items, this.state.colCount >= 2 ? 2 : 1);
       })(),
+      sBg: this.darkSeries(st.series) ? this.groundBg() : '#ffffff',
+      sInk: this.darkSeries(st.series) ? '#ffffff' : '#1f1f21',
+      sInk2: this.darkSeries(st.series) ? '#b9b9bd' : '#4a4a4d',
+      sInk3: this.darkSeries(st.series) ? '#8e8e92' : '#7a7a7e',
+      sRule: this.darkSeries(st.series) ? 'rgba(255,255,255,.32)' : '#9c9ca0',
+      sShadow: this.shadowSeries(st.series) ? '0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)' : 'none',
+      sBed: this.darkSeries(st.series) ? (this.ground() === 'black' ? '#141414' : '#232325') : '#f6f5f2',
       prevSeries: () => this.stepSeries(-1),
       nextSeries: () => this.stepSeries(1),
       curSeries: st.series || '',
@@ -1294,6 +1478,14 @@ class Component extends DCLogic {
         el.onload = () => { el.style.visibility = ''; };
         if (el.getAttribute('src') !== w.img) { el.style.visibility = ''; el.src = w.img; }
       },
+      wIsVideo: !!w.video,
+      wIsStill: !w.video,
+      wVideoRef: el => {
+        if (!el || el._wired || !w.video) return;
+        el._wired = true;
+        el.muted = true; el.defaultMuted = true; el.loop = true;
+        el.src = w.video; el.load(); el.play().catch(() => {});
+      },
       wMissing: false,
       wTitle: w.t || '', wYear: w.y ? String(w.y) : '',
       wMedium: w.m || '', wDims: w.d || '', wSeries: st.series || 'Works',
@@ -1303,10 +1495,21 @@ class Component extends DCLogic {
       exhFilters: ['All', 'Solo', 'Group', 'Curated'].map(f => ({
         label: f,
         pick: () => this.setState({ exhFilter: f }),
+        // quiet, but the inactive words still have to be readable — they are the only control
         style: {
-          cursor: 'pointer', fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase',
-          paddingBottom: 4, color: f === exhF ? '#141414' : '#6e6e72', fontWeight: f === exhF ? 500 : 400,
-          borderBottom: '1px solid ' + (f === exhF ? 'rgba(20,20,20,.85)' : 'transparent')
+          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
+          color: f === exhF ? '#141414' : '#6e6e72',
+          fontWeight: f === exhF ? 600 : 400,
+          background: 'none', border: 'none', padding: 0, borderRadius: 0
+        },
+        // over the imagery the same row runs in white
+        styleLight: {
+          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
+          color: f === exhF ? '#ffffff' : 'rgba(255,255,255,.62)',
+          fontWeight: f === exhF ? 600 : 400,
+          background: 'none', border: 'none', padding: 0, borderRadius: 0
         }
       })),
       vNews: view === 'news',
@@ -1316,6 +1519,14 @@ class Component extends DCLogic {
       newsFilters: ['All', 'Press', 'Event'].map(f => ({
         label: f === 'Event' ? 'Events' : f,
         pick: () => this.setState({ newsFilter: f }),
+        // white version for the black bar
+        styleLight: {
+          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
+          color: f === nF ? '#ffffff' : 'rgba(255,255,255,.62)',
+          fontWeight: f === nF ? 600 : 400,
+          background: 'none', border: 'none', padding: 0, borderRadius: 0
+        },
         style: {
           cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12,
           letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
@@ -1324,14 +1535,27 @@ class Component extends DCLogic {
           borderBottom: '1px solid ' + (f === nF ? 'rgba(20,20,20,.85)' : 'transparent')
         }
       })),
-      newsList: nList.map(n => ({
-        title: n.title, year: n.y, url: n.url || '#',
-        linkLabel: n.url ? (n.url.indexOf('.pdf') > 0 ? 'PDF' : 'Read') : '',
-        imgRef: mkRef(n.img, this.markBroken)
-      })),
+      newsList: nList.map(n => {
+        // the clipping is in the image; expose the same facts to search and screen readers
+        const outlet = (() => {
+          try { return n.url ? new URL(n.url).hostname.replace(/^www\./, '') : ''; } catch (e) { return ''; }
+        })();
+        const kind = n.kind === 'Press' ? 'Press' : 'Exhibition';
+        const meta = [n.title, kind, n.y, outlet].filter(Boolean).join(' — ');
+        return {
+          title: n.title, year: n.y, url: n.url || '#',
+          meta,
+          alt: [n.title, kind === 'Press' ? 'press clipping' : 'announcement', n.y].filter(Boolean).join(', '),
+          linkLabel: n.url ? (n.url.indexOf('.pdf') > 0 ? 'PDF' : 'Read') : '',
+          imgRef: mkRef(n.img, this.markBroken)
+        };
+      }),
       portraitRef: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
+      portraitRef2: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
       infoBgRef: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2019/02/19-1.jpg'),
       infoBgRef2: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2014/10/PB3.jpg'),
+      infoBgRef3: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2014/10/PB3.jpg'),
+      infoBgRefHome: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2019/02/19-1.jpg'),
       onContactSubmit: e => {
         e.preventDefault();
         const f = e.target;
@@ -1345,14 +1569,68 @@ class Component extends DCLogic {
         items: (sec.items || []).map(r => ({ y: r.y, t: r.t, v: r.v ? '  ·  ' + r.v : '' }))
       })),
       exhibitLabel: 'Exhibitions · ' + exhList.length + (exhF === 'All' ? '' : ' ' + exhF.toLowerCase()) + ' · 2005 – 2024',
-      exhibits: exhList.map(e => ({
-        year: e.y ? String(e.y) : '', title: e.title,
-        venue: [e.venue, e.city].filter(Boolean).join(', '),
-        kind: e.kinds.join(' · '),
-        open: () => this.openExhibit(e.title),
-        imgRef: mkRef(e.img),
-        plateStyle: Object.assign({ aspectRatio: '16 / 10' }, PLATE)
-      })),
+      // a full-width plate, then a pair of tall halves, repeating
+      exhibits: exhList.map((e, i) => {
+        const full = i % 3 === 0;
+        return {
+          year: e.y ? String(e.y) : '', title: e.title,
+          venue: [e.venue, e.city].filter(Boolean).join(', '),
+          kind: e.kinds.join(' · '),
+          // a real link, so the tile is focusable and openable in a new tab
+          href: '#/exhibit/' + this.slug(e.title),
+          label: [e.title, e.venue, e.city, e.y, e.kinds.join(' ')].filter(Boolean).join(', '),
+          open: ev => { if (ev && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey) this.openExhibit(e.title); },
+          imgRef: mkRef(e.img),
+          // per-show ink: black type on light imagery, white on everything else
+          capStyle: (() => {
+            const dark = e.ink === 'dark' || DARK_TILE_TITLES.indexOf(e.title) >= 0;
+            return {
+              position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 2,
+              display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+              // the scrim is sized to the caption box, not the tile: its height is the text
+              // plus this padding, so the darkening only ever covers the type and the image
+              // above it stays untouched however many lines the title takes
+              paddingTop: st.phone ? 38 : 58,
+              paddingBottom: st.phone ? (full ? 18 : 14) : (full ? 40 : 26),
+              paddingLeft: st.phone ? (full ? 18 : 14) : (full ? 40 : 30),
+              paddingRight: st.phone ? (full ? 18 : 14) : (full ? 40 : 30),
+              color: dark ? '#141414' : '#ffffff',
+              background: dark
+                ? 'linear-gradient(to top, rgba(255,255,255,.62) 0%, rgba(255,255,255,.4) 55%, rgba(255,255,255,0) 100%)'
+                : 'linear-gradient(to top, rgba(0,0,0,.6) 0%, rgba(0,0,0,.38) 55%, rgba(0,0,0,0) 100%)'
+            };
+          })(),
+          // one ladder for both lines; the narrow string drops the city rather than the type size
+          overlayMeta: (() => {
+            const city = e.city || '';
+            let venue = e.venue || '';
+            if (city && venue.length > city.length && venue.slice(-city.length) === city) {
+              venue = venue.slice(0, -city.length).replace(/[\s,]+$/, '');
+            }
+            const place = st.narrow ? venue : [venue, city].filter(Boolean).join(', ');
+            return [place, e.y].filter(Boolean).join(' — ');
+          })(),
+          metaStyle: {
+            fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+            fontSize: st.phone ? 11 : 12, fontWeight: 500,
+            letterSpacing: st.phone ? '.12em' : '.18em',
+            textTransform: 'uppercase', marginTop: st.phone ? 7 : 10, opacity: 0.85
+          },
+          wrapStyle: { cursor: 'pointer', width: full ? '100%' : 'calc(50% - 1px)', color: 'inherit', textDecoration: 'none' },
+          // the opening tile fills the first screen; the rest keep the 16:9 / 8:9 rhythm
+          // one row height for every tile, full or half — 16:9 full-width equals two 8:9 halves
+          // 16:9 full-width is exactly the height of two 8:9 halves — same row height, taller tiles
+          plateStyle: Object.assign({ aspectRatio: full ? '16 / 9' : '8 / 9' }, PLATE, { boxShadow: 'none', backgroundColor: '#0a0a0a' }),
+          titleStyle: {
+            fontFamily: "'EB Garamond',Georgia,serif",
+            fontSize: st.narrow ? (full ? 22 : 17) : (st.phone ? (full ? 26 : 19) : 38),
+            lineHeight: 1.15, letterSpacing: '-.01em', maxWidth: '26ch',
+            textWrap: 'balance', color: 'inherit',
+            // a tight shadow for edge definition where the image is busy — no visible haze
+            textShadow: '0 1px 3px rgba(0,0,0,.32)'
+          }
+        };
+      }),
 
       exTitle: cx.title || '',
       exVenue: cx.venue || '',
@@ -1370,8 +1648,6 @@ class Component extends DCLogic {
           el.addEventListener('scroll', () => {
             const block = this._pressBlock;
             if (!block) return;
-            const off = Math.max(0, Math.min(86, el.scrollTop));
-            if (off !== this.state.navOff) this.setState({ navOff: off, navSnap: false });
             const edge = block.offsetTop + block.offsetHeight;
             const hidden = this.state.exInfoHidden;
             const past = hidden ? el.scrollTop > edge - 80 : el.scrollTop >= edge;
@@ -1388,16 +1664,29 @@ class Component extends DCLogic {
       pressRowRef: el => { this._pressRow = el; },
       pressBlockRef: el => { this._pressBlock = el; },
       exInfoHidden: !!st.exInfoHidden,
+      exBackStyle: {
+        cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+        fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
+        color: 'rgba(255,255,255,.62)', fontWeight: 400,
+        background: 'none', border: 'none', padding: 0, borderRadius: 0
+      },
       exScrollStyle: {
-        position: 'absolute', top: 86 - navOff, left: 0, right: 0, bottom: 0,
+        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
         overflowY: 'auto', padding: (st.phone ? '0 18px ' : '0 44px ') + (st.exMode === 'full' ? (st.phone ? '8vh' : '20vh') : '70px')
       },
+      homeScrollRef: el => { this._homeScroll = el; },
       navStyle: {
         position: 'absolute', top: 0, left: 0, right: 0, height: 86,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        background: navOnWhite ? '#ffffff' : 'transparent',
+        borderBottom: navOnWhite ? '1px solid rgba(20,20,20,.14)' : 'none',
+        // the hero carries its own menu, so the bar only serves the inner views
+        // home and exhibits carry their own controls over the imagery
+        // every page now carries the black bar with the burger; the old top nav is retired
+        display: 'none',
+        alignItems: 'center', justifyContent: 'space-between',
         padding: st.phone ? '0 18px' : '0 44px', zIndex: 5, pointerEvents: 'none',
-        color: navInk === 'dark' ? '#141414' : '#ffffff',
-        textShadow: navInk === 'light' ? '0 1px 16px rgba(0,0,0,.5)' : 'none',
+        color: (navOnWhite || navInk === 'dark') ? '#141414' : '#ffffff',
+        textShadow: (!navOnWhite && navInk === 'light') ? '0 1px 16px rgba(0,0,0,.5)' : 'none',
         transform: 'translateY(-' + navOff + 'px)',
         opacity: 1 - (navOff / 86),
         transition: st.navSnap ? 'transform .3s cubic-bezier(.33,1,.68,1), opacity .24s ease' : 'none'
