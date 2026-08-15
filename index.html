@@ -304,13 +304,13 @@
         <div style="color:{{ sRule }}">/</div>
         <div style="color:{{ sInk }}">{{ curSeries }}</div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
-          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ sInk2 }}">←</div>
+          <div onClick="{{ prevSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ sInk2 }}"><span style="display:block;transform:scaleX(-1)">→</span></div>
           <div onClick="{{ nextSeries }}" style="cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ sInk2 }}">→</div>
         </div>
       </div>
       <sc-if value="{{ hasSeriesNote }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:60ch;padding:0 0 38px">
-          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;color:{{ sInk2 }};text-wrap:pretty">{{ seriesNote }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;color:{{ sInk2 }};text-wrap:pretty;white-space:pre-line">{{ seriesNote }}</div>
         </div>
       </sc-if>
       <div data-r="w2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1500px;padding:6px 0 0">
@@ -410,14 +410,14 @@
   <sc-if value="{{ vWork }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:20;background:#ffffff;display:flex;flex-direction:column">
       <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
-        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#4a4a4d;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414">← {{ wBackLabel }}</div>
+        <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#4a4a4d;padding:14px 16px 14px 0;margin:-14px 0;display:flex;align-items:center;min-height:44px" style-hover="color:#141414"><span style="display:inline-block;transform:scaleX(-1);margin-right:8px">→</span>{{ wBackLabel }}</div>
         <div style="display:flex;align-items:center;gap:26px">
           <div onClick="{{ toContact }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Enquire</div>
           <div onClick="{{ backToSeries }}" style="cursor:pointer;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 0 14px 4px;margin:-14px 0;display:flex;align-items:center;min-height:44px">Close</div>
         </div>
       </div>
       <div data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;gap:30px;padding:26px 44px 18px">
-        <div onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55">←</div>
+        <div onClick="{{ prevWork }}" style="position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.55"><span style="display:block;transform:scaleX(-1)">→</span></div>
         <div style="flex:1;min-width:0;align-self:stretch;min-height:0;display:flex;align-items:center;justify-content:center">
           <sc-if value="{{ wIsStill }}" hint-placeholder-val="{{ true }}">
             <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
@@ -471,7 +471,7 @@
       <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px 26px;background:#000000">
         <div style="display:flex;align-items:center;gap:26px">
           <button type="button" onClick="{{ toExhibits }}" style="{{ exBackStyle }}" style-hover="color:#ffffff">All exhibits</button>
-          <div onClick="{{ prevExhibit }}" style="cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center">←</div>
+          <div onClick="{{ prevExhibit }}" style="cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center"><span style="display:block;transform:scaleX(-1)">→</span></div>
           <div onClick="{{ nextExhibit }}" style="cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center">→</div>
         </div>
         <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
