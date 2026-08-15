@@ -291,7 +291,7 @@
   </sc-if>
 
   <sc-if value="{{ vSeries }}" hint-placeholder-val="{{ true }}">
-    <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px;background:{{ sBg }}">
+    <div data-live-layer data-r="gut" onTouchStart="{{ seriesTouchStart }}" onTouchEnd="{{ seriesTouchEnd }}" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px;background:{{ sBg }};touch-action:pan-y">
       <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
         <div style="display:flex;gap:22px">
           <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
@@ -614,7 +614,7 @@
 
   <sc-if value="{{ vNews }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 70px">
-      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+      <div data-r="exbar" style="position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
         <div style="display:flex;gap:22px">
           <sc-for list="{{ newsFilters }}" as="f" hint-placeholder-count="3">
             <button type="button" onClick="{{ f.pick }}" style="{{ f.styleLight }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ f.label }}</button>
@@ -1502,6 +1502,21 @@ class Component extends DCLogic {
       wCaption: [w.t, w.y, w.m, w.d].filter(Boolean).join(', '),
       wPos: seriesWorks.length ? (st.sel + 1) + ' of ' + seriesWorks.length : '',
       wSlash: seriesWorks.length ? (st.sel + 1) + ' / ' + seriesWorks.length : '',
+      // phone only: swipe across a series page steps to the next series
+      seriesTouchStart: e => {
+        if (!st.phone) return;
+        const t = e.touches && e.touches[0];
+        this._ssw = t ? { x: t.clientX, y: t.clientY } : null;
+      },
+      seriesTouchEnd: e => {
+        if (!st.phone || !this._ssw) return;
+        const t = e.changedTouches && e.changedTouches[0];
+        const s0 = this._ssw; this._ssw = null;
+        if (!t) return;
+        const dx = t.clientX - s0.x, dy = t.clientY - s0.y;
+        if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+        this.stepSeries(dx < 0 ? 1 : -1);
+      },
       // phone only: swipe across the artwork steps through the series
       workTouchStart: e => {
         if (!st.phone) return;
