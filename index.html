@@ -101,8 +101,8 @@
 <meta name="twitter:description" content="Drawings, prints and video. Colored pencil work made over two decades in Los Angeles.">
 <meta name="twitter:image" content="https://allart.la/artwork/uploads/2013/09/USA-Doug-Crocco.jpg">
 <meta name="theme-color" content="#000000">
-<link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Raleway:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="./works-data.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Raleway:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="./works-data-259.js"></script>
 </helmet>
 
 <div style="position:fixed;inset:0;background:#ffffff;color:#141414;font-family:Helvetica,'Helvetica Neue',Arial,sans-serif;overflow:hidden">
@@ -117,27 +117,64 @@
           </div>
           <div style="display:flex;flex-direction:column;padding-top:0">
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toExhibits }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
+              <button type="button" onClick="{{ toExhibits }}" data-r="homenav menuitem" style="background:none;border:none;padding:0;border-radius:0;color:#ffffff;font:inherit;cursor:pointer;display:block;text-align:left;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase" style-focus="outline:1px dotted currentColor;outline-offset:4px">Exhibits</button>
             </div>
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toWorks }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
+              <button type="button" onClick="{{ toWorks }}" data-r="homenav menuitem" style="background:none;border:none;padding:0;border-radius:0;color:#ffffff;font:inherit;cursor:pointer;display:block;text-align:left;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase" style-focus="outline:1px dotted currentColor;outline-offset:4px">Works</button>
             </div>
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toNews }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
+              <button type="button" onClick="{{ toNews }}" data-r="homenav menuitem" style="background:none;border:none;padding:0;border-radius:0;color:#ffffff;font:inherit;cursor:pointer;display:block;text-align:left;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase" style-focus="outline:1px dotted currentColor;outline-offset:4px">News</button>
             </div>
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toInfo }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
+              <button type="button" onClick="{{ toInfo }}" data-r="homenav menuitem" style="background:none;border:none;padding:0;border-radius:0;color:#ffffff;font:inherit;cursor:pointer;display:block;text-align:left;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase" style-focus="outline:1px dotted currentColor;outline-offset:4px">Info</button>
             </div>
             <div data-r="navrow" style="padding:14px 0;">
-              <div onClick="{{ toSearch }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
+              <button type="button" onClick="{{ toSearch }}" data-r="homenav menuitem" style="background:none;border:none;padding:0;border-radius:0;color:#ffffff;font:inherit;cursor:pointer;display:block;text-align:left;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase" style-focus="outline:1px dotted currentColor;outline-offset:4px">Search</button>
             </div>
           </div>
-          <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#ffffff;padding:40px 0 0">{{ heroCaption }}</div>
-          <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:5px 0 0">{{ heroMeta }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#ffffff;padding:40px 0 0">{{ heroCaption }}</div>
+          <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:5px 0 0">{{ heroMeta }}</div>
         </div>
       </div>
 
-      <div ref="{{ infoAnchorRef }}" data-r="gut" style="position:relative;padding:64px 44px 34px">
+      <div style="background:#000000;padding:36px 0 54px">
+        <div data-r="exbar flushbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;background:#000000">
+          <button type="button" onClick="{{ toExhibits }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#ffffff" style-hover="opacity:.65" style-focus="outline:1px dotted rgba(255,255,255,.6);outline-offset:4px">Recent exhibits</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:2px">
+          <sc-for list="{{ homeExhibits }}" as="e" hint-placeholder-count="4">
+            <a href="{{ e.href }}" aria-label="{{ e.label }}" onClick="{{ e.open }}" style="{{ e.wrapStyle }}">
+              <div style="{{ e.plateStyle }}">
+                <img ref="{{ e.imgRef }}" alt="{{ e.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+                <div style="{{ e.capStyle }}">
+                  <div style="{{ e.titleStyle }}">{{ e.title }}</div>
+                  <div style="{{ e.metaStyle }}">{{ e.overlayMeta }}</div>
+                </div>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+        <div data-r="gut" style="display:flex;justify-content:center;padding:40px 44px 0">
+          <button type="button" onClick="{{ toExhibits }}" style="background:none;border:none;padding:0 0 4px;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.45)" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:6px">See all exhibitions</button>
+        </div>
+      </div>
+
+      <div data-r="exbar flushbar" style="position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;background:#f6f5f2;border-bottom:1px dotted rgba(20,20,20,.22)">
+        <button type="button" onClick="{{ toTop }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#141414" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px">Doug Crocco</button>
+        <div data-r="navlinks" style="display:flex;gap:22px">
+          <button type="button" onClick="{{ toExhibits }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#6e6e72" style-hover="color:#141414" style-focus="color:#141414;outline:1px dotted currentColor;outline-offset:3px">Exhibits</button>
+          <button type="button" onClick="{{ toWorks }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#6e6e72" style-hover="color:#141414" style-focus="color:#141414;outline:1px dotted currentColor;outline-offset:3px">Works</button>
+          <button type="button" onClick="{{ toNews }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#6e6e72" style-hover="color:#141414" style-focus="color:#141414;outline:1px dotted currentColor;outline-offset:3px">News</button>
+          <button type="button" onClick="{{ toSearch }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#141414" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:3px">Search</button>
+        </div>
+        <button type="button" data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display:none;background:none;border:none;padding:0;border-radius:0;cursor:pointer;width:34px;height:34px;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#141414"></span>
+          <span style="width:22px;height:1px;background:#141414"></span>
+          <span style="width:22px;height:1px;background:#141414"></span>
+        </button>
+      </div>
+
+      <div ref="{{ infoAnchorRef }}" data-r="gut" style="position:relative;padding:34px 44px 34px">
         <img data-r="infophoto" ref="{{ infoBgRefHome }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
         <div data-r="infogrid" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(220px,360px) minmax(0,1fr);grid-template-areas:'p side' 'bio bio';gap:0 56px;max-width:1500px;align-items:stretch">
           <div data-r="infoportrait" style="grid-area:p;width:100%;max-width:360px">
@@ -294,11 +331,11 @@
             <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
           </sc-for>
         </div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-        </div>
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+        </button>
       </div>
       <div style="max-width:62ch;padding:36px 0 44px">
         <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.7;color:#2a2a2b;text-wrap:pretty">{{ statement }}</div>
@@ -331,14 +368,14 @@
             <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
           </sc-for>
         </div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-        </div>
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+        </button>
       </div>
       <div style="display:flex;align-items:baseline;gap:14px;padding:26px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:{{ sInk }}">
-        <div onClick="{{ toWorks }}" style="cursor:pointer;color:{{ sInk3 }}">Series</div>
+        <button type="button" onClick="{{ toWorks }}" style="background:none;border:none;padding:0;border-radius:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;color:{{ sInk3 }}" style-focus="outline:1px dotted currentColor;outline-offset:4px">Series</button>
         <div style="color:{{ sRule }}">/</div>
         <div style="color:{{ sInk }}">{{ curSeries }}</div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
@@ -365,7 +402,7 @@
                   </sc-if>
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:{{ sInk }};padding-top:11px"><em>{{ w.title }}</em></div>
-                <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:{{ sInk3 }};padding-top:3px">{{ w.meta }}</div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:{{ sInk3 }};padding-top:3px">{{ w.meta }}</div>
               </a>
             </sc-for>
           </div>
@@ -382,15 +419,15 @@
             <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
           </sc-for>
         </div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-        </div>
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+        </button>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:26px;padding:30px 0 26px">
         <sc-for list="{{ ovFilters }}" as="f" hint-placeholder-count="5">
-          <div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
+          <button type="button" onClick="{{ f.pick }}" style="{{ f.style }}" style-focus="outline:1px dotted currentColor;outline-offset:3px">{{ f.label }}</button>
         </sc-for>
       </div>
       <div data-r="galcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 30px;align-items:start;max-width:1600px">
@@ -407,7 +444,7 @@
                   </sc-if>
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:#1f1f21;padding-top:11px"><em>{{ w.title }}</em></div>
-                <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6e6e72;padding-top:3px">{{ w.meta }}</div>
+                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6e6e72;padding-top:3px">{{ w.meta }}</div>
               </a>
             </sc-for>
           </div>
@@ -424,11 +461,11 @@
             <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ m.label }}</button>
           </sc-for>
         </div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-        </div>
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+        </button>
       </div>
       <div style="flex:none;height:14px"></div>
       <div ref="{{ wallRef }}" style="{{ wallStyle }}">
@@ -493,11 +530,11 @@
             <button type="button" onClick="{{ f.pick }}" style="{{ f.styleLight }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ f.label }}</button>
           </sc-for>
         </div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-        </div>
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+        </button>
       </div>
       <div data-r="exbleed" style="position:relative;margin:0 -44px">
       <div style="display:flex;flex-wrap:wrap;gap:2px;padding:0;margin:0">
@@ -525,11 +562,11 @@
           <button type="button" aria-label="Previous exhibition" style-focus="outline:1px dotted currentColor;outline-offset:3px" onClick="{{ prevExhibit }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center"><span style="display:block;transform:scaleX(-1)">→</span></button>
           <button type="button" aria-label="Next exhibition" style-focus="outline:1px dotted currentColor;outline-offset:3px" onClick="{{ nextExhibit }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center">→</button>
         </div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-        </div>
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+        </button>
       </div>
         <div style="{{ exTitleBlockStyle }}">
           <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(26px,2.4vw,42px);letter-spacing:.04em;text-transform:uppercase;line-height:1.16;font-weight:400;max-width:min(100%,44ch);text-wrap:balance;color:#1a1a1c">{{ exTitle }}</div>
@@ -661,11 +698,11 @@
             <button type="button" onClick="{{ f.pick }}" style="{{ f.styleLight }}" style-hover="color:#ffffff" style-focus="color:#ffffff;outline:1px dotted rgba(255,255,255,.6);outline-offset:3px">{{ f.label }}</button>
           </sc-for>
         </div>
-        <div onClick="{{ toggleMenu }}" style="cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-          <div style="width:22px;height:1px;background:#ffffff"></div>
-        </div>
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;cursor:pointer;width:34px;height:34px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+          <span style="width:22px;height:1px;background:#ffffff"></span>
+        </button>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(352px,100%),1fr));gap:70px 60px;align-items:start;justify-items:center;max-width:1300px;margin:0 auto;padding:48px 0 0">
         <sc-for list="{{ newsList }}" as="n" hint-placeholder-count="6">
@@ -754,46 +791,46 @@
   </sc-if>
 
   <div style="{{ navStyle }}">
-    <div onClick="{{ toHome }}" style="pointer-events:auto;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap">Doug Crocco</div>
+    <button type="button" onClick="{{ toHome }}" style="pointer-events:auto;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap" style-focus="outline:1px dotted currentColor;outline-offset:4px">Doug Crocco</button>
     <div data-r="navlinks" style="pointer-events:auto;display:flex;align-items:center;gap:30px;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
       <sc-if value="{{ showSearch }}" hint-placeholder-val="{{ false }}">
-        <span data-r="searchglass" onClick="{{ toSearch }}" title="Search" aria-label="Search" style="cursor:pointer;display:flex;align-items:center;opacity:.62">
+        <button type="button" data-r="searchglass" onClick="{{ toSearch }}" title="Search" aria-label="Search" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;display:flex;align-items:center;opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="5.7" cy="5.7" r="4.8"></circle><path d="M9.2 9.2L13.2 13.2"></path></svg>
-        </span>
+        </button>
       </sc-if>
-      <span onClick="{{ toWorks }}" style="cursor:pointer;opacity:{{ oWorks }}">Works</span>
-      <span onClick="{{ toExhibits }}" style="cursor:pointer;opacity:{{ oExhibits }}">Exhibits</span>
-      <span onClick="{{ toNews }}" style="cursor:pointer;opacity:{{ oNews }}">News</span>
-      <span onClick="{{ toInfo }}" style="cursor:pointer;opacity:{{ oInfo }}">Info</span>
+      <button type="button" onClick="{{ toWorks }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;opacity:{{ oWorks }}" style-focus="outline:1px dotted currentColor;outline-offset:4px">Works</button>
+      <button type="button" onClick="{{ toExhibits }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;opacity:{{ oExhibits }}" style-focus="outline:1px dotted currentColor;outline-offset:4px">Exhibits</button>
+      <button type="button" onClick="{{ toNews }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;opacity:{{ oNews }}" style-focus="outline:1px dotted currentColor;outline-offset:4px">News</button>
+      <button type="button" onClick="{{ toInfo }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;opacity:{{ oInfo }}" style-focus="outline:1px dotted currentColor;outline-offset:4px">Info</button>
     </div>
-    <div data-r="navburger" onClick="{{ toggleMenu }}" style="display:none;pointer-events:auto;cursor:pointer;width:34px;height:34px;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px">
-      <div style="width:22px;height:1px;background:currentColor"></div>
-      <div style="width:22px;height:1px;background:currentColor"></div>
-      <div style="width:22px;height:1px;background:currentColor"></div>
-    </div>
+    <button type="button" data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display:none;pointer-events:auto;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;width:34px;height:34px;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px" style-focus="outline:1px dotted currentColor;outline-offset:4px">
+      <span style="width:22px;height:1px;background:currentColor"></span>
+      <span style="width:22px;height:1px;background:currentColor"></span>
+      <span style="width:22px;height:1px;background:currentColor"></span>
+    </button>
   </div>
 
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:30;background:#000000;color:#ffffff;padding:0 44px 40px;box-sizing:border-box;overflow-y:auto">
-      <div onClick="{{ toggleMenu }}" style="position:absolute;top:26px;right:44px;z-index:2;cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:rgba(255,255,255,.7)">×</div>
+      <button type="button" onClick="{{ toggleMenu }}" aria-label="Close menu" style="position:absolute;top:26px;right:44px;z-index:2;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:rgba(255,255,255,.7)" style-focus="outline:1px dotted currentColor;outline-offset:4px">×</button>
       <div data-r="heromenu" style="padding-top:100px;width:min(46%,560px);margin-left:auto">
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toHomeMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Doug Crocco</div>
+          <button type="button" onClick="{{ toHomeMenu }}" data-r="homenav" style="display:block;text-align:left;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff" style-focus="outline:1px dotted currentColor;outline-offset:4px">Doug Crocco</button>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toExhibitsMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
+          <button type="button" onClick="{{ toExhibitsMenu }}" data-r="homenav menuitem" style="display:block;text-align:left;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff" style-focus="outline:1px dotted currentColor;outline-offset:4px">Exhibits</button>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toWorksMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
+          <button type="button" onClick="{{ toWorksMenu }}" data-r="homenav menuitem" style="display:block;text-align:left;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff" style-focus="outline:1px dotted currentColor;outline-offset:4px">Works</button>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toNewsMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
+          <button type="button" onClick="{{ toNewsMenu }}" data-r="homenav menuitem" style="display:block;text-align:left;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff" style-focus="outline:1px dotted currentColor;outline-offset:4px">News</button>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toInfoMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
+          <button type="button" onClick="{{ toInfoMenu }}" data-r="homenav menuitem" style="display:block;text-align:left;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff" style-focus="outline:1px dotted currentColor;outline-offset:4px">Info</button>
         </div>
         <div data-r="navrow" style="padding:14px 0">
-          <div onClick="{{ toSearchMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
+          <button type="button" onClick="{{ toSearchMenu }}" data-r="homenav menuitem" style="display:block;text-align:left;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff" style-focus="outline:1px dotted currentColor;outline-offset:4px">Search</button>
         </div>
       </div>
     </div>
@@ -807,14 +844,61 @@ const D = () => window.DC || { works: [], series: [], exhibits: [] };
 const PLATE = { position: 'relative', overflow: 'hidden', backgroundColor: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(20,20,20,.13)' };
 // shows whose tile image is light enough to want black type — by title, or "ink":"dark" in the data
 const DARK_TILE_TITLES = [];
+// home-scroll exhibit tile: same plate/scrim language as the exhibits page, one size down
+const homeTile = (self, e, full, st, mkRef) => {
+  const dark = e.ink === 'dark' || DARK_TILE_TITLES.indexOf(e.title) >= 0;
+  const city = e.city || '';
+  let venue = e.venue || '';
+  if (city && venue.length > city.length && venue.slice(-city.length) === city) {
+    venue = venue.slice(0, -city.length).replace(/[\s,]+$/, '');
+  }
+  return {
+    title: e.title,
+    href: '#/exhibit/' + self.slug(e.title),
+    label: [e.title, e.venue, e.city, e.y].filter(Boolean).join(', '),
+    open: ev => { if (ev && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey) self.openExhibit(e.title); },
+    imgRef: mkRef(e.img),
+    overlayMeta: [st.narrow ? venue : [venue, city].filter(Boolean).join(', '), e.y].filter(Boolean).join(' — '),
+    wrapStyle: { cursor: 'pointer', width: full ? '100%' : 'calc(50% - 1px)', color: 'inherit', textDecoration: 'none' },
+    plateStyle: Object.assign({ aspectRatio: full ? '16 / 9' : '8 / 9' }, PLATE, { boxShadow: 'none', backgroundColor: '#0a0a0a' }),
+    capStyle: {
+      position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 2,
+      display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+      paddingTop: st.phone ? 38 : 58,
+      paddingBottom: st.phone ? (full ? 18 : 14) : (full ? 34 : 24),
+      paddingLeft: st.phone ? (full ? 18 : 14) : (full ? 34 : 26),
+      paddingRight: st.phone ? (full ? 18 : 14) : (full ? 34 : 26),
+      color: dark ? '#141414' : '#ffffff',
+      background: dark
+        ? 'linear-gradient(to top, rgba(255,255,255,.62) 0%, rgba(255,255,255,.4) 55%, rgba(255,255,255,0) 100%)'
+        : 'linear-gradient(to top, rgba(0,0,0,.6) 0%, rgba(0,0,0,.38) 55%, rgba(0,0,0,0) 100%)'
+    },
+    titleStyle: {
+      fontFamily: "'EB Garamond',Georgia,serif",
+      fontSize: st.narrow ? (full ? 22 : 17) : (st.phone ? (full ? 26 : 19) : (full ? 34 : 24)),
+      lineHeight: 1.15, letterSpacing: '-.01em', maxWidth: '26ch',
+      textWrap: 'balance', color: 'inherit', textShadow: '0 1px 3px rgba(0,0,0,.32)'
+    },
+    metaStyle: {
+      fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
+      fontSize: st.phone ? 11 : 11.5, fontWeight: 500,
+      letterSpacing: st.phone ? '.12em' : '.18em',
+      textTransform: 'uppercase', marginTop: st.phone ? 7 : 9, opacity: 0.85
+    }
+  };
+};
 const artistOf = c => {
   if (!c) return '';
   const first = c.split(',')[0].trim();
   if (/^installation view/i.test(first)) return 'Installation view';
   return first;
 };
-const mkRef = (url, onFail) => el => {
+const mkRef = (url, onFail, eager) => el => {
   if (!el || !url) return;
+  // grids run long: let the browser defer everything below the fold. the year wall is
+  // excluded — its columns take their width from the loaded image, so a deferred image
+  // would collapse the run to zero width until it scrolled into view
+  if (!el.getAttribute('loading')) { el.loading = eager ? 'eager' : 'lazy'; el.decoding = 'async'; }
   el.onload = () => { el.style.visibility = ''; };
   // keep the element in the layout so nothing disappears from a gallery
   el.onerror = () => { el.style.visibility = 'hidden'; if (onFail) onFail(url); };
@@ -1404,11 +1488,11 @@ class Component extends DCLogic {
             items: items.map((w, i) => ({
               title: w.t || '',
               label: [w.t || 'Untitled', w.y, w.m, w.d].filter(Boolean).join(', '),
-              // scale varies with the work's real size so the run reads like a hang
+              // a repeating 3-step height ladder so the run reads like a hang rather than a filmstrip
               style: { cursor: 'pointer', flex: 'none', height: st.phone
                 ? 'min(' + (i % 3 === 0 ? 38 : (i % 3 === 1 ? 27 : 33)) + 'dvh, ' + (i % 3 === 0 ? 300 : (i % 3 === 1 ? 215 : 255)) + 'px)'
                 : 'min(' + (i % 3 === 0 ? 44 : (i % 3 === 1 ? 32 : 38)) + 'vh, ' + (i % 3 === 0 ? 400 : (i % 3 === 1 ? 290 : 340)) + 'px)' },
-              imgRef: mkRef(w.img, this.markBroken),
+              imgRef: mkRef(w.img, this.markBroken, true),
               open: () => {
                 const list = (d.works || []).filter(x => x.s === w.s);
                 this.setState({ view: 'work', series: w.s, workFrom: 'year', sel: Math.max(0, list.findIndex(x => x.img === w.img)) });
@@ -1427,7 +1511,7 @@ class Component extends DCLogic {
         label: m.label,
         pick: () => this.setState({ view: m.v, menuOpen: false }),
         style: {
-          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
           fontSize: 11, letterSpacing: '.2em', textTransform: 'uppercase',
           color: m.on ? '#ffffff' : 'rgba(255,255,255,.55)'
         }
@@ -1448,7 +1532,7 @@ class Component extends DCLogic {
         label: m.label,
         pick: () => this.setState({ view: m.v }),
         style: {
-          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
           fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
           color: m.on ? '#ffffff' : 'rgba(255,255,255,.62)',
           fontWeight: 500,
@@ -1460,6 +1544,7 @@ class Component extends DCLogic {
         pick: () => this.setState({ ovFilter: f }),
         style: {
           cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12,
+          background: 'none', border: 'none', borderRadius: 0, padding: 0,
           letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
           color: f === (st.ovFilter || 'All') ? '#141414' : '#6e6e72',
           fontWeight: f === (st.ovFilter || 'All') ? 500 : 400,
@@ -1544,6 +1629,7 @@ class Component extends DCLogic {
       enquiryWork: st.enquiry || '',
       msgRef: el => { this._msgEl = el; },
       infoAnchorRef: el => { this._infoAnchor = el; },
+      toTop: () => { if (this._homeScroll) this._homeScroll.scrollTo({ top: 0, behavior: 'smooth' }); },
       backToSeries: () => this.setState({ view: st.workFrom || 'series' }),
       wBackLabel: st.workFrom === 'overview' ? 'Overview' : (st.workFrom === 'year' ? 'By year' : (st.series || 'Works')),
       nextSlide: () => { this.warmNear(si + 2); this.setState(s => ({ slide: s.slide + 1 })); },
@@ -1699,7 +1785,7 @@ class Component extends DCLogic {
         pick: () => this.setState({ exhFilter: f }),
         // quiet, but the inactive words still have to be readable — they are the only control
         style: {
-          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
           fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
           color: f === exhF ? '#141414' : '#6e6e72',
           fontWeight: f === exhF ? 600 : 400,
@@ -1707,7 +1793,7 @@ class Component extends DCLogic {
         },
         // over the imagery the same row runs in white
         styleLight: {
-          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
           fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
           color: f === exhF ? '#ffffff' : 'rgba(255,255,255,.62)',
           fontWeight: f === exhF ? 600 : 400,
@@ -1723,7 +1809,7 @@ class Component extends DCLogic {
         pick: () => this.setState({ newsFilter: f }),
         // white version for the black bar
         styleLight: {
-          cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+          cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
           fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
           color: f === nF ? '#ffffff' : 'rgba(255,255,255,.62)',
           fontWeight: f === nF ? 600 : 400,
@@ -1731,6 +1817,7 @@ class Component extends DCLogic {
         },
         style: {
           cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12,
+          background: 'none', border: 'none', borderRadius: 0, padding: 0,
           letterSpacing: '.16em', textTransform: 'uppercase', paddingBottom: 4,
           color: f === nF ? '#141414' : '#6e6e72',
           fontWeight: f === nF ? 500 : 400,
@@ -1801,6 +1888,10 @@ class Component extends DCLogic {
         h: sec.h,
         items: (sec.items || []).map(r => ({ y: r.y, t: r.t, v: r.v ? '  ·  ' + r.v : '' }))
       })),
+      // home scroll: five most recent shows — one full plate, then two rows of halves
+      // All = a 7-show taste; a named filter shows every matching show, so the filter never lies about the set
+      homeExhibits: exhList.slice().sort((a, b) => (b.y || 0) - (a.y || 0)).slice(0, exhF === 'All' ? 4 : 99)
+        .map((e, i) => homeTile(this, e, i % 3 === 0, st, mkRef)),
       exhibitLabel: 'Exhibitions · ' + exhList.length + (exhF === 'All' ? '' : ' ' + exhF.toLowerCase()) + ' · 2005 – 2024',
       // a full-width plate, then a pair of tall halves, repeating
       exhibits: exhList.map((e, i) => {
@@ -1844,7 +1935,7 @@ class Component extends DCLogic {
             return [place, e.y].filter(Boolean).join(' — ');
           })(),
           metaStyle: {
-            fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+            fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
             fontSize: st.phone ? 11 : 12, fontWeight: 500,
             letterSpacing: st.phone ? '.12em' : '.18em',
             textTransform: 'uppercase', marginTop: st.phone ? 7 : 10, opacity: 0.85
@@ -1898,7 +1989,7 @@ class Component extends DCLogic {
       pressBlockRef: el => { this._pressBlock = el; },
       exInfoHidden: !!st.exInfoHidden,
       exBackStyle: {
-        cursor: 'pointer', fontFamily: 'Archivo,Helvetica,Arial,sans-serif',
+        cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
         fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
         color: 'rgba(255,255,255,.62)', fontWeight: 400,
         background: 'none', border: 'none', padding: 0, borderRadius: 0
