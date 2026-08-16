@@ -59,6 +59,7 @@
     [data-r~="workvid"] { width: 100% !important; height: auto !important; max-height: none !important; }
     [data-r~="navrow"] { grid-template-columns: minmax(0,1fr) !important; gap: 4px !important; }
     [data-r~="homenav"] { font-size: 26px !important; }
+    [data-r~="menuitem"] { font-size: 24px !important; }
     [data-r~="heromenu"] { width: 100% !important; margin-left: 0 !important; padding-top: 90px !important; }
     [data-r~="gut"], [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
     /* the bleed must always equal the current gutter */
@@ -116,19 +117,19 @@
           </div>
           <div style="display:flex;flex-direction:column;padding-top:0">
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toExhibits }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
+              <div onClick="{{ toExhibits }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
             </div>
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toWorks }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
+              <div onClick="{{ toWorks }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
             </div>
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toNews }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
+              <div onClick="{{ toNews }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
             </div>
             <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-              <div onClick="{{ toInfo }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
+              <div onClick="{{ toInfo }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
             </div>
             <div data-r="navrow" style="padding:14px 0;">
-              <div onClick="{{ toSearch }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
+              <div onClick="{{ toSearch }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
             </div>
           </div>
           <div style="font-family:Archivo,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#ffffff;padding:40px 0 0">{{ heroCaption }}</div>
@@ -559,20 +560,12 @@
               </sc-for>
             </div>
             <sc-for list="{{ exCollapsedParas }}" as="p" hint-placeholder-count="2">
-              <div style="order:1;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;margin:0 0 16px">{{ p.text }}</div>
+              <div style="order:1;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;white-space:pre-line;margin:0 0 16px">{{ p.text }}</div>
             </sc-for>
             <div style="clear:both"></div>
             <sc-if value="{{ exCollapsedFade }}" hint-placeholder-val="{{ false }}">
               <div style="{{ exFadeStyle }}"></div>
             </sc-if>
-            <div style="display:flex;align-items:flex-end;gap:30px;margin-top:8px;max-width:1760px;order:2">
-              <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
-                <div onClick="{{ toggleExText }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
-              </sc-if>
-              <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
-                <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
-              </sc-if>
-            </div>
           </div>
               <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:20px">
@@ -595,6 +588,14 @@
                   </sc-if>
                 </div>
               </sc-if>
+            <div style="display:flex;align-items:flex-end;gap:30px;margin-top:22px;max-width:1760px;order:2">
+              <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleExText }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+              </sc-if>
+              <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
+              </sc-if>
+            </div>
 
           <div style="border-bottom:1px dotted rgba(20,20,20,.45);margin-top:34px"></div>
         </div>
@@ -668,12 +669,19 @@
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(352px,100%),1fr));gap:70px 60px;align-items:start;justify-items:center;max-width:1300px;margin:0 auto;padding:48px 0 0">
         <sc-for list="{{ newsList }}" as="n" hint-placeholder-count="6">
-          <a href="{{ n.url }}" target="_blank" rel="noopener" title="{{ n.meta }}" aria-label="{{ n.meta }}" style="display:block;width:100%;max-width:572px;text-decoration:none;color:inherit">
-            <figure style="margin:0">
+          <sc-if value="{{ n.isLink }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ n.url }}" target="_blank" rel="noopener" title="{{ n.meta }}" aria-label="{{ n.meta }}" style="display:block;width:100%;max-width:572px;text-decoration:none;color:inherit">
+              <figure style="margin:0">
+                <img ref="{{ n.imgRef }}" alt="{{ n.alt }}" style="display:block;width:100%;height:auto">
+                <figcaption style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0">{{ n.meta }}</figcaption>
+              </figure>
+            </a>
+          </sc-if>
+          <sc-if value="{{ n.isView }}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{ n.openView }}" title="{{ n.meta }}" aria-label="{{ n.meta }}" style="display:block;width:100%;max-width:572px;padding:0;border:none;background:none;cursor:pointer;color:inherit" style-focus="outline:1px dotted rgba(255,255,255,.6);outline-offset:4px">
               <img ref="{{ n.imgRef }}" alt="{{ n.alt }}" style="display:block;width:100%;height:auto">
-              <figcaption style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0">{{ n.meta }}</figcaption>
-            </figure>
-          </a>
+            </button>
+          </sc-if>
         </sc-for>
       </div>
     </div>
@@ -716,6 +724,23 @@
   </sc-if>
 
 
+  <sc-if value="{{ vNewsView }}" hint-placeholder-val="{{ false }}">
+    <div data-live-layer style="position:fixed;inset:0;z-index:22;background:#ffffff;display:flex;flex-direction:column">
+      <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
+        <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.5">{{ newsViewCaption }}</div>
+        <div onClick="{{ closeNewsView }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
+      </div>
+      <div data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:22px 44px 14px">
+        <a href="{{ newsViewUrl }}" target="_blank" rel="noopener" style="display:block;max-height:100%">
+          <img ref="{{ newsViewImgRef }}" alt="{{ newsViewCaption }}" style="max-width:100%;max-height:calc(100dvh - 176px);width:auto;height:auto;object-fit:contain">
+        </a>
+      </div>
+      <div data-r="gut" style="flex:none;display:flex;justify-content:center;padding:0 44px 34px">
+        <a href="{{ newsViewUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Read on artnet</a>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ vVenue }}" hint-placeholder-val="{{ false }}">
     <div data-live-layer style="position:fixed;inset:0;z-index:21;background:#ffffff;display:flex;flex-direction:column">
       <div data-r="gut" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px 44px 0;flex:none">
@@ -756,19 +781,19 @@
           <div onClick="{{ toHomeMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Doug Crocco</div>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toExhibitsMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
+          <div onClick="{{ toExhibitsMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Exhibits</div>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toWorksMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
+          <div onClick="{{ toWorksMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Works</div>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toNewsMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
+          <div onClick="{{ toNewsMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">News</div>
         </div>
         <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
-          <div onClick="{{ toInfoMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
+          <div onClick="{{ toInfoMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Info</div>
         </div>
         <div data-r="navrow" style="padding:14px 0">
-          <div onClick="{{ toSearchMenu }}" data-r="homenav" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
+          <div onClick="{{ toSearchMenu }}" data-r="homenav menuitem" style="cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:28px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Search</div>
         </div>
       </div>
     </div>
@@ -1282,12 +1307,15 @@ class Component extends DCLogic {
       }
       return '';
     };
-    const chunk = t => {
-      const sents = t.match(/[^.!?]+[.!?]+(?:\s|$)/g) || (t.trim() ? [t] : []);
-      const out = [];
+    // explicit blank lines in the source are paragraph breaks and survive chunking;
+    // single newlines inside a paragraph are kept as written
+    const chunk = t => String(t).split(/\n{2,}/).reduce((out, part) => {
+      if (!part.trim()) return out;
+      if (part.indexOf('\n') >= 0) { out.push(part.trim()); return out; }
+      const sents = part.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [part];
       for (let i = 0; i < sents.length; i += 3) out.push(sents.slice(i, i + 3).join('').trim());
       return out;
-    };
+    }, []);
     const cut = firstSentenceOf(p0);
     const lead = cut || p0;
     // header already shows venue / city / year — drop that tail from the summary
@@ -1721,9 +1749,17 @@ class Component extends DCLogic {
           meta,
           alt: [n.title, kind === 'Press' ? 'press clipping' : 'announcement', n.y].filter(Boolean).join(', '),
           linkLabel: n.url ? (n.url.indexOf('.pdf') > 0 ? 'PDF' : 'Read') : '',
-          imgRef: mkRef(n.img, this.markBroken)
+          imgRef: mkRef(n.img, this.markBroken),
+          isView: !!(n.gal && n.gal[0] && n.gal[0].view),
+          isLink: !(n.gal && n.gal[0] && n.gal[0].view),
+          openView: () => this.setState({ newsView: n.gal[0].u, newsViewCap: n.gal[0].c || n.title, newsViewUrl: n.url || '' })
         };
       }),
+      vNewsView: !!st.newsView,
+      newsViewCaption: st.newsViewCap || '',
+      newsViewUrl: st.newsViewUrl || '',
+      newsViewImgRef: el => { if (el && st.newsView && el.src !== st.newsView) el.src = st.newsView; },
+      closeNewsView: () => this.setState({ newsView: '', newsViewCap: '', newsViewUrl: '' }),
       portraitRef: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
       portraitRef2: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
       infoBgRef: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2019/02/19-1.jpg'),
@@ -1926,6 +1962,7 @@ class Component extends DCLogic {
       exCollapsedParas: (() => {
         const sp = String(summary).split(/\n{2,}/).map(t => t.trim()).filter(Boolean);
         const all = sp.concat(body);
+        this._exCut = -1;
         // cut on a paragraph boundary: roster, else the paragraph that fills the
         // column beside the venue photograph (never mid-sentence, never a fade)
         let cutAt = rosterAt;
@@ -1935,6 +1972,7 @@ class Component extends DCLogic {
           while (k < all.length && acc < target) { acc += all[k].length; k++; }
           cutAt = (k < all.length) ? k : -1;
         }
+        this._exCut = cutAt;
         const keep = (!st.exOpen && cutAt >= 0) ? all.slice(0, cutAt) : all;
         return keep.map((t, i) => ({ text: t, i }));
       })(),
@@ -1953,7 +1991,7 @@ class Component extends DCLogic {
         right: st.narrow ? 0 : (st.phone ? 'calc(clamp(150px, 38vw, 240px) + 22px)' : 'calc(clamp(240px, 26vw, 320px) + 52px)'),
         background: 'linear-gradient(to bottom, rgba(255,255,255,0), #ffffff 88%)'
       },
-      exHasMore: body.length > 0,
+      exHasMore: this._exCut >= 0 || !!(cx.press && cx.press.u) || !!(cx.press2 && cx.press2.u),
       exExpanded: !!st.exOpen,
       exMoreLabel: st.exOpen ? 'Less' : (rosterAt >= 0 ? 'Artist list' : 'See more'),
       toggleExText: () => {
