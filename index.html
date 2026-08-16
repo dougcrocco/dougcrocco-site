@@ -857,10 +857,14 @@ const homeTile = (self, e, full, st, mkRef) => {
     href: '#/exhibit/' + self.slug(e.title),
     label: [e.title, e.venue, e.city, e.y].filter(Boolean).join(', '),
     open: ev => { if (ev && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey) self.openExhibit(e.title); },
-    imgRef: mkRef(e.img),
+    // only four tiles and they sit right under the hero — load them eagerly so the band
+    // never reads as an empty black stripe on a short viewport
+    imgRef: mkRef(e.img, null, true),
     overlayMeta: [st.narrow ? venue : [venue, city].filter(Boolean).join(', '), e.y].filter(Boolean).join(' — '),
     wrapStyle: { cursor: 'pointer', width: full ? '100%' : 'calc(50% - 1px)', color: 'inherit', textDecoration: 'none' },
-    plateStyle: Object.assign({ aspectRatio: full ? '16 / 9' : '8 / 9' }, PLATE, { boxShadow: 'none', backgroundColor: '#0a0a0a' }),
+    // percentage padding rather than aspect-ratio: the image is absolutely positioned, so this
+    // keeps the plate from collapsing to zero height on older iPad Safari
+    plateStyle: Object.assign({ height: 0, paddingBottom: full ? '56.25%' : '112.5%' }, PLATE, { boxShadow: 'none', backgroundColor: '#0a0a0a' }),
     capStyle: {
       position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 2,
       display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
