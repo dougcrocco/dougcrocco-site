@@ -1948,7 +1948,7 @@ class Component extends DCLogic {
           // the opening tile fills the first screen; the rest keep the 16:9 / 8:9 rhythm
           // one row height for every tile, full or half — 16:9 full-width equals two 8:9 halves
           // 16:9 full-width is exactly the height of two 8:9 halves — same row height, taller tiles
-          plateStyle: Object.assign({ aspectRatio: full ? '16 / 9' : '8 / 9' }, PLATE, { boxShadow: 'none', backgroundColor: '#0a0a0a' }),
+          plateStyle: Object.assign({ height: 0, paddingBottom: full ? '56.25%' : '112.5%' }, PLATE, { boxShadow: 'none', backgroundColor: '#0a0a0a' }),
           titleStyle: {
             fontFamily: "'EB Garamond',Georgia,serif",
             fontSize: st.narrow ? (full ? 22 : 17) : (st.phone ? (full ? 26 : 19) : 38),
@@ -1965,7 +1965,7 @@ class Component extends DCLogic {
       exYear: cx.y ? String(cx.y) : '',
       exKind: (cx.kinds || []).join(' · '),
       exHeroRef: mkRef(cx.img),
-      exHeroStyle: Object.assign({ aspectRatio: '16 / 10' }, PLATE),
+      exHeroStyle: Object.assign({ height: 0, paddingBottom: '62.5%' }, PLATE),
       exPlaceDate: [cx.city, cx.y].filter(Boolean).join(' · '),
       prevExhibit: () => this.stepExhibit(-1),
       nextExhibit: () => this.stepExhibit(1),
