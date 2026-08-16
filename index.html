@@ -13,6 +13,11 @@
   a { color:#141414; text-decoration:none; }
   a:hover { text-decoration:none; color:#000000; }
   x-dc:not(:defined) [data-live-layer] { display:none !important; }
+  /* iPadOS long-press picks up images/links and drags the layout: block it */
+  html, body { overflow-x:hidden; overscroll-behavior:none; }
+  img, a, button, svg, video { -webkit-user-drag:none; user-drag:none; }
+  img, video { -webkit-touch-callout:none; }
+
   [data-r~="taphalf"], [data-r~="fullarrow"] { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; }
   /* ---- breakpoint ladder: 1024 / 900 / 820 / 700 / 460 ----
      The single-image frame steps down in even 20px increments so artwork scales
@@ -74,9 +79,9 @@
     [data-r~="w2"] { gap: 0 14px !important; }
     [data-r~="navlinks"] { display: none !important; }
     [data-r~="navburger"] { display: flex !important; }
-    /* the home mark falls back to initials where the bar runs out of room */
-    [data-r~="markfull"] { display: none !important; }
-    [data-r~="markshort"] { display: inline !important; }
+    /* the full name stays the home mark at every width */
+    [data-r~="markfull"] { display: inline !important; }
+    [data-r~="markshort"] { display: none !important; }
   }
   @media only screen and (max-width: 460px) {
     [data-r~="venuebox"] { height: 220px !important; }
