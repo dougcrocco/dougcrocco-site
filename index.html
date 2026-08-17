@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,8 @@
 <helmet>
 <style>
   html, body { margin:0; height:100%; background:#ffffff; -webkit-font-smoothing:antialiased; }
+  /* headings carry meaning only — every visual value stays on the element's own inline style */
+  h1, h2, h3, h4 { margin:0; padding:0; font-size:inherit; font-weight:inherit; font-style:inherit; letter-spacing:inherit; line-height:inherit; color:inherit; font-family:inherit; }
   a { color:#141414; text-decoration:none; }
   a:hover { text-decoration:none; color:#000000; }
   x-dc:not(:defined) [data-live-layer] { display:none !important; }
@@ -114,12 +116,14 @@
 <script src="./works-data.js"></script>
 </helmet>
 
-<div style="position:fixed;inset:0;background:#ffffff;color:#141414;font-family:Helvetica,'Helvetica Neue',Arial,sans-serif;overflow:hidden">
+<div role="main" style="position:fixed;inset:0;background:#ffffff;color:#141414;font-family:Helvetica,'Helvetica Neue',Arial,sans-serif;overflow:hidden">
+
+  <h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0">{{ pageHeading }}</h1>
 
   <sc-if value="{{ vHome }}" hint-placeholder-val="{{ true }}">
     <div ref="{{ homeScrollRef }}" data-live-layer style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden">
       <div data-r="vhero" style="position:relative;min-height:100dvh;padding:0 44px 40px;box-sizing:border-box;background:#000000;color:#ffffff;overflow:hidden">
-        <video ref="{{ heroVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" poster="./hero-still.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;z-index:0"></video>
+        <video ref="{{ heroVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" poster="./hero-still.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;z-index:0"></video>
         <div data-r="heromenu" style="position:relative;z-index:1;padding-top:100px;width:min(46%,560px);margin-left:auto">
           <div data-r="navrow" style="padding:14px 0;border-bottom:1px dotted rgba(255,255,255,.3)">
             <div data-r="homenav" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#ffffff">Doug Crocco</div>
@@ -154,9 +158,9 @@
           <sc-for list="{{ homeExhibits }}" as="e" hint-placeholder-count="4">
             <a href="{{ e.href }}" aria-label="{{ e.label }}" onClick="{{ e.open }}" style="{{ e.wrapStyle }}">
               <div style="{{ e.plateStyle }}">
-                <img ref="{{ e.imgRef }}" alt="{{ e.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+                <img ref="{{ e.imgRef }}" alt="{{ e.title }}" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
                 <div style="{{ e.capStyle }}">
-                  <div style="{{ e.titleStyle }}">{{ e.title }}</div>
+                  <h3 style="{{ e.titleStyle }}">{{ e.title }}</h3>
                   <div style="{{ e.metaStyle }}">{{ e.overlayMeta }}</div>
                 </div>
               </div>
@@ -184,11 +188,11 @@
       </div>
 
       <div ref="{{ infoAnchorRef }}" data-r="gut" style="position:relative;padding:34px 44px 34px">
-        <img data-r="infophoto" ref="{{ infoBgRefHome }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
+        <img data-r="infophoto" ref="{{ infoBgRefHome }}" alt="" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3;z-index:0;pointer-events:none">
         <div data-r="infogrid" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(220px,360px) minmax(0,1fr);grid-template-areas:'p side' 'bio bio';gap:0 56px;max-width:1500px;align-items:stretch">
           <div data-r="infoportrait" style="grid-area:p;width:100%;max-width:360px">
           <div style="background:#f2f1ee">
-            <img ref="{{ portraitRef2 }}" alt="Doug Crocco" style="display:block;width:100%;height:auto">
+            <img ref="{{ portraitRef2 }}" alt="Doug Crocco" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
           </div>
         </div>
           <div data-r="infoside" style="grid-area:side;align-self:stretch;width:100%;max-width:420px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:left;gap:30px;padding:20px 0">
@@ -203,8 +207,14 @@
             <sc-if value="{{ contactIdle }}" hint-placeholder-val="{{ true }}">
             <form onSubmit="{{ onContactSubmit }}" style="display:flex;flex-direction:column;gap:22px">
               <input type="text" name="website" tabIndex="{{ -1 }}" autoComplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-              <input type="email" name="email" placeholder="Your email" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;color:#3c3c3d;width:100%;box-sizing:border-box;padding:0 0 9px;border:none;border-bottom:1px solid rgba(20,20,20,.32);background:transparent;border-radius:0;outline:none">
-              <textarea ref="{{ msgRef }}" name="message" rows="3" placeholder="Message" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:#3c3c3d;width:100%;box-sizing:border-box;padding:0 0 9px;border:none;border-bottom:1px solid rgba(20,20,20,.32);background:transparent;border-radius:0;outline:none;resize:vertical"></textarea>
+              <div>
+                <label for="dc-email" style="display:block;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:6px">Your email</label>
+                <input id="dc-email" type="email" name="email" placeholder="Your email" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;color:#3c3c3d;width:100%;box-sizing:border-box;padding:0 0 9px;border:none;border-bottom:1px solid rgba(20,20,20,.32);background:transparent;border-radius:0;outline:none">
+              </div>
+              <div>
+                <label for="dc-message" style="display:block;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:6px">Message</label>
+                <textarea id="dc-message" ref="{{ msgRef }}" name="message" rows="3" placeholder="Message" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:#3c3c3d;width:100%;box-sizing:border-box;padding:0 0 9px;border:none;border-bottom:1px solid rgba(20,20,20,.32);background:transparent;border-radius:0;outline:none;resize:vertical"></textarea>
+              </div>
               <div style="display:flex;align-items:baseline;gap:20px">
                 <button type="submit" style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#141414;background:none;border:none;border-bottom:1px solid rgba(20,20,20,.45);padding:0 0 3px;cursor:pointer;border-radius:0">{{ sendLabel }}</button>
               </div>
@@ -219,7 +229,7 @@
             </div>
           </div>
           </div>
-          <div data-r="infobio" style="grid-area:bio;margin-top:44px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.72;letter-spacing:.004em;color:#1f1f21;max-width:none;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks, and spending time in Mexico City working on new projects.</div>
+          <div data-r="infobio" style="grid-area:bio;margin-top:44px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.72;letter-spacing:.004em;color:#1f1f21;max-width:none;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. Prior to that he published <a href="https://www.cult2vader.com" target="_blank" rel="noopener" style="color:inherit;border-bottom:1px solid rgba(20,20,20,.35)" style-hover="border-bottom-color:#141414">cult2vader</a>, a curated image bank of contemporary art and culture. He is currently producing new artworks, and spending time between Palm Beach, Los Angeles, and Mexico City working on new projects.</div>
         </div>
       </div>
 
@@ -324,7 +334,7 @@
       </div>
 
       <div style="margin:60px 0 0;background:#f2f1ee;height:340px;overflow:hidden">
-        <img ref="{{ infoBgRef3 }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+        <img ref="{{ infoBgRef3 }}" alt="" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
       </div>
     </div>
   </sc-if>
@@ -348,12 +358,12 @@
             <sc-for list="{{ col.items }}" as="s" hint-placeholder-count="3">
               <div onClick="{{ s.open }}" style="cursor:pointer">
                 <sc-if value="{{ s.isStill }}" hint-placeholder-val="{{ true }}">
-                  <img ref="{{ s.imgRef }}" alt="{{ s.name }}" style="display:block;width:100%;height:auto">
+                  <img ref="{{ s.imgRef }}" alt="{{ s.name }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
                 </sc-if>
                 <sc-if value="{{ s.isPoster }}" hint-placeholder-val="{{ false }}">
-                  <video ref="{{ s.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
+                  <video ref="{{ s.videoRef }}" poster="./hero-poster.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
                 </sc-if>
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.4;color:#2a2a2b;margin-top:9px">{{ s.name }}</div>
+                <h3 style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.4;color:#2a2a2b;margin-top:9px">{{ s.name }}</h3>
               </div>
             </sc-for>
           </div>
@@ -375,7 +385,7 @@
       <div style="display:flex;align-items:baseline;gap:14px;padding:26px 0 26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;color:{{ sInk }}">
         <button type="button" onClick="{{ toWorks }}" style="background:none;border:none;padding:0;border-radius:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;color:{{ sInk3 }}" style-focus="outline:1px dotted currentColor;outline-offset:4px">Series</button>
         <div style="color:{{ sRule }}">/</div>
-        <div style="color:{{ sInk }}">{{ curSeries }}</div>
+        <h2 style="color:{{ sInk }}">{{ curSeries }}</h2>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <button type="button" aria-label="Previous series" style-focus="outline:1px dotted currentColor;outline-offset:3px" onClick="{{ prevSeries }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ sInk2 }}"><span style="display:block;transform:scaleX(-1)">→</span></button>
           <button type="button" aria-label="Next series" style-focus="outline:1px dotted currentColor;outline-offset:3px" onClick="{{ nextSeries }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ sInk2 }}">→</button>
@@ -393,10 +403,10 @@
               <a href="{{ w.href }}" aria-label="{{ w.label }}" onClick="{{ w.open }}" style="display:block;cursor:pointer;color:inherit;text-decoration:none">
                 <div style="background:{{ sBed }};box-shadow:{{ sShadow }}">
                   <sc-if value="{{ w.isStill }}" hint-placeholder-val="{{ true }}">
-                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
                   </sc-if>
                   <sc-if value="{{ w.isPoster }}" hint-placeholder-val="{{ false }}">
-                    <video ref="{{ w.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
+                    <video ref="{{ w.videoRef }}" poster="./hero-poster.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
                   </sc-if>
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:{{ sInk }};padding-top:11px"><em>{{ w.title }}</em></div>
@@ -431,10 +441,10 @@
               <a href="{{ w.href }}" aria-label="{{ w.label }}" onClick="{{ w.open }}" style="display:block;cursor:pointer;color:inherit;text-decoration:none">
                 <div style="background:#f6f5f2">
                   <sc-if value="{{ w.isStill }}" hint-placeholder-val="{{ true }}">
-                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="display:block;width:100%;height:auto">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
                   </sc-if>
                   <sc-if value="{{ w.isPoster }}" hint-placeholder-val="{{ false }}">
-                    <video ref="{{ w.videoRef }}" poster="./hero-poster.png" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
+                    <video ref="{{ w.videoRef }}" poster="./hero-poster.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000"></video>
                   </sc-if>
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4;color:#1f1f21;padding-top:11px"><em>{{ w.title }}</em></div>
@@ -465,11 +475,11 @@
               <div style="{{ yearRowStyle }}">
                 <sc-for list="{{ g.items }}" as="w" hint-placeholder-count="3">
                   <div onClick="{{ w.open }}" data-wall-label="{{ w.label }}" style="{{ w.style }}">
-                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" style="{{ wallImgStyle }}">
+                    <img ref="{{ w.imgRef }}" alt="{{ w.title }}" loading="lazy" decoding="async" style="{{ wallImgStyle }}">
                   </div>
                 </sc-for>
               </div>
-              <div style="{{ yearLabelStyle }}">{{ g.year }}</div>
+              <h2 style="{{ yearLabelStyle }}">{{ g.year }}</h2>
             </div>
           </sc-for>
         </div>
@@ -493,7 +503,7 @@
         <button type="button" aria-label="Previous work" style-focus="outline:1px dotted currentColor;outline-offset:3px" data-r="workarrow" onClick="{{ prevWork }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;position:relative;z-index:2;cursor:pointer;flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#6e6e72">❮</button>
         <div style="flex:1;min-width:0;align-self:stretch;min-height:0;display:flex;align-items:center;justify-content:center">
           <sc-if value="{{ wIsStill }}" hint-placeholder-val="{{ true }}">
-            <img ref="{{ wImgRef }}" alt="{{ wTitle }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
+            <img ref="{{ wImgRef }}" alt="{{ wTitle }}" decoding="async" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)">
           </sc-if>
           <sc-if value="{{ wIsVideo }}" hint-placeholder-val="{{ false }}">
             <video data-r="workvid" ref="{{ wVideoRef }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="max-width:100%;max-height:100%;height:100%;width:auto;aspect-ratio:4/5;object-fit:cover;object-position:left bottom;background:#000000;box-shadow:0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.06)"></video>
@@ -527,9 +537,9 @@
         <sc-for list="{{ exhibits }}" as="e" hint-placeholder-count="4">
           <a data-r="extile" href="{{ e.href }}" aria-label="{{ e.label }}" onClick="{{ e.open }}" style="{{ e.wrapStyle }}">
             <div data-r="explate" style="{{ e.plateStyle }}">
-              <img ref="{{ e.imgRef }}" alt="{{ e.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+              <img ref="{{ e.imgRef }}" alt="{{ e.title }}" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
               <div style="{{ e.capStyle }}">
-                <div style="{{ e.titleStyle }}">{{ e.title }}</div>
+                <h3 style="{{ e.titleStyle }}">{{ e.title }}</h3>
                 <div style="{{ e.metaStyle }}">{{ e.overlayMeta }}</div>
               </div>
             </div>
@@ -552,13 +562,13 @@
         </div>
       </div>
         <div style="{{ exTitleBlockStyle }}">
-          <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(26px,2.4vw,42px);letter-spacing:.04em;text-transform:uppercase;line-height:1.16;font-weight:400;max-width:min(100%,44ch);text-wrap:balance;color:#1a1a1c">{{ exTitle }}</div>
+          <h2 style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:clamp(26px,2.4vw,42px);letter-spacing:.04em;text-transform:uppercase;line-height:1.16;font-weight:400;max-width:min(100%,44ch);text-wrap:balance;color:#1a1a1c">{{ exTitle }}</h2>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:17px;font-weight:500;letter-spacing:.01em;color:#2e2e30;margin-top:14px">{{ exVenue }}</div>
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.03em;color:#6e6e72;margin-top:5px">{{ exPlaceDate }}</div>
         </div>
         <sc-if value="{{ exHasHero }}" hint-placeholder-val="{{ false }}">
           <div onTouchStart="{{ heroTouchStart }}" onTouchEnd="{{ heroTouchEnd }}" style="{{ heroFrameStyle }}">
-            <img ref="{{ heroImgRef }}" alt="{{ exTitle }}" style="{{ heroImgStyle }}">
+            <img ref="{{ heroImgRef }}" alt="{{ exTitle }}" decoding="async" style="{{ heroImgStyle }}">
           </div>
         </sc-if>
         <div ref="{{ pressBlockRef }}" style="max-width:1760px;padding:0 0 34px;min-height:0">
@@ -569,7 +579,7 @@
                 <div onClick="{{ v.open }}" style="{{ v.wrapStyle }}">
                   <div data-r="venuebox" style="{{ v.boxStyle }}">
                     <sc-for list="{{ v.layers }}" as="L" hint-placeholder-count="1">
-                      <img ref="{{ L.imgRef }}" alt="" style="{{ L.style }}">
+                      <img ref="{{ L.imgRef }}" alt="" loading="lazy" decoding="async" style="{{ L.style }}">
                     </sc-for>
                   </div>
                   <sc-if value="{{ v.hasCaption }}" hint-placeholder-val="{{ false }}">
@@ -655,7 +665,7 @@
           <div style="position:relative">
             <div ref="{{ fullSwipeRef }}" onClick="{{ backdropToGrid }}" data-r="arrowgut" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:min(calc(100dvh - 120px), 86vh)">
               <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:100%;height:100%">
-                <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="{{ fullImgStyle }}">
+                <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" decoding="async" style="{{ fullImgStyle }}">
                 <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
                   <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
                 </sc-if>
@@ -682,7 +692,7 @@
                   <sc-if value="{{ g.missing }}" hint-placeholder-val="{{ false }}">
                     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
                   </sc-if>
-                  <img ref="{{ g.imgRef }}" alt="{{ g.caption }}" style="display:block;width:100%;height:auto">
+                  <img ref="{{ g.imgRef }}" alt="{{ g.caption }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
                 </div>
                 <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#6b6b6d;padding:9px 0 0;text-align:center">{{ g.artist }}</div>
               </div>
@@ -709,14 +719,14 @@
           <sc-if value="{{ n.isLink }}" hint-placeholder-val="{{ true }}">
             <a href="{{ n.url }}" target="_blank" rel="noopener" title="{{ n.meta }}" aria-label="{{ n.meta }}" style="display:block;width:100%;max-width:572px;text-decoration:none;color:inherit">
               <figure style="margin:0">
-                <img ref="{{ n.imgRef }}" alt="{{ n.alt }}" style="display:block;width:100%;height:auto">
+                <img ref="{{ n.imgRef }}" alt="{{ n.alt }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
                 <figcaption style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0">{{ n.meta }}</figcaption>
               </figure>
             </a>
           </sc-if>
           <sc-if value="{{ n.isView }}" hint-placeholder-val="{{ false }}">
             <button type="button" onClick="{{ n.openView }}" title="{{ n.meta }}" aria-label="{{ n.meta }}" style="display:block;width:100%;max-width:572px;padding:0;border:none;background:none;cursor:pointer;color:inherit" style-focus="outline:1px dotted rgba(255,255,255,.6);outline-offset:4px">
-              <img ref="{{ n.imgRef }}" alt="{{ n.alt }}" style="display:block;width:100%;height:auto">
+              <img ref="{{ n.imgRef }}" alt="{{ n.alt }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
             </button>
           </sc-if>
         </sc-for>
@@ -740,12 +750,12 @@
           <div onClick="{{ searchBackdrop }}" style="padding:26px 0 0;display:flex;flex-direction:column;gap:32px">
             <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="0">
               <div onClick="{{ searchBackdrop }}">
-                <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</div>
+                <h2 style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#7a7a7e;margin-bottom:14px">{{ g.label }}</h2>
                 <div data-r="searchcols" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 24px;align-items:start;max-width:1180px">
                   <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="0">
                     <div onClick="{{ r.open }}" style="cursor:pointer">
                       <div style="background:#f6f5f2">
-                        <img ref="{{ r.imgRef }}" alt="{{ r.title }}" style="display:block;width:100%;height:auto">
+                        <img ref="{{ r.imgRef }}" alt="{{ r.title }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto">
                       </div>
                       <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.4;color:#2a2a2b;padding:8px 0 0">{{ r.title }}</div>
                       <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#7a7a7e;padding:2px 0 0">{{ r.meta }}</div>
@@ -773,7 +783,7 @@
         </sc-if>
         <sc-if value="{{ newsViewIsImg }}" hint-placeholder-val="{{ true }}">
           <a href="{{ newsViewUrl }}" target="_blank" rel="noopener" style="display:block;max-height:100%">
-            <img ref="{{ newsViewImgRef }}" alt="{{ newsViewCaption }}" style="max-width:100%;max-height:calc(100dvh - 176px);width:auto;height:auto;object-fit:contain">
+            <img ref="{{ newsViewImgRef }}" alt="{{ newsViewCaption }}" decoding="async" style="max-width:100%;max-height:calc(100dvh - 176px);width:auto;height:auto;object-fit:contain">
           </a>
         </sc-if>
       </div>
@@ -790,14 +800,14 @@
         <div onClick="{{ closeVenue }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
       </div>
       <div onClick="{{ closeVenue }}" data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:26px 44px 44px;cursor:pointer">
-        <img ref="{{ venueImgRef }}" alt="" style="max-width:100%;max-height:calc(100dvh - 150px);width:auto;height:auto;object-fit:contain">
+        <img ref="{{ venueImgRef }}" decoding="async" alt="{{ venueCaption }}" style="max-width:100%;max-height:calc(100dvh - 150px);width:auto;height:auto;object-fit:contain">
       </div>
     </div>
   </sc-if>
 
   <div style="{{ navStyle }}">
     <button type="button" onClick="{{ toHome }}" style="pointer-events:auto;background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;font-size:16px;letter-spacing:.02em;white-space:nowrap" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
-    <div data-r="navlinks" style="pointer-events:auto;display:flex;align-items:center;gap:30px;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
+    <div data-r="navlinks" role="navigation" aria-label="Sections" style="pointer-events:auto;display:flex;align-items:center;gap:30px;font-size:12px;letter-spacing:.16em;text-transform:uppercase">
       <sc-if value="{{ showSearch }}" hint-placeholder-val="{{ false }}">
         <button type="button" data-r="searchglass" onClick="{{ toSearch }}" title="Search" aria-label="Search" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;display:flex;align-items:center;opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="5.7" cy="5.7" r="4.8"></circle><path d="M9.2 9.2L13.2 13.2"></path></svg>
@@ -1106,14 +1116,119 @@ class Component extends DCLogic {
     else window.location.hash = h;
   }
 
+  // ---- head: one title, description, canonical and schema per view ----
+  headFor() {
+    const d = window.DC || {}, st = this.state;
+    const site = 'Doug Crocco';
+    const base = 'Drawings, prints and video. Colored pencil work made over two decades in Los Angeles.';
+    const abs = u => !u ? '' : (/^https?:/.test(u) ? u : 'https://dougcrocco.com/' + String(u).replace(/^\.\//, ''));
+    const ex = () => (d.exhibits || []).find(x => x.title === st.exhibit) || {};
+    const seriesWorks = () => (d.works || []).filter(w => w.s === st.series);
+    switch (st.view) {
+      case 'works': return { h: 'Works by series', t: 'Works by series | ' + site, desc: 'Colored pencil drawings, prints and video grouped into seven series.' };
+      case 'series': {
+        const s = (d.series || []).find(x => x.name === st.series) || {};
+        return { h: st.series + ' — works', t: st.series + ' | ' + site, desc: (s.note || base).slice(0, 180), img: abs(s.cover) };
+      }
+      case 'work': {
+        const w = seriesWorks()[st.sel] || {};
+        const meta = [w.y, w.m, w.d].filter(Boolean).join(', ');
+        return {
+          h: [w.t, w.y].filter(Boolean).join(', '),
+          t: [w.t, w.y].filter(Boolean).join(', ') + (w.s ? ' — ' + w.s : '') + ' | ' + site,
+          desc: [w.t, meta].filter(Boolean).join(' — '), img: abs(w.img), work: w
+        };
+      }
+      case 'overview': return { h: 'Works by medium', t: 'Works by medium | ' + site, desc: 'The full archive by medium — drawing, print, sculpture, public work and video.' };
+      case 'year': return { h: 'Works by year', t: 'Works by year | ' + site, desc: 'The archive in chronological order, 2003 to the present.' };
+      case 'exhibits': return { h: 'Exhibitions', t: 'Exhibitions | ' + site, desc: 'Solo, group and curated exhibitions in Los Angeles, New York, Miami, Palm Beach, Boston and Melbourne.' };
+      case 'exhibit': {
+        const e = ex();
+        return {
+          h: [e.title, e.venue, e.y].filter(Boolean).join(' — '),
+          t: e.title + ' — ' + [e.venue, e.city, e.y].filter(Boolean).join(', ') + ' | ' + site,
+          desc: (e.sum || (e.paras || [])[0] || base).slice(0, 200), img: abs(e.img), exhibit: e
+        };
+      }
+      case 'news': return { h: 'News and press', t: 'News and press | ' + site, desc: 'Reviews, features and exhibition notices.' };
+      case 'search': return { h: 'Search', t: 'Search | ' + site, desc: 'Search works, exhibitions and press.' };
+      default: return { h: site + ' — drawings, prints and video', t: site, desc: base };
+    }
+  }
+
+  syncHead() {
+    if (typeof document === 'undefined') return;
+    const h = this.headFor();
+    const img = h.img || 'https://allart.la/artwork/uploads/2013/09/USA-Doug-Crocco.jpg';
+    const url = window.location.origin + window.location.pathname + (window.location.hash || '');
+    document.title = h.t;
+    const set = (sel, attr, val) => {
+      let el = document.head.querySelector(sel);
+      if (!el) {
+        el = document.createElement(sel.indexOf('link') === 0 ? 'link' : 'meta');
+        const m = sel.match(/\[(name|property|rel)="([^"]+)"\]/);
+        if (m) el.setAttribute(m[1], m[2]);
+        document.head.appendChild(el);
+      }
+      el.setAttribute(attr, val);
+    };
+    set('meta[name="description"]', 'content', h.desc);
+    set('link[rel="canonical"]', 'href', url);
+    set('meta[property="og:title"]', 'content', h.t);
+    set('meta[property="og:description"]', 'content', h.desc);
+    set('meta[property="og:image"]', 'content', img);
+    set('meta[property="og:url"]', 'content', url);
+    set('meta[name="twitter:title"]', 'content', h.t);
+    set('meta[name="twitter:description"]', 'content', h.desc);
+    set('meta[name="twitter:image"]', 'content', img);
+
+    const person = {
+      '@context': 'https://schema.org', '@type': 'Person', name: 'Doug Crocco',
+      jobTitle: 'Artist and curator', url: 'https://dougcrocco.com/',
+      email: 'mailto:doug@dougcrocco.com', image: img,
+      address: { '@type': 'PostalAddress', addressLocality: 'Los Angeles', addressRegion: 'CA', addressCountry: 'US' },
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Claremont Graduate University' }
+    };
+    const graph = [person];
+    if (h.work && h.work.t) {
+      graph.push({
+        '@context': 'https://schema.org', '@type': 'VisualArtwork', name: h.work.t,
+        creator: { '@type': 'Person', name: 'Doug Crocco' },
+        dateCreated: h.work.y ? String(h.work.y) : undefined,
+        artMedium: h.work.m || undefined, artform: h.work.k && h.work.k[0] ? h.work.k[0] : undefined,
+        artworkSurface: h.work.d || undefined, image: h.img || undefined, url: url,
+        isPartOf: h.work.s || undefined
+      });
+    }
+    if (h.exhibit && h.exhibit.title) {
+      graph.push({
+        '@context': 'https://schema.org', '@type': 'ExhibitionEvent', name: h.exhibit.title,
+        startDate: h.exhibit.y ? String(h.exhibit.y) : undefined, url: url, image: h.img || undefined,
+        description: h.desc,
+        location: { '@type': 'Place', name: h.exhibit.venue || undefined, address: h.exhibit.city || undefined }
+      });
+    }
+    let ld = document.head.querySelector('script[data-dc-schema]');
+    if (!ld) {
+      ld = document.createElement('script');
+      ld.type = 'application/ld+json';
+      ld.setAttribute('data-dc-schema', '1');
+      document.head.appendChild(ld);
+    }
+    ld.textContent = JSON.stringify(graph.length === 1 ? graph[0] : graph);
+  }
+
   componentDidUpdate() {
     this.syncHash();
+    this.syncHead();
     // the home layer remounts at the top, and no scroll event follows
     if (this._prevView !== this.state.view && this.state.homePast) this.setState({ homePast: false });
     this._prevView = this.state.view;
   }
 
   componentDidMount() {
+    if (typeof document !== 'undefined' && !document.documentElement.lang) document.documentElement.lang = 'en';
+    this.syncHead();
     this._resize = () => {
       const n = this.colsFor(window.innerWidth);
       const p = window.innerWidth <= 700;
@@ -1728,6 +1843,15 @@ class Component extends DCLogic {
         el.muted = true;
         el.defaultMuted = true;
         el.loop = true;
+        // a visitor who asked their system for less motion keeps the poster frame:
+        // nothing autoplays and the 2.8MB loop is never fetched
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          el.autoplay = false;
+          el.removeAttribute('autoplay');
+          el.preload = 'none';
+          try { el.pause(); } catch (err) {}
+          return;
+        }
         // hosts that answer media requests without byte ranges (this preview among them) can't be
         // streamed by WebKit — fetching the 2.8MB whole and playing it from a blob works anywhere
         fetch('./hero.mp4')
@@ -1795,6 +1919,8 @@ class Component extends DCLogic {
       nextSeries: () => this.stepSeries(1),
       curSeries: st.series || '',
       statement: (d.statement || ''),
+      // the one h1 on the page, named for whatever view is showing
+      pageHeading: this.headFor().h,
       seriesNote: ((d.series || []).find(x => x.name === st.series) || {}).note || '',
       hasSeriesNote: !!((d.series || []).find(x => x.name === st.series) || {}).note,
       wImgRef: el => {
@@ -1978,7 +2104,7 @@ class Component extends DCLogic {
           href: '#/exhibit/' + this.slug(e.title),
           label: [e.title, e.venue, e.city, e.y, e.kinds.join(' ')].filter(Boolean).join(', '),
           open: ev => { if (ev && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey) this.openExhibit(e.title); },
-          imgRef: mkRef(e.img),
+          imgRef: (() => { const base = mkRef(e.img); const pos = e.tilePos || e.heroPos; return el => { base(el); if (el && pos) el.style.objectPosition = pos; }; })(),
           // per-show ink: black type on light imagery, white on everything else
           capStyle: (() => {
             const dark = e.ink === 'dark' || DARK_TILE_TITLES.indexOf(e.title) >= 0;
@@ -2149,7 +2275,8 @@ class Component extends DCLogic {
         el.src = u;
         el.style.animation = 'none';
       },
-      heroImgStyle: { display: 'block', width: '100%', height: '100%', objectFit: 'cover' },
+      // heroPos lets a show anchor its banner crop (e.g. 'right center') instead of centering
+      heroImgStyle: { display: 'block', width: '100%', height: '100%', objectFit: 'cover', objectPosition: cx.heroPos || 'center' },
       exCollapsedParas: (() => {
         const sp = String(summary).split(/\n{2,}/).map(t => t.trim()).filter(Boolean);
         const all = sp.concat(body);

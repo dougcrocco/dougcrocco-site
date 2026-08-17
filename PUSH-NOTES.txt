@@ -1,0 +1,15 @@
+Push set — 2026-08-16
+Changed since the 2026-08-15 push. Copy these to the repo root, overwriting.
+
+ADD / REPLACE
+  index.html         structure + metadata pass, lazy loading, bio copy, cult2vader link
+  works-data.js      caption and data fixes (DBA fully captioned, Entropy city, apostrophes)
+  hero-poster.jpg    new — replaces hero-poster.png (1.04MB -> 211KB)
+  hero-still.jpg     new — replaces hero-still.png (0.48MB -> 99KB)
+
+DELETE FROM THE REPO
+  hero-poster.png
+  hero-still.png
+
+Nothing else changed. The archived press pages, support.js, contact.php, images/ and
+artwork/ are all identical to what is already live.
