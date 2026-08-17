@@ -1844,7 +1844,7 @@ class Component extends DCLogic {
         el.defaultMuted = true;
         el.loop = true;
         // a visitor who asked their system for less motion keeps the poster frame:
-        // nothing autoplays and the 2.8MB loop is never fetched
+        // nothing autoplays and the 11MB loop is never fetched
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           el.autoplay = false;
           el.removeAttribute('autoplay');
@@ -1852,15 +1852,28 @@ class Component extends DCLogic {
           try { el.pause(); } catch (err) {}
           return;
         }
-        // hosts that answer media requests without byte ranges (this preview among them) can't be
-        // streamed by WebKit — fetching the 2.8MB whole and playing it from a blob works anywhere
-        fetch('./hero.mp4')
-          .then(r => r.blob())
-          .then(b => { el.src = URL.createObjectURL(b); el.load(); el.play().catch(() => {}); })
-          .catch(() => { el.src = './hero.mp4'; el.play().catch(() => {}); });
+        // Stream first: on a host that answers byte ranges (GitHub Pages does) playback starts on
+        // the first few hundred KB instead of waiting for all 11MB. Hosts that ignore ranges —
+        // this preview among them — can't be streamed by WebKit, so fall back to fetching the
+        // whole file and playing it from a blob. Whichever path runs, it runs once.
+        let usedBlob = false;
+        const viaBlob = () => {
+          if (usedBlob) return;
+          usedBlob = true;
+          fetch('./hero-v5.mp4')
+            .then(r => r.blob())
+            .then(b => { el.src = URL.createObjectURL(b); el.load(); el.play().catch(() => {}); })
+            .catch(() => {});
+        };
+        el.addEventListener('error', viaBlob, { once: true });
+        el.src = './hero-v5.mp4';
+        el.load();
+        el.play().catch(viaBlob);
+        // nothing advancing after three seconds means the range request never resolved
+        setTimeout(() => { if (!el.currentTime) viaBlob(); }, 3000);
       },
       heroCaption: 'The Question Remains — 2026',
-      heroMeta: 'Video, 5 minute loop, silent',
+      heroMeta: 'Video, 3 minute loop, silent',
       slideTitle: cur.title || '',
       slideVenue: [cur.venue, cur.y].filter(Boolean).join(', '),
       slideCount: slides.length ? (si + 1) + ' / ' + slides.length : '',

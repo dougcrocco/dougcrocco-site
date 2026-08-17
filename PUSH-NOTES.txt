@@ -1,15 +1,22 @@
-Push set — 2026-08-16
-Changed since the 2026-08-15 push. Copy these to the repo root, overwriting.
+Push set — 2026-08-17
+Changed since the 2026-08-15 push. Copy to the repo root, overwriting.
 
 ADD / REPLACE
-  index.html         structure + metadata pass, lazy loading, bio copy, cult2vader link
-  works-data.js      caption and data fixes (DBA fully captioned, Entropy city, apostrophes)
+  index.html         structure + metadata pass, lazy loading, hero streams from src (not
+                     fetch->blob), bio copy, cult2vader link, "3 minute loop"
+  works-data.js      caption and data fixes (DBA fully captioned, Entropy filed under Florida,
+                     apostrophes normalised, Psycho Conundrum, Bed, Sun Projection)
+  hero-v5.mp4        NEW hero video — 720x1280, 30fps, 3:01, H.264 509kbps, 11MB, fast-start
   hero-poster.jpg    new — replaces hero-poster.png (1.04MB -> 211KB)
   hero-still.jpg     new — replaces hero-still.png (0.48MB -> 99KB)
 
 DELETE FROM THE REPO
+  hero.mp4           superseded by hero-v5.mp4
   hero-poster.png
   hero-still.png
 
-Nothing else changed. The archived press pages, support.js, contact.php, images/ and
-artwork/ are all identical to what is already live.
+Why the versioned video filename: one unchanging name meant browsers kept serving a cached
+old cut. hero-v5.mp4 guarantees every visitor gets this one.
+
+Net: posters -1.2MB. The video is 11MB but streams — a visitor who glances for ten seconds
+pulls roughly 600KB, where the old 2.8MB file was fetched whole before the first frame.
