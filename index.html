@@ -70,7 +70,7 @@
     [data-r~="gut"], [data-r~="arrowgut"] { padding-left:18px !important; padding-right:18px !important; }
     /* the bleed must always equal the current gutter */
     [data-r~="exbleed"] { margin-left: -18px !important; margin-right: -18px !important; }
-    [data-r~="exbar"] { margin-left: -18px !important; margin-right: -18px !important; padding-left: 18px !important; padding-right: 18px !important; height: 54px !important; }
+    [data-r~="exbar"] { margin-left: -18px !important; margin-right: -18px !important; padding-left: 18px !important; padding-right: 28px !important; height: 54px !important; }
     [data-r~="flushbar"] { margin-left: 0 !important; margin-right: 0 !important; }
     [data-r~="arrowgut"] { height: min(calc(100dvh - 200px), 78vh) !important; }
     [data-r~="fullpad"] { min-height:calc(100dvh - 40px) !important; padding-bottom:20px !important; }
@@ -147,7 +147,7 @@
       </div>
 
       <div style="background:#000000;padding:36px 0 54px">
-        <div data-r="exbar flushbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;background:#000000">
+        <div data-r="exbar flushbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;background:#000000">
           <button type="button" onClick="{{ toExhibits }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#ffffff" style-hover="opacity:.65" style-focus="outline:1px dotted rgba(255,255,255,.6);outline-offset:4px">Recent exhibits</button>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:2px">
@@ -168,7 +168,7 @@
         </div>
       </div>
 
-      <div data-r="exbar flushbar" style="position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;background:#f6f5f2;border-bottom:1px dotted rgba(20,20,20,.22)">
+      <div data-r="exbar flushbar" style="position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;background:#f6f5f2;border-bottom:1px dotted rgba(20,20,20,.22)">
         <button type="button" onClick="{{ toTop }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#141414" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div data-r="navlinks" style="display:flex;gap:22px">
           <button type="button" onClick="{{ toExhibits }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#6e6e72" style-hover="color:#141414" style-focus="color:#141414;outline:1px dotted currentColor;outline-offset:3px">Exhibits</button>
@@ -193,20 +193,6 @@
           <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#5c5c5e;padding-top:10px">Los Angeles</div>
         </div>
           <div data-r="infoside" style="grid-area:side;align-self:stretch;width:100%;max-width:420px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:left;gap:30px;padding:20px 0">
-          <div data-r="infometa" style="display:flex;flex-direction:column;gap:15px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#3c3c3d">
-            <div>
-              <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:3px">Email</div>
-              <div><a href="mailto:doug@dougcrocco.com">doug@dougcrocco.com</a></div>
-            </div>
-            <div>
-              <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:3px">Studio</div>
-              <div>Visits by appointment</div>
-            </div>
-            <div>
-              <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:3px">CV</div>
-              <div><a href="http://dougcrocco.com/wp-content/uploads/2020/04/Doug-Crocco-CV-most-cuurent-2020.pdf" target="_blank" rel="noopener" style="border-bottom:1px solid rgba(20,20,20,.45)">Download PDF</a></div>
-            </div>
-          </div>
           <div data-r="infoform" style="width:100%;max-width:400px">
             <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:18px">Enquire</div>
             <sc-if value="{{ hasEnquiry }}" hint-placeholder-val="{{ false }}">
@@ -228,9 +214,13 @@
             <sc-if value="{{ contactPending }}" hint-placeholder-val="{{ false }}">
               <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;color:#6e6e72">Sending…</div>
             </sc-if>
+            <div style="margin-top:30px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.7;color:#3c3c3d">
+              <div style="font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#6e6e72;padding-bottom:3px">Email</div>
+              <div><a href="mailto:doug@dougcrocco.com">doug@dougcrocco.com</a></div>
+            </div>
           </div>
           </div>
-          <div data-r="infobio" style="grid-area:bio;margin-top:44px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.72;letter-spacing:.004em;color:#1f1f21;max-width:none;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks.</div>
+          <div data-r="infobio" style="grid-area:bio;margin-top:44px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.72;letter-spacing:.004em;color:#1f1f21;max-width:none;text-wrap:pretty">Doug Crocco is an artist and curator based in Los Angeles, California. He has exhibited in New York, Los Angeles, Palm Beach, Miami, Boston, and Melbourne. He received his MFA from Claremont Graduate University in 2004. From 2015 to 2020 he was owner and director of the project space Big Pictures Los Angeles. He is currently producing new artworks, and spending time in Mexico City working on new projects.</div>
         </div>
       </div>
 
@@ -319,11 +309,16 @@
             <div style="font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#141414;padding-bottom:9px;border-bottom:1px dotted rgba(20,20,20,.32);margin-bottom:16px">Selected press</div>
             <div style="display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 16px;font-family:Raleway,Helvetica,Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.62;color:#414142">
               <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><a href="./staring-at-the-sun-review.html" style="border-bottom:1px solid rgba(20,20,20,.28)">David Pagel, “Where dread and beauty collide,” <em>Los Angeles Times</em>, September 11</a></div>
-              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty">Catherine Wagley, “5 Shows to See,” <em>L.A. Weekly</em>, April 26</div>
-              <div style="color:#8c8c8e">2008</div><div style="text-wrap:pretty">Christine Davis, “Art Connections,” <em>Palm Beach Post</em>, August 3</div>
+              <div style="color:#8c8c8e">2017</div><div style="text-wrap:pretty"><a href="./polaroid-black-la-weekly.html" style="border-bottom:1px solid rgba(20,20,20,.28)">Catherine Wagley, “5 Shows to See,” <em>L.A. Weekly</em>, April 26</a></div>
+              <div style="color:#8c8c8e">2015</div><div style="text-wrap:pretty"><a href="./big-pictures-neighborhood-news.html" style="border-bottom:1px solid rgba(20,20,20,.28)">Renee Montgomery, “Big Pictures Los Angeles,” <em>The Neighborhood News</em>, August/September</a></div>
+              <div style="color:#8c8c8e">2008</div><div style="text-wrap:pretty"><a href="./palm-beach-post-art-connections.html" style="border-bottom:1px solid rgba(20,20,20,.28)">Christine Davis, “Art Connections,” <em>Palm Beach Post</em>, August 3</a></div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div data-r="gut" style="padding:44px 44px 0">
+        <a href="./doug-crocco-cv.html" target="_blank" rel="noopener" style="display:inline-block;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#141414;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Download CV</a>
       </div>
 
       <div style="margin:60px 0 0;background:#f2f1ee;height:340px;overflow:hidden">
@@ -334,7 +329,7 @@
 
   <sc-if value="{{ vWorks }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px">
-      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0 -44px;background:#000000">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div style="display:flex;gap:22px">
           <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
@@ -367,7 +362,7 @@
 
   <sc-if value="{{ vSeries }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer data-r="gut" onTouchStart="{{ seriesTouchStart }}" onTouchEnd="{{ seriesTouchEnd }}" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px;background:{{ sBg }};touch-action:pan-y">
-      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0 -44px;background:#000000">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div style="display:flex;gap:22px">
           <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
@@ -414,7 +409,7 @@
 
   <sc-if value="{{ vOverview }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px">
-      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0 -44px;background:#000000">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div style="display:flex;gap:22px">
           <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
@@ -452,7 +447,7 @@
 
   <sc-if value="{{ vYear }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer style="position:absolute;inset:0;display:flex;flex-direction:column">
-      <div data-r="exbar flushbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0;background:#000000;flex:none">
+      <div data-r="exbar flushbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0;background:#000000;flex:none">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div style="display:flex;gap:22px">
           <sc-for list="{{ worksModes }}" as="m" hint-placeholder-count="3">
@@ -517,7 +512,7 @@
 
   <sc-if value="{{ vExhibits }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 60px;background:#000000">
-      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0 -44px;background:#000000">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div data-r="exfilters" style="display:flex;gap:22px">
           <sc-for list="{{ exhFilters }}" as="f" hint-placeholder-count="4">
@@ -545,7 +540,7 @@
 
   <sc-if value="{{ vExhibit }}" hint-placeholder-val="{{ true }}">
     <div ref="{{ exScrollRef }}" data-live-layer style="{{ exScrollStyle }}">
-      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px 26px;background:#000000">
+      <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0 -44px 26px;background:#000000">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div style="display:flex;align-items:center;gap:26px">
           <button type="button" onClick="{{ toExhibits }}" style="{{ exBackStyle }}" style-hover="color:#ffffff">All exhibits</button>
@@ -582,54 +577,55 @@
               </sc-for>
             </div>
             <sc-for list="{{ exCollapsedParas }}" as="p" hint-placeholder-count="2">
-              <div style="order:1;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;white-space:pre-line;margin:0 0 16px">{{ p.text }}</div>
+              <div style="order:1;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.68;color:#3c3c3d;text-wrap:pretty;white-space:pre-line;margin:0 0 16px"><sc-for list="{{ p.parts }}" as="s" hint-placeholder-count="1"><sc-if value="{{ s.isLink }}" hint-placeholder-val="{{ false }}"><a href="{{ s.href }}" target="_blank" rel="noopener" style="color:#3c3c3d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.32)" style-hover="border-bottom-color:#141414">{{ s.text }}</a></sc-if><sc-if value="{{ s.plain }}" hint-placeholder-val="{{ true }}"><span>{{ s.text }}</span></sc-if></sc-for></div>
             </sc-for>
             <div style="clear:both"></div>
             <sc-if value="{{ exCollapsedFade }}" hint-placeholder-val="{{ false }}">
               <div style="{{ exFadeStyle }}"></div>
             </sc-if>
           </div>
-              <sc-if value="{{ exExpanded }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:20px">
-                  <sc-if value="{{ exPress2IsImage }}" hint-placeholder-val="{{ false }}">
-                    <div onClick="{{ openPress2 }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPress2Label }}</div>
-                  </sc-if>
-                  <sc-if value="{{ exHasPdf }}" hint-placeholder-val="{{ false }}">
-                    <a href="{{ exPdf }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Checklist</a>
-                  </sc-if>
-                </div>
-              </sc-if>
-            <div style="display:flex;align-items:flex-end;gap:30px;margin-top:22px;max-width:1760px;order:2">
-              <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
-                <div onClick="{{ toggleExText }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
-              </sc-if>
-              <sc-if value="{{ exHasPress }}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{ exHasMore }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;margin-top:22px;max-width:1760px;order:2">
+                <div onClick="{{ toggleExText }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exMoreLabel }}</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ exHasLinkRow }}" hint-placeholder-val="{{ false }}">
+            <div data-r="linkrow" style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 30px;margin-top:18px;max-width:1760px;order:2">              <sc-if value="{{ exHasPress }}" hint-placeholder-val="{{ false }}">
                 <sc-if value="{{ exPressIsImage }}" hint-placeholder-val="{{ false }}">
-                  <div onClick="{{ openPress }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</div>
+                  <div onClick="{{ openPress }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exPressLabel }}</div>
                 </sc-if>
                 <sc-if value="{{ exPressIsPage }}" hint-placeholder-val="{{ false }}">
-                  <a href="{{ exPressUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPressLabel }}</a>
+                  <a href="{{ exPressUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exPressLabel }}</a>
                 </sc-if>
               </sc-if>
+              <sc-if value="{{ exPress2IsImage }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ openPress2 }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exPress2Label }}</div>
+              </sc-if>
               <sc-if value="{{ exPress2IsPage }}" hint-placeholder-val="{{ false }}">
-                <a href="{{ exPress2Url }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Press: {{ exPress2Label }}</a>
+                <a href="{{ exPress2Url }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exPress2Label }}</a>
+              </sc-if>
+              <sc-if value="{{ exHasPdf }}" hint-placeholder-val="{{ false }}">
+                <a href="{{ exPdf }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exPdfLabel }}</a>
               </sc-if>
               <sc-if value="{{ exHasUrl }}" hint-placeholder-val="{{ false }}">
-                <a href="{{ exUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exUrlLabel }}</a>
+                <a href="{{ exUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ exUrlLabel }}</a>
               </sc-if>
               <sc-if value="{{ exInfoHidden }}" hint-placeholder-val="{{ false }}">
-                <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
+                <div onClick="{{ showInfo }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Show info</div>
               </sc-if>
             </div>
+            </sc-if>
 
           <sc-if value="{{ exHasArtists }}" hint-placeholder-val="{{ false }}">
             <div style="margin-top:20px;order:3">
-              <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#6e6e72;padding-bottom:11px;border-bottom:1px solid rgba(20,20,20,.16);margin-bottom:20px">Artists</div>
-              <div data-r="artistcols" style="column-count:3;column-gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.4;color:#3c3c3d">
-                <sc-for list="{{ exArtists }}" as="a" hint-placeholder-count="12">
-                  <div style="break-inside:avoid;padding-bottom:14px">{{ a.name }}</div>
-                </sc-for>
-              </div>
+              <div onClick="{{ toggleExArtists }}" style="{{ exArtistsHeadStyle }}" style-hover="color:#141414">{{ exArtistsHeadLabel }}</div>
+              <sc-if value="{{ exArtistsOpen }}" hint-placeholder-val="{{ true }}">
+                <div data-r="artistcols" style="margin-top:20px;column-count:3;column-gap:26px;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.4;color:#3c3c3d">
+                  <sc-for list="{{ exArtists }}" as="a" hint-placeholder-count="12">
+                    <div style="break-inside:avoid;padding-bottom:14px">{{ a.name }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
             </div>
           </sc-if>
 
@@ -657,7 +653,7 @@
           <div style="position:relative">
             <div ref="{{ fullSwipeRef }}" onClick="{{ backdropToGrid }}" data-r="arrowgut" style="padding:0 46px;display:flex;align-items:center;justify-content:center;height:min(calc(100dvh - 120px), 86vh)">
               <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:100%;height:100%">
-                <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;flex:0 1 auto;min-height:0">
+                <img ref="{{ fullImgRef }}" alt="{{ fullCaption }}" style="{{ fullImgStyle }}">
                 <sc-if value="{{ fullMissing }}" hint-placeholder-val="{{ false }}">
                   <div style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9c9ca0">Image unavailable</div>
                 </sc-if>
@@ -698,7 +694,7 @@
 
   <sc-if value="{{ vNews }}" hint-placeholder-val="{{ true }}">
     <div data-live-layer data-r="gut" style="position:absolute;inset:0;overflow-y:auto;padding:0 44px 70px">
-      <div data-r="exbar" style="position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 44px;margin:0 -44px;background:#000000">
+      <div data-r="exbar" style="position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0 -44px;background:#000000">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div style="display:flex;gap:22px">
           <sc-for list="{{ newsFilters }}" as="f" hint-placeholder-count="3">
@@ -770,12 +766,17 @@
         <div onClick="{{ closeNewsView }}" style="cursor:pointer;font-family:Raleway,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(20,20,20,.45);padding-bottom:3px">Close</div>
       </div>
       <div data-r="gut" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:22px 44px 14px">
-        <a href="{{ newsViewUrl }}" target="_blank" rel="noopener" style="display:block;max-height:100%">
-          <img ref="{{ newsViewImgRef }}" alt="{{ newsViewCaption }}" style="max-width:100%;max-height:calc(100dvh - 176px);width:auto;height:auto;object-fit:contain">
-        </a>
+        <sc-if value="{{ newsViewIsPdf }}" hint-placeholder-val="{{ false }}">
+          <iframe ref="{{ newsViewPdfRef }}" title="{{ newsViewCaption }}" style="width:100%;max-width:900px;height:calc(100dvh - 176px);border:1px solid rgba(20,20,20,.14);background:#ffffff"></iframe>
+        </sc-if>
+        <sc-if value="{{ newsViewIsImg }}" hint-placeholder-val="{{ true }}">
+          <a href="{{ newsViewUrl }}" target="_blank" rel="noopener" style="display:block;max-height:100%">
+            <img ref="{{ newsViewImgRef }}" alt="{{ newsViewCaption }}" style="max-width:100%;max-height:calc(100dvh - 176px);width:auto;height:auto;object-fit:contain">
+          </a>
+        </sc-if>
       </div>
       <div data-r="gut" style="flex:none;display:flex;justify-content:center;padding:0 44px 34px">
-        <a href="{{ newsViewUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">Read on artnet</a>
+        <a href="{{ newsViewUrl }}" target="_blank" rel="noopener" style="font-family:Raleway,Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:#4a4a4d;text-decoration:none;border-bottom:1px solid rgba(20,20,20,.4);padding-bottom:3px">{{ newsViewLinkLabel }}</a>
       </div>
     </div>
   </sc-if>
@@ -1067,7 +1068,7 @@ class Component extends DCLogic {
       if (!e) return { view: 'exhibits' };
       return {
         view: 'exhibit', exhibit: e.title, exMode: (parts[2] || '').toLowerCase() === 'grid' ? 'grid' : 'full',
-        exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exFullU: '', exFullFor: '', exInfoHidden: false, exGal: 'Works'
+        exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exFullU: '', exFullFor: '', exInfoHidden: false, exGal: 'Works', exArtistsOpen: false
       };
     }
     if (head === 'works') {
@@ -1193,7 +1194,30 @@ class Component extends DCLogic {
     this.setState(s => ({ sel: (s.sel + n + len) % len }));
   }
   // light-ground work needs the detail page's lift on the series grid too
+  // an exhibit's `links` list turns the first mention of each name into an anchor
+  linkParts(text, links) {
+    const plain = t => ({ text: t, plain: true, isLink: false, href: '' });
+    if (!links || !links.length) return [plain(text)];
+    const parts = [], used = {};
+    let rest = String(text);
+    while (rest) {
+      let at = -1, hit = null;
+      links.forEach(L => {
+        if (used[L.t]) return;
+        const i = rest.indexOf(L.t);
+        if (i !== -1 && (at === -1 || i < at)) { at = i; hit = L; }
+      });
+      if (at === -1) { parts.push(plain(rest)); break; }
+      if (at > 0) parts.push(plain(rest.slice(0, at)));
+      parts.push({ text: hit.t, plain: false, isLink: true, href: hit.u });
+      used[hit.t] = 1;
+      rest = rest.slice(at + hit.t.length);
+    }
+    return parts;
+  }
   shadowSeries(name) { return ['New Forms'].indexOf(name) !== -1; }
+  // shows whose works are shot on light ground get the same lift as New Forms
+  shadowShow(title) { return ['Drawing and Sculpture'].indexOf(title) !== -1; }
   ground() { return this.props.darkGround || 'black'; }
   groundBg() {
     const g = this.ground();
@@ -1244,7 +1268,7 @@ class Component extends DCLogic {
 
   openExhibit(title) {
     this._enteredAt = Date.now();
-    this.setState({ view: 'exhibit', exhibit: title, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exGal: 'Works', venueIdx: 0, venueFade: true, exFullU: '', exFullFor: '', exInfoHidden: false, searchOpen: false });
+    this.setState({ view: 'exhibit', exhibit: title, exArtistsOpen: false, exOpen: false, lb: '', lbC: '', venue: '', venueCap: '', exMode: 'full', exGal: 'Works', venueIdx: 0, venueFade: true, exFullU: '', exFullFor: '', exInfoHidden: false, searchOpen: false });
   }
 
   setViewMode(mode) {
@@ -1340,6 +1364,7 @@ class Component extends DCLogic {
     const exhList = exhF === 'All' ? ex : ex.filter(e => e.kinds.indexOf(exhF) >= 0);
     const cxI = ex.findIndex(e => e.title === st.exhibit);
     const cx = ex[cxI] || {};
+    const collapseArtists = (cx.artists || []).length > 50;
     // the nav only hides while you're inside an exhibit
     const navHidden = view === 'exhibit' && !!st.exInfoHidden;
     // the nav rides up in step with the scroll, capped at its own height
@@ -1876,14 +1901,18 @@ class Component extends DCLogic {
           imgRef: mkRef(n.img, this.markBroken),
           isView: !!(n.gal && n.gal[0] && n.gal[0].view),
           isLink: !(n.gal && n.gal[0] && n.gal[0].view),
-          openView: () => this.setState({ newsView: n.gal[0].u, newsViewCap: n.gal[0].c || n.title, newsViewUrl: n.url || '' })
+          openView: () => this.setState({ newsView: n.gal[0].u, newsViewCap: n.gal[0].c || n.title, newsViewUrl: n.url || '', newsViewLabel: n.gal[0].label || 'Read the original' })
         };
       }),
       vNewsView: !!st.newsView,
       newsViewCaption: st.newsViewCap || '',
       newsViewUrl: st.newsViewUrl || '',
+      newsViewLinkLabel: st.newsViewLabel || 'Read the original',
+      newsViewIsPdf: /\.pdf($|\?)/i.test(st.newsView || ''),
+      newsViewIsImg: !!st.newsView && !/\.pdf($|\?)/i.test(st.newsView),
+      newsViewPdfRef: el => { if (el && st.newsView && el.src !== st.newsView) el.src = st.newsView; },
       newsViewImgRef: el => { if (el && st.newsView && el.src !== st.newsView) el.src = st.newsView; },
-      closeNewsView: () => this.setState({ newsView: '', newsViewCap: '', newsViewUrl: '' }),
+      closeNewsView: () => this.setState({ newsView: '', newsViewCap: '', newsViewUrl: '', newsViewLabel: '' }),
       portraitRef: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
       portraitRef2: mkRef('./images/doug-crocco-portrait.jpg', this.markBroken),
       infoBgRef: mkRef((window.IMG_BASE||'') + 'artwork/uploads/2019/02/19-1.jpg'),
@@ -1998,6 +2027,22 @@ class Component extends DCLogic {
       exYear: cx.y ? String(cx.y) : '',
       // a show can carry a structured artist roster; it renders as columns, not prose
       exHasArtists: !!(cx.artists && cx.artists.length),
+      // long rosters load closed behind a cue — 50 names is the line
+      exArtistsCollapsible: collapseArtists,
+      exArtistsOpen: !collapseArtists || !!st.exArtistsOpen,
+      exArtistsHeadLabel: (collapseArtists && !st.exArtistsOpen) ? 'See artists' : 'Artists',
+      // a collapsible roster reads like the other cues: text-width underline, no full rule
+      exArtistsHeadStyle: collapseArtists ? {
+        display: 'inline-block', cursor: 'pointer',
+        fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 11, fontWeight: 500,
+        letterSpacing: '.2em', textTransform: 'uppercase', color: '#4a4a4d',
+        paddingBottom: 3, borderBottom: '1px solid rgba(20,20,20,.4)'
+      } : {
+        fontFamily: 'Raleway,Helvetica,Arial,sans-serif', fontSize: 12, fontWeight: 500,
+        letterSpacing: '.2em', textTransform: 'uppercase', color: '#6e6e72',
+        paddingBottom: 11, borderBottom: '1px solid rgba(20,20,20,.16)'
+      },
+      toggleExArtists: () => this.setState({ exArtistsOpen: !this.state.exArtistsOpen }),
       exArtists: (cx.artists || []).slice().sort((a, b) => {
         const last = n => { const p = String(n).trim().split(/\s+/); return p[p.length - 1].toLowerCase(); };
         return last(a).localeCompare(last(b)) || String(a).localeCompare(String(b));
@@ -2031,6 +2076,8 @@ class Component extends DCLogic {
       pressRowRef: el => { this._pressRow = el; },
       pressBlockRef: el => { this._pressBlock = el; },
       exInfoHidden: !!st.exInfoHidden,
+      // the row only exists when something can sit in it
+      exHasLinkRow: !!(cx.press && cx.press.u) || !!(cx.press2 && cx.press2.u) || !!cx.url || !!cx.pdf || !!st.exInfoHidden,
       exBackStyle: {
         cursor: 'pointer', fontFamily: 'Raleway,Helvetica,Arial,sans-serif',
         fontSize: 10.5, letterSpacing: '.2em', textTransform: 'uppercase',
@@ -2058,6 +2105,8 @@ class Component extends DCLogic {
         opacity: 1 - (navOff / 86),
         transition: st.navSnap ? 'transform .3s cubic-bezier(.33,1,.68,1), opacity .24s ease' : 'none'
       },
+      // bar and title stay put; the gallery below them scrolls under
+      // only the bar stays locked; the title scrolls up under it like everything else
       exTitleBlockStyle: { maxWidth: 1760, padding: cx.hero ? '0 0 24px' : '0 0 40px' },
       exHasHero: !!cx.hero,
       heroFrameStyle: {
@@ -2108,7 +2157,7 @@ class Component extends DCLogic {
         }
         this._exCut = cutAt;
         const keep = (!st.exOpen && cutAt >= 0) ? all.slice(0, cutAt) : all;
-        return keep.map((t, i) => ({ text: t, i }));
+        return keep.map((t, i) => ({ text: t, i, parts: this.linkParts(t, cx.links) }));
       })(),
       // one continuous text flow wrapping a right-floated venue photograph; "See more"
       // just lifts the height cap so the copy fills the space under the image
@@ -2125,7 +2174,7 @@ class Component extends DCLogic {
         right: st.narrow ? 0 : (st.phone ? 'calc(clamp(150px, 38vw, 240px) + 22px)' : 'calc(clamp(240px, 26vw, 320px) + 52px)'),
         background: 'linear-gradient(to bottom, rgba(255,255,255,0), #ffffff 88%)'
       },
-      exHasMore: this._exCut >= 0 || !!(cx.press && cx.press.u) || !!(cx.press2 && cx.press2.u),
+      exHasMore: this._exCut >= 0,
       exExpanded: !!st.exOpen,
       exMoreLabel: st.exOpen ? 'Less' : (rosterAt >= 0 ? 'Artist list' : 'See more'),
       toggleExText: () => {
@@ -2153,6 +2202,7 @@ class Component extends DCLogic {
       exUrlLabel: cx.urlLabel || 'Gallery website',
       exHasPdf: !!cx.pdf,
       exPdf: cx.pdf || '',
+      exPdfLabel: cx.pdfLabel || 'Checklist',
       exVenueImgs: (() => {
         // every frame gets its own layer and keeps its src for good — only opacity changes,
         // so a swap can never catch an image mid-load
@@ -2216,6 +2266,8 @@ class Component extends DCLogic {
         el.onload = () => { el.style.visibility = ''; };
         if (el.getAttribute('src') !== u) { el.style.visibility = ''; el.src = u; }
       },
+      fullImgStyle: Object.assign({ display: 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', flex: '0 1 auto', minHeight: 0 },
+        this.shadowShow(st.exhibit) ? { boxShadow: '0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)' } : null),
       fullMissing: !!st.broken[(lbAll[fullI] || {}).u],
       fullCaption: (lbAll[fullI] || {}).c || '',
       fullCount: lbAll.length ? (fullI + 1) + ' / ' + lbAll.length : '',
@@ -2227,7 +2279,8 @@ class Component extends DCLogic {
         const items = restItems.map(g => ({
           caption: g.c || '', artist: artistOf(g.c), imgRef: mkRef(g.u, this.markBroken),
           missing: !!st.broken[g.u],
-          boxStyle: { position: 'relative', background: '#f6f5f2', minHeight: st.broken[g.u] ? 200 : 0 },
+          boxStyle: Object.assign({ position: 'relative', background: '#f6f5f2', minHeight: st.broken[g.u] ? 200 : 0 },
+            this.shadowShow(st.exhibit) ? { boxShadow: '0 14px 34px rgba(20,20,20,.08), 0 2px 6px rgba(20,20,20,.05)' } : null),
           open: this.openFullAt(g.u),
           _u: g.u
         }));
