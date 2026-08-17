@@ -545,7 +545,7 @@
       <div data-r="exbar" style="display:flex;align-items:center;justify-content:space-between;gap:30px;height:64px;padding:0 60px 0 44px;margin:0 -44px 26px;background:#000000">
         <button type="button" onClick="{{ toHomeMenu }}" style="background:none;border:none;padding:0;border-radius:0;cursor:pointer;font-family:'Julius Sans One',Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;white-space:nowrap" style-hover="opacity:.62" style-focus="outline:1px dotted currentColor;outline-offset:4px"><span data-r="markfull">Doug Crocco</span><span data-r="markshort" style="display:none">DC</span></button>
         <div style="display:flex;align-items:center;gap:26px">
-          <button type="button" onClick="{{ toExhibits }}" style="{{ exBackStyle }}" style-hover="color:#ffffff">All exhibits</button>
+          <button type="button" onClick="{{ toAllExhibits }}" style="{{ exBackStyle }}" style-hover="color:#ffffff">All exhibits</button>
           <span style="width:1px;height:16px;background:rgba(255,255,255,.28)"></span>
           <button type="button" aria-label="Previous exhibition" style-focus="outline:1px dotted currentColor;outline-offset:3px" onClick="{{ prevExhibit }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center"><span style="display:block;transform:scaleX(-1)">→</span></button>
           <button type="button" aria-label="Next exhibition" style-focus="outline:1px dotted currentColor;outline-offset:3px" onClick="{{ nextExhibit }}" style="background:none;border:none;padding:0;border-radius:0;color:inherit;font:inherit;cursor:pointer;color:rgba(255,255,255,.62);font-size:15px;line-height:1;width:26px;text-align:center">→</button>
@@ -1339,8 +1339,12 @@ class Component extends DCLogic {
   }
 
   stepExhibit(n) {
-    const list = window.DC ? window.DC.exhibits : [];
-    if (!list.length) return;
+    const all = window.DC ? window.DC.exhibits : [];
+    if (!all.length) return;
+    // stepping stays inside the filter the visitor arrived through
+    const f = this.state.exhFilter;
+    const scoped = (f && f !== 'All') ? all.filter(e => (e.kinds || []).indexOf(f) >= 0) : all;
+    const list = scoped.length ? scoped : all;
     const i = list.findIndex(e => e.title === this.state.exhibit);
     const next = list[((i < 0 ? 0 : i) + n + list.length) % list.length];
     this.openExhibit(next.title);
@@ -1688,6 +1692,8 @@ class Component extends DCLogic {
       toInfoMenu: () => this.goInfo(),
       toHome: this.go('home'), toWorks: () => this.setState({ view: 'works' }),
       toExhibits: this.go('exhibits'), toInfo: () => this.goInfo(),
+      // the back button out of a show always lands on the unfiltered list
+      toAllExhibits: () => this.setState({ view: 'exhibits', exhFilter: 'All' }),
       toContact: () => this.goInfo({ enquiry: [w.t, w.y, w.m, w.d].filter(Boolean).join(', ') }),
       hasEnquiry: !!st.enquiry,
       enquiryWork: st.enquiry || '',
